@@ -1,0 +1,12 @@
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+data
+venv
+db.sqlite3
+.vscode
+node_modules
+
+fixtures/
