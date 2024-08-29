@@ -56,7 +56,7 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR,'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -105,7 +105,7 @@ AUTHENTICATION_BACKENDS = [
     'auth_user.backends.EmailBackend'
 ]
 
-UTH_USER_MODEL = "auth_user.User" 
+AUTH_USER_MODEL = "auth_user.User" 
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
