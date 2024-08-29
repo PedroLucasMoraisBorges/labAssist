@@ -8,6 +8,17 @@ from .forms import *
 from .models import *
 
 # Create your views here.
+class Redirect(View):
+    def get(self, request):
+        user = request.user
+        if user.is_authenticated:
+            if user.is_staff:
+                return redirect('home_admin')
+            else:
+                return redirect('home')
+        else:
+            return redirect('landing_page')
+
 class Login(View):
     def get(self, request):
         form = AuthenticationForm()
