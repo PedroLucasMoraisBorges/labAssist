@@ -19,6 +19,7 @@ class Reagent(models.Model):
     formula = models.CharField(max_length=144)
     size = models.IntegerField()
     amount = models.IntegerField()
+    limit = models.IntegerField()
     validity = models.DateField()
     classification = models.CharField(max_length=64)
     incompatibility = models.ManyToManyField('self', blank=True)
