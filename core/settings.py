@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'auth_user',
+    'reagents',
+    'reports'
 ]
 
 MIDDLEWARE = [
@@ -64,6 +66,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'reports.custom_tags.get_reagents_alert',
+                'reports.custom_tags.get_register_request',
+                'reports.custom_tags.get_movement_request'
             ],
         },
     },
