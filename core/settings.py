@@ -66,10 +66,11 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'reports.custom_tags.get_reagents_alert',
-                'reports.custom_tags.get_register_request',
-                'reports.custom_tags.get_movement_request'
             ],
+            'libraries' : {
+                'reports_tags' : 'reports.custom_tags',
+                'reagent_tags' : 'reagents.custom_tags'
+            },
         },
     },
 ]
