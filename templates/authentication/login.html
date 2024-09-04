@@ -6,10 +6,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link rel="stylesheet" href="{%static 'css/output' %}">
 </head>
 
 <body>
-    {{errors}}
+    <!-- {{errors}}
     <form method="post">
         {% csrf_token %}
 
@@ -19,7 +20,33 @@
         {% endfor %}
 
         <button type="submit">Salvar</button>
-    </form>
+    </form> -->
+    <div>
+        <img src="../../assets/leas_login_logo.png"
+        alt="Logo do Laboratório de Engenharia Ambiental e Sanitária LEAS"
+        classname="object-cover h-48 w-96">
+        <div>
+        <form method="POST">
+
+            {% for field in form %}
+            <div>
+                {{field}}
+            </div>
+            {% endfor %}
+            <div>
+                <button type="submit">ENTRAR</button>
+                <a href="//"> Esqueceu a senha? </a>
+            </div>
+
+        </div>
+        </form>
+        <div>
+            <h1>Olá, Usuário!</h1>
+            <h2>É seu primeiro acesso?</h2>
+            <p>Realize seu cadastro para ter acesso as informações do LEAS.</p>
+            <button>CADASTRE-SE AQUI</button>
+        </div>
+    </div>
 </body>
 
 </html>

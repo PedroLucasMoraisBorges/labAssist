@@ -80,7 +80,8 @@ htmlcov/
 .coverage.* 
 .cache 
 .pytest_cache/ 
-nosetests.xml 
+nosetests.xml
+node_modules/
 coverage.xml 
 *.cover 
 .hypothesis/ 
