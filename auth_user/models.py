@@ -3,29 +3,49 @@ from django.contrib.auth.models import AbstractUser, Group, Permission
 from .managers import *
 import uuid
 
+# Listas
+sectorCompleteChoices = [
+    ('B' , 'Bolsista'),
+    ('P', 'Professor'),
+    ('A', 'Administração')
+]
+
+sectorChoices= [
+    ('B' , 'Bolsista'),
+    ('P', 'Professor'),
+]
+
 # Create your models here.
 class User(AbstractUser):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     username = None
     email = models.EmailField(unique = True, blank = False)
-    nome = models.CharField(max_length = 256)
+    name = models.CharField(max_length = 256)
+    sector = models.CharField(max_length=64, choices=sectorCompleteChoices, default='A')
 
-    # Especificar related_name para evitar conflitos
     groups = models.ManyToManyField(
         Group,
-        related_name='user_groups',  # Nome alternativo para evitar conflito
+        related_name='user_groups',
         blank=True
     )
     user_permissions = models.ManyToManyField(
         Permission,
-        related_name='user_permissions',  # Nome alternativo para evitar conflito
+        related_name='user_permissions',
         blank=True
     )
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['nome']
+    REQUIRED_FIELDS = ['name']
 
-    object = UserManager()
+    objects = UserManager()
 
     def __str__(self):
-        return self.nome
+        return self.name
+    
+    @property
+    def user_image(self):
+        name = self.name.split('')
+        firstName = name[0]
+        secondName = name[1]
+        
+        return firstName[0].upper() + secondName[0].upper()
