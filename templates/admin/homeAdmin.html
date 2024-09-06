@@ -4,6 +4,30 @@
 {% endblock %}
 
 {% block content %}
+
+{% for reagent in geralVision %}
+    <div>
+        {{reagent}}
+    </div>
+{% endfor %}
+
+<hr>
+
+{% for reagent in recentMovement %}
+    <div>
+        {{reagent}}
+    </div>
+{% endfor %}
+
+<hr>
+
+{% for reagent in inventoryBalance %}
+    <div>
+        {{reagent}}
+        {{reagent.amount}}
+    </div>
+{% endfor %}
+
 {% endblock %}
 
 {% block scripts %}
