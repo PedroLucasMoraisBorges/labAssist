@@ -14,14 +14,14 @@ register = template.Library()
 @register.simple_tag
 def get_reagents_alert(*args, **kwargs):
     reagents = Reagent.objects.filter(Q(amount__lte=F('limit'))).order_by('amount')
-    return {'alert_reagents' : reagents}
+    return reagents
 
 @register.simple_tag
 def get_register_request(*args, **kwargs):
     users = User.objects.filter(is_active=False)
-    return {'request_users' : users}
+    return users
 
 @register.simple_tag
 def get_movement_request(*args, **kwargs):
     requests = Request.objects.filter(appoove=False).order_by('dt_request')
-    return {'request_movement_requests': requests}
+    return requests
