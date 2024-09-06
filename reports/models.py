@@ -24,13 +24,22 @@ class Movement(models.Model):
     fk_reagent = models.ForeignKey(Reagent, related_name='reagent_movement', null=False, on_delete=models.CASCADE)
     fk_user = models.ForeignKey(User, related_name='responsible_movement', null=False,  on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.fk_reagent.name + ' ' + self.movement_type
+
 class Request(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     appoove = models.BooleanField(default=False)
-    dt_request = models.DateTimeField(default=date.today)
-    dt_response = models.DateTimeField()
+    dt_request = models.DateTimeField()
+    dt_response = models.DateTimeField(null=True, default=None, blank=True)
 
     fk_movement = models.ForeignKey(Movement, related_name='request_movement', null=False, on_delete=models.CASCADE)
+
+    def __str__(self):
+        year = str(self.dt_request.year)
+        month = str(self.dt_request.month)
+        day = str(self.dt_request.day)
+        return self.fk_movement.fk_user.name + ' ' + day + '/' + month + '/' + year
 
 class License(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

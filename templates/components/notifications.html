@@ -1,0 +1,21 @@
+{% load static %}
+{% load reports_tags %}
+
+{% get_reagents_alert as alert_reagents %}
+{% get_register_request as request_users %}
+{% get_movement_request as request_movement_requests %}
+
+<div>
+    <h2>Alerta de estoque</h2>
+    {{alert_reagents}}
+</div>
+
+<div>
+    <h2>Alerta de Usuário inativo</h2>
+    {{request_users}}
+</div>
+
+<div>
+    <h2>Alerta de requisição de movimentação</h2>
+    {{request_movement_requests}}
+</div>
