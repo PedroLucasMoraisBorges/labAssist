@@ -8,7 +8,10 @@
 <div>
     <h1 style="font-size: 2rem;">Requisição de usuários</h1>
     {% for user in users %}
-        <p>{{ user }}</p>
+        <div>
+            <p>{{ user.info }}</p>
+            <button class="approveUserButton" data-id="{{ user.codifiqued_id }}">Aprovar</button>
+        </div>
         <hr>
     {% endfor %}
 </div>
@@ -19,7 +22,7 @@
         <div>
             <p>{{ request }}</p>
             <p>{{ request.fk_movement.motivation }}</p>
-            <button class="approve-button" data-id="{{ request.id }}">Aprovar</button>
+            <button class="approveRequestButton" data-id="{{ request.id }}">Aprovar</button>
         </div>
         <hr>
     {% endfor %}
@@ -29,7 +32,39 @@
 
 {% block scripts %}
 <script>
-    const approveButtons = document.querySelectorAll('.approve-button');
+    const approveUserButtons = document.querySelectorAll('.approveUserButton');
+
+    approveUserButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            console.log('jjj')
+            // Obtém o ID da requisição de movimentação do atributo data-id
+            const userId = this.getAttribute('data-id');
+
+            // Monta a URL dinamicamente de acordo com a url do django
+            const url = `{% url 'approve_user' %}?id=${userId}`;
+
+            fetch(url, {
+                method: 'GET'
+            })
+            .then(response => response.json())  // Converte a resposta em JSON
+            .then(data => {
+                if (data.message) {
+                    alert('Requisição aprovada com sucesso!');
+                    this.parentElement.style.display = 'none';
+                } else if (data.error) {
+                    alert('Erro: ' + data.error);
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao aprovar a requisição:', error);
+                alert('Ocorreu um erro ao aprovar a requisição.');
+            });
+        });
+    });
+</script>
+
+<script>
+    const approveButtons = document.querySelectorAll('.approveRequestButton');
 
     approveButtons.forEach(button => {
         button.addEventListener('click', function() {
