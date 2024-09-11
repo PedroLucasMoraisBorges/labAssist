@@ -68,6 +68,7 @@ class ApproveUser(APIView):
         if codifiquedId:
             decoded_id = base64.b64decode(codifiquedId).decode('utf-8')
 
+            print(decoded_id)
             user = User.objects.get(id=decoded_id)
 
             if user:

@@ -1,4 +1,5 @@
 {% extends 'components/base.html' %}
+{% load static %}
 
 {% block head %}
 {% endblock %}
@@ -31,67 +32,6 @@
 {% endblock %}
 
 {% block scripts %}
-<script>
-    const approveUserButtons = document.querySelectorAll('.approveUserButton');
-
-    approveUserButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            console.log('jjj')
-            // Obtém o ID da requisição de movimentação do atributo data-id
-            const userId = this.getAttribute('data-id');
-
-            // Monta a URL dinamicamente de acordo com a url do django
-            const url = `{% url 'approve_user' %}?id=${userId}`;
-
-            fetch(url, {
-                method: 'GET'
-            })
-            .then(response => response.json())  // Converte a resposta em JSON
-            .then(data => {
-                if (data.message) {
-                    alert('Requisição aprovada com sucesso!');
-                    this.parentElement.style.display = 'none';
-                } else if (data.error) {
-                    alert('Erro: ' + data.error);
-                }
-            })
-            .catch(error => {
-                console.error('Erro ao aprovar a requisição:', error);
-                alert('Ocorreu um erro ao aprovar a requisição.');
-            });
-        });
-    });
-</script>
-
-<script>
-    const approveButtons = document.querySelectorAll('.approveRequestButton');
-
-    approveButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            // Obtém o ID da requisição de movimentação do atributo data-id
-            const requestId = this.getAttribute('data-id');
-
-            // Monta a URL dinamicamente de acordo com a url do django
-            const url = `{% url 'approve_request_movement' %}?id=${requestId}`;
-
-            // Faz uma requisição GET para a API de aprovação usando Fetch
-            fetch(url, {
-                method: 'GET'
-            })
-            .then(response => response.json())  // Converte a resposta em JSON
-            .then(data => {
-                if (data.message) {
-                    alert('Requisição aprovada com sucesso!');
-                    this.parentElement.style.display = 'none';
-                } else if (data.error) {
-                    alert('Erro: ' + data.error);
-                }
-            })
-            .catch(error => {
-                console.error('Erro ao aprovar a requisição:', error);
-                alert('Ocorreu um erro ao aprovar a requisição.');
-            });
-        });
-    });
-</script>
+<script src="{% static 'js/activeUser.js' %}" url="{% url 'approve_user' %}"></script>
+<script src="{% static 'js/approveMovement.js' %}" url="{% url 'approve_request_movement' %}"></script>
 {% endblock %}
