@@ -63,12 +63,10 @@ class ApproveRequestMovement(APIView):
 class ApproveUser(APIView):
     def get(self, request):
         codifiquedId = request.query_params.get('id', None)
-        print(codifiquedId)
 
         if codifiquedId:
             decoded_id = base64.b64decode(codifiquedId).decode('utf-8')
 
-            print(decoded_id)
             user = User.objects.get(id=decoded_id)
 
             if user:
