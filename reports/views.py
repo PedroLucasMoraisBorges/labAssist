@@ -2,6 +2,8 @@ from django.shortcuts import render, get_object_or_404
 from django.views import View
 from django.utils import timezone
 import base64
+import threading
+from .tasks import *
 
 from .models import *
 from auth_user.models import *
@@ -70,8 +72,22 @@ class ApproveUser(APIView):
             user = User.objects.get(id=decoded_id)
 
             if user:
-                user.is_active = True
                 user.save()
+                
+                def send_activation_email():
+                    subject = 'Conta ativada'
+                    body = render_to_string(
+                        'components/emails/confirmation.html',
+                        {
+                            'user': user,
+                            'domain': HOST
+                        }
+                    )
+                    EmailMessage(to = [user.email], subject = subject, body = body).send()
+
+                email_thread = threading.Thread(target=send_activation_email)
+                email_thread.start()
+
                 return Response({'message' : 'User ativado com sucesso'}, status=status.HTTP_200_OK)
             else:
                 return Response({'error': 'User não encontrado'}, status=status.HTTP_400_BAD_REQUEST)
