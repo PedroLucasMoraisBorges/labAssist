@@ -1,0 +1,37 @@
+{% extends 'components/base.html' %}
+{% load static %}
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+
+<div>
+    <h1 style="font-size: 2rem;">Requisição de usuários</h1>
+    {% for user in users %}
+        <div>
+            <p>{{ user.info }}</p>
+            <button class="approveUserButton" data-id="{{ user.codifiqued_id }}">Aprovar</button>
+        </div>
+        <hr>
+    {% endfor %}
+</div>
+
+<div>
+    <h1 style="font-size: 2rem;">Requisição de movimentação</h1>
+    {% for request in requests_movement %}
+        <div>
+            <p>{{ request }}</p>
+            <p>{{ request.fk_movement.motivation }}</p>
+            <button class="approveRequestButton" data-id="{{ request.id }}">Aprovar</button>
+        </div>
+        <hr>
+    {% endfor %}
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/activeUser.js' %}" url="{% url 'approve_user' %}"></script>
+<script src="{% static 'js/approveMovement.js' %}" url="{% url 'approve_request_movement' %}"></script>
+{% endblock %}

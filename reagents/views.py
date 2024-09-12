@@ -52,4 +52,3 @@ class RegisterReagent(View):
             }
 
             return render(request, 'reagents/register.html', context)
-
