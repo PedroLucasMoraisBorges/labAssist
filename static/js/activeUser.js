@@ -1,14 +1,14 @@
-const approveUserButtons = document.querySelectorAll('.approveUserButton');
-var importUserUrl = document.currentScript.getAttribute('url');
+const buttons = document.querySelectorAll('.actionButtons');
 
-approveUserButtons.forEach(button => {
+buttons.forEach(button => {
     button.addEventListener('click', function() {
         // Obtém o ID da requisição de movimentação do atributo data-id
-        const userId = this.getAttribute('data-id');
+        console.log(this)
+        const id = this.getAttribute('data-id');
+        const importedUrl = this.getAttribute('url');
 
-        console.log(importUserUrl)
         // Monta a URL dinamicamente de acordo com a url do django
-        var url = `${importUserUrl}?id=${userId}`;
+        var url = `${importedUrl}?id=${id}`;
 
         fetch(url, {
             method: 'GET'
@@ -16,7 +16,7 @@ approveUserButtons.forEach(button => {
         .then(response => response.json())  // Converte a resposta em JSON
         .then(data => {
             if (data.message) {
-                alert('Usuário ativado com sucesso!');
+                alert('Ação feita com sucesso');
                 this.parentElement.style.display = 'none';
             } else if (data.error) {
                 alert('Erro: ' + data.error);
@@ -24,7 +24,7 @@ approveUserButtons.forEach(button => {
         })
         .catch(error => {
             console.error('Erro ao aprovar a requisição:', error);
-            alert('Ocorreu um erro ao ativar o usuário.');
+            alert('Ocorreu um erro ao enviar a requisição');
         });
     });
 });
