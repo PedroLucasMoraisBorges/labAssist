@@ -11,7 +11,8 @@
     {% for user in users %}
         <div>
             <p>{{ user.info }}</p>
-            <button class="approveUserButton" data-id="{{ user.codifiqued_id }}">Aprovar</button>
+            <button class="actionButtons" url="{{user.urls.approve}}" data-id="{{ user.codifiqued_id }}">Aprovar</button>
+            <button class="actionButtons" url="{{user.urls.desapprove}}" data-id="{{ user.codifiqued_id }}">Desaprovar</button>
         </div>
         <hr>
     {% endfor %}
@@ -21,9 +22,10 @@
     <h1 style="font-size: 2rem;">Requisição de movimentação</h1>
     {% for request in requests_movement %}
         <div>
-            <p>{{ request }}</p>
-            <p>{{ request.fk_movement.motivation }}</p>
-            <button class="approveRequestButton" data-id="{{ request.id }}">Aprovar</button>
+            <p>{{ request.info }}</p>
+            <p>{{ request..info.fk_movement.motivation }}</p>
+            <button class="actionButtons" url="{{request.urls.approve}}" data-id="{{ request.info.id }}">Aprovar</button>
+            <button class="actionButtons" url="{{request.urls.desapprove}}" data-id="{{ request.info.id }}">Desaprovar</button>
         </div>
         <hr>
     {% endfor %}
@@ -32,6 +34,5 @@
 {% endblock %}
 
 {% block scripts %}
-<script src="{% static 'js/activeUser.js' %}" url="{% url 'approve_user' %}"></script>
-<script src="{% static 'js/approveMovement.js' %}" url="{% url 'approve_request_movement' %}"></script>
+<script src="{% static 'js/activeUser.js' %}"></script>
 {% endblock %}
