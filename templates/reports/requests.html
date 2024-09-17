@@ -1,0 +1,38 @@
+{% extends 'components/base.html' %}
+{% load static %}
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+
+<div>
+    <h1 style="font-size: 2rem;">Requisição de usuários</h1>
+    {% for user in users %}
+        <div>
+            <p>{{ user.info }}</p>
+            <button class="actionButtons" url="{{user.urls.approve}}" data-id="{{ user.codifiqued_id }}">Aprovar</button>
+            <button class="actionButtons" url="{{user.urls.desapprove}}" data-id="{{ user.codifiqued_id }}">Desaprovar</button>
+        </div>
+        <hr>
+    {% endfor %}
+</div>
+
+<div>
+    <h1 style="font-size: 2rem;">Requisição de movimentação</h1>
+    {% for request in requests_movement %}
+        <div>
+            <p>{{ request.info }}</p>
+            <p>{{ request..info.fk_movement.motivation }}</p>
+            <button class="actionButtons" url="{{request.urls.approve}}" data-id="{{ request.info.id }}">Aprovar</button>
+            <button class="actionButtons" url="{{request.urls.desapprove}}" data-id="{{ request.info.id }}">Desaprovar</button>
+        </div>
+        <hr>
+    {% endfor %}
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/activeUser.js' %}"></script>
+{% endblock %}

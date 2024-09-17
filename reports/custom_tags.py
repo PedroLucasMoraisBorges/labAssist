@@ -23,5 +23,5 @@ def get_register_request(*args, **kwargs):
 
 @register.simple_tag
 def get_movement_request(*args, **kwargs):
-    requests = Request.objects.filter(appoove=False).order_by('dt_request')
+    requests = Request.objects.filter(approved=False).order_by('dt_request')
     return requests
