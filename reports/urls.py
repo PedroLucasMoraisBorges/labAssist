@@ -7,4 +7,5 @@ urlpatterns = [
     path('desaprovarMovimentação/', DesapproveRequestMovement.as_view(), name='desapprove_request_movement'),
     path('ativarUsuario/',ApproveUser.as_view(), name='approve_user'),
     path('desaprovarUsuario/', DisapproveUser.as_view(), name='desapprove_user'),
+    path('createMovement/', CrateMovement.as_view(), name='create_movement')
 ]
