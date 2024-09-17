@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'auth_user',
     'reagents',
+    'tailwind',
     'reports'
 ]
 

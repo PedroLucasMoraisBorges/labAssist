@@ -5,37 +5,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/login/login.css' %}">
     <title>Login</title>
-    <link rel="stylesheet" href="{%static 'css/output' %}">
 </head>
 
 <body>
-    <div>
-        <img src="{% static 'imgs/leas_login_logo.png' %}"
-        alt="Logo do Laboratório de Engenharia Ambiental e Sanitária LEAS"
-        classname="object-cover h-48 w-96">
-        <div>
-        <form method="POST">
-            {% csrf_token %}
-            {% for field in form %}
-                <div>
-                    {{field}}
+    <div class="container" id="container">
+        <!-- Formulário de Login -->
+        <div class="formContainer">
+            <img class="leas_logo" src="{% static 'imgs/leas_login_logo.png' %}" height="130" width="490"/>
+            <form method="POST">    
+                {% csrf_token %}
+                {% for field in form %}
+                    {{ field }}
+                {% endfor %}
+                <div class="btns">
+                    <button type="submit">ENTRAR</button>
+                    <a href="#">Esqueceu sua senha?</a>
                 </div>
-            {% endfor %}
-            <div>
-                <button type="submit">ENTRAR</button>
-                <a href="//"> Esqueceu a senha? </a>
-            </div>
-
+            </form>
         </div>
-        </form>
-        <div>
-            <h1>Olá, Usuário!</h1>
-            <h2>É seu primeiro acesso?</h2>
-            <p>Realize seu cadastro para ter acesso as informações do LEAS.</p>
-            <button>CADASTRE-SE AQUI</button>
+
+        <!-- Saudação e Cadastro -->
+        <div class="Greetings-Cadastro">
+            <div class="Cadastro-text">
+                <h1 class="greet">Olá, Usuário!</h1>
+                <h2>É seu primeiro acesso?</h2>
+                <p>Realize seu cadastro para ter acesso às informações do LEAS.</p>
+                <a href="{% url 'register' %}" class="btn_register" id="register">CADASTRE-SE AQUI</a>
+            </div>
         </div>
     </div>
 </body>
-
 </html>
