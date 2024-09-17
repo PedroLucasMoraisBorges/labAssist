@@ -3,9 +3,8 @@ from django.urls import reverse
 from django.views import View
 from django.utils import timezone
 import base64
-import threading
 from .tasks import *
-
+from .forms import *
 from .models import *
 from auth_user.models import *
 
@@ -14,6 +13,7 @@ from rest_framework.response import Response
 from rest_framework import status
 # Create your views here.
 from core.settings import HOST
+from GeralUtilits import *
 
 class Requests(View):
     def get(self, request):
@@ -58,7 +58,35 @@ class Requests(View):
 
 # MOVEMENT
 
+class CrateMovement(APIView):
+    def post(self, request):
+        movementForm = MovementForm(request.POST)
 
+        errors = getErrors([movementForm])
+
+        if movementForm.is_valid():
+            movement = movementForm.save(commit=False)
+            movement.fk_user = request.user
+            movement.dt_movement = timezone.now()
+
+            movement.save()
+
+            if movement.movement_type in ['R', 'T']:
+                if movement.fk_reagent.amount - movement.amount < 0:
+                    movement.delete()
+                    return Response({'error': 'O reagente não tem tantas unidades'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+            requestMovement = Request.objects.create(
+                dt_request = movement.dt_movement,
+                fk_movement = movement
+            )
+            requestMovement.save()
+
+            return Response({'message': 'Requisição aprovada com sucesso'}, status=status.HTTP_200_OK)
+        
+        return Response({'error': 'Formulário incorreto'}, status=status.HTTP_400_BAD_REQUEST)
+        
 class ApproveRequestMovement(APIView):
     def get(self, request):
         id = request.query_params.get('id', None)
@@ -74,9 +102,9 @@ class ApproveRequestMovement(APIView):
             reagent = movement.fk_reagent
 
             if movement.movement_type == 'A':
-                reagent.amount += movement.ammount
+                reagent.amount += movement.amount
             elif movement.movement_type in ['R', 'T']:
-                reagent.amount -= movement.ammount
+                reagent.amount -= movement.amount
             
             reagent.save()
             

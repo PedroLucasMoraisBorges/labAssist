@@ -81,12 +81,13 @@ TEMPLATES = [
             ],
             'libraries' : {
                 'reports_tags' : 'reports.custom_tags',
-                'reagent_tags' : 'reagents.custom_tags'
+                'reagent_tags' : 'reagents.custom_tags',
             },
         },
     },
 ]
 
+NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"
 WSGI_APPLICATION = 'core.wsgi.application'
 
 
