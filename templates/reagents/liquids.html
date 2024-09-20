@@ -1,0 +1,36 @@
+{% extends 'components/base.html' %}
+{% load static %}
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+
+{% for grupo in active_liquids %}
+    {% for letra, reagents in grupo.items %}
+        <h2>{{ letra }}</h2>
+        <ul>
+            {% for reagent in reagents %}
+                <li>{{ reagent.name }}</li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+{% endfor %}
+
+<hr>
+
+{% for grupo in passive_liquids %}
+    {% for letra, reagents in grupo.items %}
+        <h2>{{ letra }}</h2>
+        <ul>
+            {% for reagent in reagents %}
+                <li>{{ reagent.name }}</li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+{% endfor %}
+
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

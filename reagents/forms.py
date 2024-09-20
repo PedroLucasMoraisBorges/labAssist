@@ -57,10 +57,15 @@ class ReagentForm(forms.ModelForm):
         queryset=Reagent.objects.all(),
         widget= forms.SelectMultiple(),
     )
+
+    is_active = forms.BooleanField(
+        required=True,
+        label='É ativo?'
+    )
     
     class Meta():
         model = Reagent
-        fields = ['name', 'formula', 'classification', 'state', 'amount', 'validity', 'control', 'incompatibility', 'size', 'limit']
+        fields = ['name', 'formula', 'classification', 'state', 'amount', 'validity', 'control', 'incompatibility', 'size', 'limit', 'is_active']
 
     def save(self, commit=True):
         instance = super().save(commit=False)
