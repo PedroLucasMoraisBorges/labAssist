@@ -58,6 +58,28 @@ class Requests(View):
 
 # MOVEMENT
 
+class Movements(View):
+    def get(self, request):
+        movements = Movement.objects.all()
+        
+        add_movements = []
+        removed_movements = []
+
+        for movement in movements:
+            req = Request.objects.get(fk_movement = movement)
+            if req.approved == True and req.dt_response != None:
+                if movement.movement_type in ['R', 'T']:
+                    removed_movements.append(movement)
+                else:
+                    add_movements.append(movement)
+
+        context = {
+            'added_movements' : add_movements,
+            'removed_movements' : removed_movements
+        }
+
+        return render(request, 'reports/movements.html', context)
+
 class CrateMovement(APIView):
     def post(self, request):
         movementForm = MovementForm(request.POST)
