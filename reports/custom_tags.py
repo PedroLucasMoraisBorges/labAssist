@@ -3,6 +3,7 @@ from django.db.models import Q, F
 from reagents.models import Reagent
 from auth_user.models import *
 from .models import *
+from .forms import *
 
 # "lte" : significa "less than or equal", ou seja, menor ou igual
 # "lt"  : significa "less than", ou seja, menor.
@@ -23,5 +24,9 @@ def get_register_request(*args, **kwargs):
 
 @register.simple_tag
 def get_movement_request(*args, **kwargs):
-    requests = Request.objects.filter(appoove=False).order_by('dt_request')
+    requests = Request.objects.filter(approved=False).order_by('dt_request')
     return requests
+
+@register.simple_tag
+def get_movement_form(*args, **kwargs):
+    return MovementForm()

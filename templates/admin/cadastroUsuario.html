@@ -1,0 +1,41 @@
+{% extends 'components/base.html' %}
+
+{% block head %}
+    <title>Cadastro LEAS</title>
+    <!-- Link para o arquivo CSS externo -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <!-- Área à esquerda para o login -->
+        <div class="login-left">
+            <h2><strong><span class="ola-usuario">Olá, usuário!</span></strong><br>Bem-vindo de volta</h2>
+            <button class="login-btn">FAÇA SEU LOGIN</button>
+        </div>
+        <!-- Área à direita para o cadastro -->
+        <div class="login-right">
+            <img src="{% static 'imgs/logo-leas 3.jpg' %}" alt="Logo LEAS" class="logo">
+            <h2>Cadastro</h2>
+            <form action="#" method="POST" class="form-cadastro">
+                {% csrf_token %}
+                <!-- Campo de nome completo -->
+                <input type="text" name="nome" placeholder="Nome completo" required>
+                <!-- Campo de e-mail -->
+                <input type="email" name="email" placeholder="E-mail Institucional" required>
+                <!-- Campo de setor -->
+                <input type="text" name="setor" placeholder="Setor" required>
+                <!-- Campo de senha -->
+                <input type="password" name="senha" placeholder="Senha" required>
+                <!-- Campo de confirmação de senha -->
+                <input type="password" name="confirmar_senha" placeholder="Confirme sua senha" required>
+                <!-- Botão de cadastro -->
+                <button type="submit">CADASTRAR</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <!-- Inclua aqui seus scripts adicionais se necessário -->
+{% endblock %}

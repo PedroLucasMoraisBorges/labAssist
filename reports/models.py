@@ -17,7 +17,7 @@ typeMovementChoices = [
 class Movement(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     motivation = models.CharField(max_length=288)
-    ammount = models.IntegerField()
+    amount = models.IntegerField()
     movement_type = models.CharField(max_length=64, choices=typeMovementChoices)
     dt_movement = models.DateTimeField()
 
@@ -29,7 +29,7 @@ class Movement(models.Model):
 
 class Request(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    appoove = models.BooleanField(default=False)
+    approved = models.BooleanField(default=False)
     dt_request = models.DateTimeField()
     dt_response = models.DateTimeField(null=True, default=None, blank=True)
 
