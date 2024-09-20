@@ -6,6 +6,7 @@ from .forms import *
 from reports.models import *
 from django.db.models import Q
 from GeralUtilits import getErrors
+from .utilits import *
 
 # Create your views here.
 
@@ -15,12 +16,15 @@ class LandingPage(View):
 
 class HomeAdmin(View):
     def get(self, request):
-        geralVision = Reagent.objects.filter(~Q(formula=''))
+        liquids = Reagent.objects.filter(state='L')
+        solids = Reagent.objects.filter(state='S')
+
         recentMovement = Movement.objects.filter().order_by('dt_movement')
         inventoryBalance = Reagent.objects.filter().order_by('amount')
 
         context = {
-            'geralVision' : geralVision,
+            'solids' : agrupar_reagents_por_letra(ordenar_lista(solids)),
+            'liquids' : agrupar_reagents_por_letra(ordenar_lista(liquids)),
             'recentMovement' : recentMovement,
             'inventoryBalance' : inventoryBalance
         }
@@ -52,3 +56,25 @@ class RegisterReagent(View):
             }
 
             return render(request, 'reagents/register.html', context)
+
+class ViewLiquids(View):
+    def get(self, request):
+        passive_liquids = Reagent.objects.filter(state='L', is_active=False)
+        active_liquids = Reagent.objects.filter(state='L', is_active=True)
+
+        context = {
+            'active_liquids' : agrupar_reagents_por_letra(ordenar_lista(active_liquids)),
+            'passive_liquids' : agrupar_reagents_por_letra(ordenar_lista(passive_liquids))
+        }
+        return render(request, 'reagents/liquids.html', context)
+    
+class ViewSolids(View):
+    def get(self, request):
+        passive_solids = Reagent.objects.filter(state='L', is_active=False)
+        active_solids = Reagent.objects.filter(state='L', is_active=True)
+
+        context = {
+            'active_liquids' : agrupar_reagents_por_letra(ordenar_lista(active_solids)),
+            'passive_liquids' : agrupar_reagents_por_letra(ordenar_lista(passive_solids))
+        }
+        return render(request, 'reagents/liquids.html', context)
