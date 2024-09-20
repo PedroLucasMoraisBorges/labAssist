@@ -11,13 +11,13 @@ UserModel = get_user_model()
 class AuthenticationForm(forms.Form):
     username = forms.EmailField(
         label="Email", 
-        widget=forms.TextInput(attrs={"autofocus": True, 'placeholder': 'E-mail institucional'})
+        widget=forms.TextInput(attrs={"autofocus": True, 'placeholder': 'EMAIL'})
     )
     
     password = forms.CharField(
         label="Password",
         strip=False,
-        widget=forms.PasswordInput(attrs={"autocomplete": "current-password"}),
+        widget=forms.PasswordInput(attrs={"autocomplete": "current-password", 'placeholder': 'SENHA'}),
     )
 
     error_messages = {

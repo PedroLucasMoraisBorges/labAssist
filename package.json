@@ -1,5 +1,8 @@
 {
   "devDependencies": {
     "tailwindcss": "^3.4.10"
+  },
+  "dependencies": {
+    "@phosphor-icons/web": "^2.1.1"
   }
 }
