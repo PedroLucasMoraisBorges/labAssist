@@ -6,6 +6,13 @@
 
 {% block content %}
 
+<form>
+    <input type="text" name="search" placeholder="Busque por reagents">
+    <button type="submit">Button</button>
+</form>
+
+
+<h1>Ativos</h1>
 {% for grupo in active_liquids %}
     {% for letra, reagents in grupo.items %}
         <h2>{{ letra }}</h2>
@@ -19,6 +26,7 @@
 
 <hr>
 
+<h1>Passivos</h1>
 {% for grupo in passive_liquids %}
     {% for letra, reagents in grupo.items %}
         <h2>{{ letra }}</h2>

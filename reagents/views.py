@@ -15,7 +15,7 @@ class LandingPage(View):
         return render(request, 'landingPage.html')
 
 class HomeAdmin(View):
-    def get(self, request):
+    def get(self, request):            
         liquids = Reagent.objects.filter(state='L')
         solids = Reagent.objects.filter(state='S')
 
@@ -59,8 +59,10 @@ class RegisterReagent(View):
 
 class ViewLiquids(View):
     def get(self, request):
-        passive_liquids = Reagent.objects.filter(state='L', is_active=False)
-        active_liquids = Reagent.objects.filter(state='L', is_active=True)
+        search = request.GET.get('search', "")
+
+        passive_liquids = search_for_reagent(search, 'L')['passives']
+        active_liquids = search_for_reagent(search, 'L')['actives']
 
         context = {
             'active_liquids' : agrupar_reagents_por_letra(ordenar_lista(active_liquids)),
@@ -70,8 +72,10 @@ class ViewLiquids(View):
     
 class ViewSolids(View):
     def get(self, request):
-        passive_solids = Reagent.objects.filter(state='L', is_active=False)
-        active_solids = Reagent.objects.filter(state='L', is_active=True)
+        search = request.GET.get('search', "")
+
+        passive_solids = search_for_reagent(search, 'S')['passives']
+        active_solids = search_for_reagent(search, 'S')['actives']
 
         context = {
             'active_liquids' : agrupar_reagents_por_letra(ordenar_lista(active_solids)),
