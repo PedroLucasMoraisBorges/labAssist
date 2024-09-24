@@ -1,7 +1,26 @@
 import locale
 from django.db.models import QuerySet
 from collections import defaultdict
+from .models import Reagent
 import unicodedata
+from django.db.models import Q
+
+def search_for_reagent(search, state):
+    passives = Reagent.objects.filter(
+        (Q(name__startswith=search) | Q(classification__startswith=search) | Q(formula__startswith=search)) &
+        Q(state=state) &
+        Q(is_active=False)
+    )
+    actives = Reagent.objects.filter(
+        (Q(name__startswith=search) | Q(classification__startswith=search) | Q(formula__startswith=search)) &
+        Q(state=state) &
+        Q(is_active=True)
+    )
+
+    return {
+        'passives' : passives,
+        'actives' : actives
+    }
 
 def ordenar_lista(queryset: QuerySet):
     # Define a localidade para que os acentos sejam considerados corretamente
