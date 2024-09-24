@@ -75,3 +75,13 @@ class RegisterUser(View):
         }
 
         return render(request, 'authentication/registerUser.html', context)
+    
+class Users(View):
+    def get(self, request):
+        users = User.objects.filter()
+
+        context = {
+            'users' : users
+        }
+        
+        return render(request,'admin/usersPage.html', context)
