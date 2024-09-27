@@ -7,6 +7,10 @@ from GeralUtilits import *
 from .forms import *
 from .models import *
 
+from django.contrib.auth.decorators import login_required, permission_required
+from django.utils.decorators import method_decorator
+from .decorators import *
+
 # Create your views here.
 class Redirect(View):
     def get(self, request):
@@ -77,6 +81,8 @@ class RegisterUser(View):
         return render(request, 'authentication/registerUser.html', context)
     
 class Users(View):
+    @method_decorator(login_required)
+    @method_decorator(superuser_required)
     def get(self, request):
         users = User.objects.filter()
 
