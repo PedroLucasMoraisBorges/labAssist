@@ -15,7 +15,13 @@ from rest_framework import status
 from core.settings import HOST
 from GeralUtilits import *
 
+from django.contrib.auth.decorators import login_required, permission_required
+from django.utils.decorators import method_decorator
+from auth_user.decorators import *
+
 class Requests(View):
+    @method_decorator(login_required)
+    @method_decorator(superuser_required)
     def get(self, request):
         users = User.objects.filter(is_active = False)
         requests = Request.objects.filter(approved=False, dt_response=None)
@@ -59,6 +65,8 @@ class Requests(View):
 # MOVEMENT
 
 class Movements(View):
+    @method_decorator(login_required)
+    @method_decorator(superuser_required)
     def get(self, request):
         movements = Movement.objects.all()
         
@@ -81,6 +89,8 @@ class Movements(View):
         return render(request, 'reports/movements.html', context)
 
 class CrateMovement(APIView):
+    @method_decorator(login_required)
+    @method_decorator(permission_required('Reports.can_add_movement', login_url='/'))
     def post(self, request):
         movementForm = MovementForm(request.POST)
 
@@ -109,6 +119,8 @@ class CrateMovement(APIView):
         return Response({'error': 'Formulário incorreto'}, status=status.HTTP_400_BAD_REQUEST)
         
 class ApproveRequestMovement(APIView):
+    @method_decorator(login_required)
+    @method_decorator(superuser_required)
     def get(self, request):
         id = request.query_params.get('id', None)
         
@@ -134,6 +146,8 @@ class ApproveRequestMovement(APIView):
         return Response({'error': 'ID não fornecido'}, status=status.HTTP_400_BAD_REQUEST)
     
 class DesapproveRequestMovement(APIView):
+    @method_decorator(login_required)
+    @method_decorator(superuser_required)
     def get(self, request):
         id = request.query_params.get('id', None)
         
@@ -148,9 +162,9 @@ class DesapproveRequestMovement(APIView):
     
 
 # USER
-
-
 class ApproveUser(APIView):
+    @method_decorator(login_required)
+    @method_decorator(superuser_required)
     def get(self, request):
         codifiquedId = request.query_params.get('id', None)
 
@@ -168,6 +182,8 @@ class ApproveUser(APIView):
         return Response({'error': 'ID não fornecido'}, status=status.HTTP_400_BAD_REQUEST)
 
 class DisapproveUser(APIView):
+    @method_decorator(login_required)
+    @method_decorator(superuser_required)
     def get(self, request):
         codifiquedId = request.query_params.get('id', None)
 

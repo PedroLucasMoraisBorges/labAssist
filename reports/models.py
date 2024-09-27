@@ -29,6 +29,11 @@ class Movement(models.Model):
         month = str(self.dt_movement.month)
         day = str(self.dt_movement.day)
         return self.fk_reagent.name + ' ' + self.movement_type + ' '+ day + '/' + month + '/' + year
+    
+    class Meta:
+        permissions = [
+            ("can_add_movement", "Criar Movimentação")
+        ]
 
 class Request(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
