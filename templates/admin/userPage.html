@@ -1,0 +1,26 @@
+{% extends 'components/base.html' %}
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+{{userInfo.name}}
+
+
+<div>
+    {% for perm in userInfo.user_permissions.all %}
+        <p>{{perm.name}}</p>
+    {% endfor %}
+</div>
+<hr>
+<form method="post">
+    {% csrf_token %}
+    {{form.user_permissions.label_tag}}
+    {{form.user_permissions}}
+
+    <button type="submit">Salvar</button>
+</form>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

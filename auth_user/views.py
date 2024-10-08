@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.contrib.auth import login, logout
 from django.views import View
 from django.contrib.auth.forms import PasswordChangeForm
@@ -90,4 +91,27 @@ class Users(View):
             'users' : users
         }
         
-        return render(request,'admin/usersPage.html', context)
+        
+
+class UserPermissions(View):
+    @method_decorator(login_required)
+    @method_decorator(superuser_required)
+    def get(self, request, id):
+        user = User.objects.get(id=id)
+        form = PermissionForm(instance=user)
+
+        context = {
+            'userInfo' : user,
+            'form' : form,
+        }
+
+        return render(request, 'admin/userPage.html', context)
+    
+    def post(self, request, id):
+        user = User.objects.get(id=id)
+        form = PermissionForm(request.POST, instance=user)
+
+        if form.is_valid():
+            form.save()
+            url = reverse('user_page', kwargs={'id': id})
+            return redirect(url)
