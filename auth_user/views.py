@@ -26,6 +26,9 @@ class Redirect(View):
 
 class Login(View):
     def get(self, request):
+        if request.user.is_authenticated:
+            return redirect('')
+        
         form = AuthenticationForm()
 
         context = {
@@ -55,6 +58,9 @@ class Login(View):
     
 class RegisterUser(View):
     def get(self, request):
+        if request.user.is_authenticated:
+            return redirect('')
+        
         registerForm = CustomUserCreationForm()
 
         context = {
@@ -90,10 +96,12 @@ class Users(View):
         context = {
             'users' : users
         }
+
+        return render(request, 'admin/usersPage.html', context)
         
         
 
-class UserPermissions(View):
+class UserPage(View):
     @method_decorator(login_required)
     @method_decorator(superuser_required)
     def get(self, request, id):
