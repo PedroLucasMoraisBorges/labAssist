@@ -17,7 +17,7 @@ class Redirect(View):
     def get(self, request):
         user = request.user
         if user.is_authenticated:
-            if user.is_staff:
+            if user.is_staff or user.is_superuser:
                 return redirect('home_admin')
             else:
                 return redirect('home')
