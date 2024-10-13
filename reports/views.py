@@ -175,7 +175,7 @@ class ApproveUser(APIView):
 
             if user:
                 user.save()
-                return send_activation_email(user)  
+                return send_liberation_user_email(user)  
                       
             return Response({'error': 'User não encontrado'}, status=status.HTTP_400_BAD_REQUEST)
             
@@ -192,7 +192,7 @@ class DisapproveUser(APIView):
             user = User.objects.get(id=decoded_id)
 
             if user:
-                return send_cancellation_email(user)
+                return send_cancellation_user_email(user)
                       
             return Response({'error': 'User não encontrado'}, status=status.HTTP_400_BAD_REQUEST)
             
