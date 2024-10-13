@@ -16,6 +16,7 @@ from auth_user.forms import *
 
 
 class LandingPage(View):
+    @method_decorator(logged_out_required)
     def get(self, request):
         return render(request, 'landingPage.html')
 
