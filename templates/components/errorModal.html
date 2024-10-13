@@ -17,15 +17,11 @@
                 <h3 class="modal-h3 pt-8 text-3xl font-semibold text-gray-900 dark:text-white">
                     ERROR REQUEST!
                 </h3>
-                <p class="text-base p-1 leading-relaxed text-black">
-                    Ocorreu algum erro na sua ação
-                </p>
-            </div>
-            <!-- Modal footer -->
-            <div class="flex flex-col items-center pr-4 pb-12 pl-4 pt-1 rounded-b dark:border-gray-600">
-                <button data-modal-hide="static-modal" type="button"
-                    class="shadow text-black bg-white hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-28 py-2.5 text-center">
-                    CONTATE O SUPORTE</button>
+                {% for error in errors %}
+                    <p class="text-base p-1 leading-relaxed text-black">
+                        {{error}}
+                    </p>
+                {% endfor %}
             </div>
         </div>
     </div>

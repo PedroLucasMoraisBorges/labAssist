@@ -25,6 +25,7 @@ class Redirect(View):
             return redirect('landing_page')
 
 class Login(View):
+    @method_decorator(logged_out_required)
     def get(self, request):
         if request.user.is_authenticated:
             return redirect('')
@@ -57,6 +58,7 @@ class Login(View):
         return render(request, 'authentication/login.html', context)
     
 class RegisterUser(View):
+    @method_decorator(logged_out_required)
     def get(self, request):
         if request.user.is_authenticated:
             return redirect('')
@@ -69,6 +71,7 @@ class RegisterUser(View):
 
         return render(request, 'authentication/registerUser.html', context)
     
+    @method_decorator(logged_out_required)
     def post(self, request):
         registerForm = CustomUserCreationForm(request.POST)
 
@@ -97,9 +100,7 @@ class Users(View):
             'users' : users
         }
 
-        return render(request, 'admin/usersPage.html', context)
-        
-        
+        return render(request, 'admin/usersPage.html', context)      
 
 class UserPage(View):
     @method_decorator(login_required)

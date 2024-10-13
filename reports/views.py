@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.views import View
 from django.utils import timezone
@@ -159,9 +159,44 @@ class DesapproveRequestMovement(APIView):
             return Response({'message': 'Requisição aprovada com sucesso'}, status=status.HTTP_200_OK)
         
         return Response({'error': 'ID não fornecido'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+# LICENSE
+
+class RegisterLicense(View):
+    @method_decorator(login_required)
+    @method_decorator(superuser_required)
+    def get(self, request):
+        form = LicenseForm()
+
+        context = {
+            'form' : form
+        }
+
+        return render(request, 'reports/registerLicense.html', context)
     
+    @method_decorator(login_required)
+    @method_decorator(superuser_required)
+    def post(self, request):
+        form = LicenseForm(request.POST, request.FILES)
+        errors = getErrors([form])
+
+        if form.is_valid():
+            license_instance = form.save(commit=False)
+            license_instance.dt_register = date.today()
+            license_instance.save()
+
+            return redirect('/')
+        
+        context = {
+            'form' : form,
+            'errors' : errors
+        }
+
+        return render(request, 'reports/registerLicense.html', context)
 
 # USER
+
 class ApproveUser(APIView):
     @method_decorator(login_required)
     @method_decorator(superuser_required)

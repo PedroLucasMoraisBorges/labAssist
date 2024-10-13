@@ -32,3 +32,14 @@ class MovementForm(forms.ModelForm):
     class Meta:
         model=Movement
         fields=['motivation', 'amount', 'movement_type', 'fk_reagent']
+
+class LicenseForm(forms.ModelForm):
+    pdf = forms.FileField(
+        label='Licensa',
+        required=True,
+        widget=forms.FileInput(attrs={'accept' : '.pdf'})
+    )
+
+    class Meta:
+        model=License
+        fields=['pdf']
