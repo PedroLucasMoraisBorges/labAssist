@@ -1,4 +1,7 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required, permission_required
+from django.utils.decorators import method_decorator
+
 from django.views import View
 
 from .models import *
@@ -6,7 +9,10 @@ from .forms import *
 from reports.models import *
 from django.db.models import Q
 from GeralUtilits import getErrors
+from .utilits import *
 
+from auth_user.decorators import *
+from auth_user.forms import *
 # Create your views here.
 
 class LandingPage(View):
@@ -14,20 +20,27 @@ class LandingPage(View):
         return render(request, 'landingPage.html')
 
 class HomeAdmin(View):
-    def get(self, request):
-        geralVision = Reagent.objects.filter(~Q(formula=''))
+    @method_decorator(login_required)
+    @method_decorator(superuser_required)
+    def get(self, request):     
+        liquids = Reagent.objects.filter(state='L')
+        solids = Reagent.objects.filter(state='S')
+
         recentMovement = Movement.objects.filter().order_by('dt_movement')
         inventoryBalance = Reagent.objects.filter().order_by('amount')
 
         context = {
-            'geralVision' : geralVision,
+            'solids' : agrupar_reagents_por_letra(ordenar_lista(solids)),
+            'liquids' : agrupar_reagents_por_letra(ordenar_lista(liquids)),
             'recentMovement' : recentMovement,
-            'inventoryBalance' : inventoryBalance
+            'inventoryBalance' : inventoryBalance,
         }
         
         return render(request, 'admin/homeAdmin.html', context)
 
 class RegisterReagent(View):
+    @method_decorator(login_required)
+    @method_decorator(permission_required('reagents.can_add_reagent', login_url='/'))
     def get(self, request):
         reagentForm = ReagentForm()
 
@@ -52,3 +65,33 @@ class RegisterReagent(View):
             }
 
             return render(request, 'reagents/register.html', context)
+
+class ViewLiquids(View):
+    @method_decorator(login_required)
+    @method_decorator(permission_required('reagents.can_view_reagent', login_url='/'))
+    def get(self, request):
+        search = request.GET.get('search', "")
+
+        passive_liquids = search_for_reagent(search, 'L')['passives']
+        active_liquids = search_for_reagent(search, 'L')['actives']
+
+        context = {
+            'active_liquids' : agrupar_reagents_por_letra(ordenar_lista(active_liquids)),
+            'passive_liquids' : agrupar_reagents_por_letra(ordenar_lista(passive_liquids))
+        }
+        return render(request, 'reagents/liquids.html', context)
+    
+class ViewSolids(View):
+    @method_decorator(login_required)
+    @method_decorator(permission_required('reagents.can_view_reagent', login_url='/'))
+    def get(self, request):
+        search = request.GET.get('search', "")
+
+        passive_solids = search_for_reagent(search, 'S')['passives']
+        active_solids = search_for_reagent(search, 'S')['actives']
+
+        context = {
+            'active_liquids' : agrupar_reagents_por_letra(ordenar_lista(active_solids)),
+            'passive_liquids' : agrupar_reagents_por_letra(ordenar_lista(passive_solids))
+        }
+        return render(request, 'reagents/liquids.html', context)

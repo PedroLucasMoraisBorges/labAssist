@@ -1,0 +1,42 @@
+{% extends 'components/base.html' %}
+{% load static %}
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+<div>
+    <h1>Produtos adicionados</h1>
+    {% for movement in added_movements %}
+        <p>{{movement.fk_user}}</p>
+        <p>{{movement.fk_user.sector}}</p>
+        <p>{{movement.fk_reagent.name}}</p>
+        <p>{{movement.fk_reagent.formula}}</p>
+        <p>{{movement.fk_reagent.classification}}</p>
+        <p>{{movement.fk_reagent.amount}}</p>
+        <p>{{movement.fk_reagent.size}}</p>
+        <p>{{movement.dt_movement.date}}</p>
+        <p>{{movement.motivation}}</p>
+        <hr>
+    {% endfor %}
+</div>
+
+<div></div>
+    <h1>Produtos removidos</h1>
+    {% for movement in removed_movements %}
+        <p>{{movement.fk_user}}</p>
+        <p>{{movement.fk_user.sector}}</p>
+        <p>{{movement.fk_reagent.name}}</p>
+        <p>{{movement.fk_reagent.formula}}</p>
+        <p>{{movement.fk_reagent.classification}}</p>
+        <p>{{movement.fk_reagent.amount}}</p>
+        <p>{{movement.fk_reagent.size}}</p>
+        <p>{{movement.dt_movement.date}}</p>
+        <p>{{movement.motivation}}</p>
+        <hr>
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

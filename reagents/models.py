@@ -26,6 +26,15 @@ class Reagent(models.Model):
     control = models.CharField(max_length=144, choices=controlChoices)
     state = models.CharField(max_length=64, choices=statesChoices)
     opening_date = models.DateField(null=True)
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name
+    
+    class Meta:
+        permissions = [
+            ("can_add_reagent", "Can add reagent"),
+            ("can_change_reagent", "Can change reagent"),
+            ("can_delete_reagent", "Can delete reagent"),
+            ("can_view_reagent", "Can view reagent"),
+        ]

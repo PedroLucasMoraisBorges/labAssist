@@ -15,7 +15,13 @@ from rest_framework import status
 from core.settings import HOST
 from GeralUtilits import *
 
+from django.contrib.auth.decorators import login_required, permission_required
+from django.utils.decorators import method_decorator
+from auth_user.decorators import *
+
 class Requests(View):
+    @method_decorator(login_required)
+    @method_decorator(superuser_required)
     def get(self, request):
         users = User.objects.filter(is_active = False)
         requests = Request.objects.filter(approved=False, dt_response=None)
@@ -58,7 +64,33 @@ class Requests(View):
 
 # MOVEMENT
 
+class Movements(View):
+    @method_decorator(login_required)
+    @method_decorator(superuser_required)
+    def get(self, request):
+        movements = Movement.objects.all()
+        
+        add_movements = []
+        removed_movements = []
+
+        for movement in movements:
+            req = Request.objects.get(fk_movement = movement)
+            if req.approved == True and req.dt_response != None:
+                if movement.movement_type in ['R', 'T']:
+                    removed_movements.append(movement)
+                else:
+                    add_movements.append(movement)
+
+        context = {
+            'added_movements' : add_movements,
+            'removed_movements' : removed_movements
+        }
+
+        return render(request, 'reports/movements.html', context)
+
 class CrateMovement(APIView):
+    @method_decorator(login_required)
+    @method_decorator(permission_required('Reports.can_add_movement', login_url='/'))
     def post(self, request):
         movementForm = MovementForm(request.POST)
 
@@ -75,19 +107,20 @@ class CrateMovement(APIView):
                 if movement.fk_reagent.amount - movement.amount < 0:
                     movement.delete()
                     return Response({'error': 'O reagente não tem tantas unidades'}, status=status.HTTP_400_BAD_REQUEST)
-
-
+                
             requestMovement = Request.objects.create(
                 dt_request = movement.dt_movement,
                 fk_movement = movement
             )
             requestMovement.save()
-
-            return Response({'message': 'Requisição aprovada com sucesso'}, status=status.HTTP_200_OK)
+            
+            return send_request_movement(requestMovement)
         
         return Response({'error': 'Formulário incorreto'}, status=status.HTTP_400_BAD_REQUEST)
         
 class ApproveRequestMovement(APIView):
+    @method_decorator(login_required)
+    @method_decorator(superuser_required)
     def get(self, request):
         id = request.query_params.get('id', None)
         
@@ -113,6 +146,8 @@ class ApproveRequestMovement(APIView):
         return Response({'error': 'ID não fornecido'}, status=status.HTTP_400_BAD_REQUEST)
     
 class DesapproveRequestMovement(APIView):
+    @method_decorator(login_required)
+    @method_decorator(superuser_required)
     def get(self, request):
         id = request.query_params.get('id', None)
         
@@ -127,9 +162,9 @@ class DesapproveRequestMovement(APIView):
     
 
 # USER
-
-
 class ApproveUser(APIView):
+    @method_decorator(login_required)
+    @method_decorator(superuser_required)
     def get(self, request):
         codifiquedId = request.query_params.get('id', None)
 
@@ -147,6 +182,8 @@ class ApproveUser(APIView):
         return Response({'error': 'ID não fornecido'}, status=status.HTTP_400_BAD_REQUEST)
 
 class DisapproveUser(APIView):
+    @method_decorator(login_required)
+    @method_decorator(superuser_required)
     def get(self, request):
         codifiquedId = request.query_params.get('id', None)
 

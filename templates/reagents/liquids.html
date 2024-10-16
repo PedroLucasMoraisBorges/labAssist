@@ -1,0 +1,46 @@
+{% extends 'components/base.html' %}
+{% load static %}
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+
+<form>
+    <input type="text" name="search" placeholder="Busque por reagents">
+    <button type="submit">Button</button>
+</form>
+
+
+<h1>Ativos</h1>
+{% for grupo in active_liquids %}
+    {% for letra, reagents in grupo.items %}
+        <div class="{{letra}} none">
+            <h2>{{ letra }}</h2>
+            <ul>
+                {% for reagent in reagents %}
+                    <li>{{ reagent.name }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endfor %}
+{% endfor %}
+
+<hr>
+
+<h1>Passivos</h1>
+{% for grupo in passive_liquids %}
+    {% for letra, reagents in grupo.items %}
+        <h2>{{ letra }}</h2>
+        <ul>
+            {% for reagent in reagents %}
+                <li>{{ reagent.name }}</li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+{% endfor %}
+
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

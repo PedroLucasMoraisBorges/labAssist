@@ -7,16 +7,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/landingPage.css'%}">
     <title>Instituto Federal - LEAS</title>
+        <!-- Link Swiper's CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 </head>
 <body>
     <!-- headerzinho padrão  -->
     <div class="header">
         <img src="{% static 'imgs/header_IF_logo2.png' %}" height="50" width="200">
         <div class="interactive-header">
-            <a class="header-btn active" href="#">Bem-vindo</a>
-            <a class="header-btn" href="#">Sobre nós</a>
-            <a class="header-btn" href="#">Estoque</a>
-            <a class="header-btn" href="#">Contato</a>
+            <a class="header-btn" href="#boas-vindas">Bem-vindo</a>
+            <a class="header-btn" href="#sobre nós">Sobre nós</a>
+            <a class="header-btn" href="#estoque">Estoque</a>
+            <a class="header-btn" href="#contato">Contato</a>
             <button class="login">LOGIN</button>
             <button class="register">CADASTRAR</button>
         </div>
@@ -39,9 +41,27 @@
     o que exatamente vai estar aqui. -->
 
     <section id="sobre nós">
-        <div class="carroceu">
-            <img src="{% static 'imgs/placeholder.png' %}" height="300" width="900">
-        </div>
+
+        <main class="carousel-container">
+            <div class="carousel">
+            <div class="item active">
+                <img src="{% static 'imgs/slider/placeholder.png' %}" alt="Image 1" />
+            </div>
+            <div class="item">
+                <img src="{% static 'imgs/slider/placeholder2.png' %}" alt="Image 2" />
+            </div>
+            <div class="item">
+            <img src="{% static 'imgs/slider/placeholder3.png' %}" alt="Image 3" />
+            </div>
+            </div>
+            <button class="btn prev"> 
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H6M12 5l-7 7 7 7"/></svg> 
+            </button>
+            <button class="btn next">  
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M12 5l7 7-7 7"/></svg>
+            </button>
+            <div class="dots"></div>
+        </main>
     </section>
     <!-- Apresentação do LEAS para o usuário -->
 
@@ -143,5 +163,122 @@
     });
 });
 
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+let carousel = document.querySelector(".carousel");
+let items = carousel.querySelectorAll(".item");
+let dotsContainer = document.querySelector(".dots");
+
+  // Insert dots into the DOM
+items.forEach((_, index) => {
+    let dot = document.createElement("span");
+    dot.classList.add("dot");
+    if (index === 0) dot.classList.add("active");
+    dot.dataset.index = index;
+    dotsContainer.appendChild(dot);
+});
+
+let dots = document.querySelectorAll(".dot");
+
+  // Function to show a specific item
+function showItem(index) {
+    items.forEach((item, idx) => {
+    item.classList.remove("active");
+    dots[idx].classList.remove("active");
+    if (idx === index) {
+        item.classList.add("active");
+        dots[idx].classList.add("active");
+    }
+    });
+}
+
+  // Event listeners for buttons
+document.querySelector(".prev").addEventListener("click", () => {
+    let index = [...items].findIndex((item) =>
+    item.classList.contains("active")
+    );
+    showItem((index - 1 + items.length) % items.length);
+});
+
+document.querySelector(".next").addEventListener("click", () => {
+    let index = [...items].findIndex((item) =>
+    item.classList.contains("active")
+    );
+    showItem((index + 1) % items.length);
+});
+
+  // Event listeners for dots
+dots.forEach((dot) => {
+    dot.addEventListener("click", () => {
+    let index = parseInt(dot.dataset.index);
+    showItem(index);
+    });
+});
+});
+
+</script>
+
+
+<script> configObj = {"buttonD":"M8 18.568L10.8 21.333 16 16.198 21.2 21.333 24 18.568 16 10.667z",
+"buttonT":"translate(-1148 -172) translate(832 140) translate(32 32) translate(284)",
+"shadowSize":"0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
+"roundnessSize":"999px",
+"buttonDToBottom":"40px",
+"buttonDToRight":"40px",
+"selectedBackgroundColor":"#19882c",
+"selectedIconColor":"#ffffff",
+"buttonWidth":"48px",
+"buttonHeight":"48px",
+"svgWidth":"40px",
+"svgHeight":"40px"};
+
+function createButton(obj, pageSimulator) {   
+    const body = document.querySelector("body");    
+    backToTopButton = document.createElement("span");    
+    backToTopButton.classList.add("softr-back-to-top-button");    
+    backToTopButton.id = "softr-back-to-top-button";    
+    pageSimulator      ? pageSimulator.appendChild(backToTopButton)      : body.appendChild(backToTopButton);    
+    backToTopButton.style.width = obj.buttonWidth;    
+    backToTopButton.style.height = obj.buttonHeight;   
+    backToTopButton.style.marginRight = obj.buttonDToRight;    
+    backToTopButton.style.marginBottom = obj.buttonDToBottom;    
+    backToTopButton.style.borderRadius = obj.roundnessSize;    
+    backToTopButton.style.boxShadow = obj.shadowSize;    
+    backToTopButton.style.color = obj.selectedBackgroundColor;    
+    backToTopButton.style.backgroundColor = obj.selectedBackgroundColor;    
+    pageSimulator ? backToTopButton.style.position = "absolute" : backToTopButton.style.position = "fixed";    
+    backToTopButton.style.outline = "none";    
+    backToTopButton.style.bottom = "0px";    
+    backToTopButton.style.right = "0px";    
+    backToTopButton.style.cursor = "pointer";    
+    backToTopButton.style.textAlign = "center";    
+    backToTopButton.style.border = "solid 2px currentColor";    
+    backToTopButton.innerHTML =      '<svg class="back-to-top-button-svg" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" > <g fill="none" fill-rule="evenodd"> <path d="M0 0H32V32H0z" transform="translate(-1028 -172) translate(832 140) translate(32 32) translate(164) matrix(1 0 0 -1 0 32)" /> <path class="back-to-top-button-img" fill-rule="nonzero" d="M11.384 13.333h9.232c.638 0 .958.68.505 1.079l-4.613 4.07c-.28.246-.736.246-1.016 0l-4.613-4.07c-.453-.399-.133-1.079.505-1.079z" transform="translate(-1028 -172) translate(832 140) translate(32 32) translate(164) matrix(1 0 0 -1 0 32)" /> </g> </svg>';    
+    backToTopButtonSvg = document.querySelector(".back-to-top-button-svg");    
+    backToTopButtonSvg.style.verticalAlign = "middle";    
+    backToTopButtonSvg.style.margin = "auto";    
+    backToTopButtonSvg.style.justifyContent = "center";   
+    backToTopButtonSvg.style.width = obj.svgWidth;    
+    backToTopButtonSvg.style.height = obj.svgHeight;    
+    backToTopButton.appendChild(backToTopButtonSvg);    
+    backToTopButtonImg = document.querySelector(".back-to-top-button-img");    
+    backToTopButtonImg.style.fill = obj.selectedIconColor;    
+    backToTopButtonSvg.appendChild(backToTopButtonImg);    
+    backToTopButtonImg.setAttribute("d", obj.buttonD);    
+    backToTopButtonImg.setAttribute("transform", obj.buttonT);        
+    if(!pageSimulator) {      backToTopButton.style.display = "none";      
+    window.onscroll = function() {        
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {          
+            backToTopButton.style.display = "block";        } 
+            else {          backToTopButton.style.display = "none";        }      };        
+            backToTopButton.onclick = function() {        
+                document.body.scrollTop = 0;        
+                document.documentElement.scrollTop = 0;      };
+                    }  };
+                    document.addEventListener("DOMContentLoaded", function() { 
+                        createButton(configObj, null); });
+                        
 </script>
 </html>

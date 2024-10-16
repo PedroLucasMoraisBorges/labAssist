@@ -14,7 +14,7 @@ html {
 }
 
 body {
-    margin-top: 100px; /* Ajuste conforme a altura do seu header */
+    margin-top: 100px;
 }
 
 /* Customização do Header da página */
@@ -25,11 +25,11 @@ body {
     padding-block: 20px;
     justify-content: space-between;
     align-items: center;
-    position: fixed; /* Torna o header fixo */
-    top: 0; /* Fixa o header no topo */
+    position: fixed;
+    top: 0;
     left: 0;
-    width: 100%; /* Faz com que o header ocupe toda a largura da tela */
-    z-index: 1000; /* Garante que o header fique acima de outros elementos */
+    width: 100%;
+    z-index: 1000; 
 }
 
 .interactive-header{
@@ -129,12 +129,118 @@ body {
     margin-bottom: 20px;
 }
 
-.carroceu{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-block: 50px;
+/* Customização do Slider/Carrocel da página */
+.slider-container{
+    width: 80%;
+    height: 80vh;
+    margin: auto;
+    position: relative;
 }
+
+/* .slider-container .images {
+    display: none;
+} */
+.carousel-container {
+    width: 80%;
+    margin: auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Diminui o espaço entre os elementos da galeria */
+    align-items: center;
+    margin-top: -150px;
+
+    .carousel {
+        aspect-ratio: 16/9;
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .item {
+            opacity: 0;
+            width: 900px;
+            height: 300px;
+            display: none;
+            transition: opacity 0.5s ease-in-out;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: center;
+            }
+            &.active {
+                opacity: 1;
+                display: block;
+            }
+        }
+    }
+
+    .btn {
+        padding: 1em;
+        position: absolute;
+        transform: translateY(-50%);
+        top: 50%;
+        outline: none;
+        border: none;
+        cursor: pointer;
+        text-transform: uppercase;
+        font-size: 12px;
+        font-weight: 900;
+        color: white;
+        background-color: #19882C;
+        transition: transform 0.5s ease-in-out;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35); 
+        border-radius: 100px;
+
+        &:active,
+        &:focus {
+            transform: translateY(-50%) scale(0.9);
+        }
+
+        &:hover {
+            transform: translateY(-50%) scale(0.96);
+            color: #A5FEB4;
+            box-shadow: none;
+        }
+    }
+
+    .prev {
+        left: 5%; 
+    }
+
+    .next {
+        right: 5%;
+    }
+
+    .dots {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-top: -100px;
+        margin-bottom: 50px;
+
+        .dot {
+            cursor: pointer;
+            height: 10px;
+            width: 10px;
+            background-color: #878787;
+            transition: background-color 0.2s ease;
+            border-radius: 130px;
+
+            &.active,
+            &:hover {
+                background-color: #19882C;
+            }
+        }
+    }
+}
+
+
 
 /* Customização da apresentação do LEAS para o usuário */
 .presentation {
