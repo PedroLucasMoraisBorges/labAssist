@@ -1,12 +1,284 @@
 {% load reagent_tags %}
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/landingPage.css'%}">
+    <title>Instituto Federal - LEAS</title>
+        <!-- Link Swiper's CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 </head>
 <body>
-    <h1>Landing Page</h1>
+    <!-- headerzinho padrão  -->
+    <div class="header">
+        <img src="{% static 'imgs/header_IF_logo2.png' %}" height="50" width="200">
+        <div class="interactive-header">
+            <a class="header-btn" href="#boas-vindas">Bem-vindo</a>
+            <a class="header-btn" href="#sobre nós">Sobre nós</a>
+            <a class="header-btn" href="#estoque">Estoque</a>
+            <a class="header-btn" href="#contato">Contato</a>
+            <button class="login">LOGIN</button>
+            <button class="register">CADASTRAR</button>
+        </div>
+    </div>
+
+    <!-- Herozinho padrão tbm -->
+
+    <section id="boas-vindas">
+        <div class="hero">
+            <h1>Bem-vindo ao LEAS</h1>
+            <h2>Laboratório de engenharia ambiental e sanitária</h2>
+
+            <div class="btns-hero">
+                <button class="hero-login">FAZER LOGIN NO SISTEMA</button>
+                <button class="hero-register">VISUALIZAR ESTOQUE</button>
+            </div>
+        </div>
+    </section>
+    <!-- Aqui o carroceu ainda não foi implementado completamente implementado, tem que saber
+    o que exatamente vai estar aqui. -->
+
+    <section id="sobre nós">
+
+        <main class="carousel-container">
+            <div class="carousel">
+            <div class="item active">
+                <img src="{% static 'imgs/slider/placeholder.png' %}" alt="Image 1" />
+            </div>
+            <div class="item">
+                <img src="{% static 'imgs/slider/placeholder2.png' %}" alt="Image 2" />
+            </div>
+            <div class="item">
+            <img src="{% static 'imgs/slider/placeholder3.png' %}" alt="Image 3" />
+            </div>
+            </div>
+            <button class="btn prev"> 
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H6M12 5l-7 7 7 7"/></svg> 
+            </button>
+            <button class="btn next">  
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M12 5l7 7-7 7"/></svg>
+            </button>
+            <div class="dots"></div>
+        </main>
+    </section>
+    <!-- Apresentação do LEAS para o usuário -->
+
+    <section id="estoque">
+        <div class="presentation">
+            <div class="presentation-text">        
+                <h2>Conheça o nosso estoque</h2>
+                <h3>Laboratório de engenharia ambiental e sanitária</h3>
+                <p class="pText1">Este sistema tem o intuito de facilitar o acesso ao laboratório do LEAS. Dessa forma, estarão listados aqui itens do estoque e todos os reagentes que utilizamos.</p>
+                <p class="pText2">Excepteur efficient emerging, minim veniam anim aute carefully curated Ginza conversation exquisite perfect nostrud nisi intricate Content. Qui  international first-class nulla ut. Punctual adipisicing, essential lovely queen tempor eiusmod irure. Exclusive izakaya charming Scandinavian impeccable aute quality of life soft power pariatur Melbourne occaecat discerning. Qui wardrobe aliquip, et Porter destination Toto remarkable officia Helsinki excepteur Basset hound. Zürich sleepy perfect consectetur.</p>
+                <a href="#">ACESSAR O ESTOQUE</a>
+            </div>
+            <img src="{% static 'imgs/pics/testTube.png' %}" height="400" width="600">
+        </div>
+    </section>
+
+    <div class="imgs">
+        <div class="img1">
+            <img src="{% static 'imgs/placeholder.png' %}" height="150" width="150">
+            <h2>TÍTULO</h2>
+        </div>
+        <div class="img2">
+            <img src="{% static 'imgs/placeholder.png' %}" height="150" width="150">
+            <h2>TÍTULO</h2>
+        </div>
+        <div class="img3">
+            <img src="{% static 'imgs/placeholder.png' %}" height="150" width="150">
+            <h2>TÍTULO</h2>
+        </div>
+        <div class="img4">
+            <img src="{% static 'imgs/placeholder.png' %}" height="150" width="150">
+            <h2>TÍTULO</h2>
+        </div>
+    </div>
+
+    <section id="contato">
+        <div class="questions">
+            <img src="{% static 'imgs/scientist1.png' %}" height="400" width="400">
+            <div class="text-questions">
+                <h2> Possui alguma dúvida? Entre em contato conosco</h2>
+                <button>ENVIE UMA MENSSAGEM</button>
+            </div>
+        </div>
+    </section>
+
+    <div class="footer">
+            <div class="infoFooter">
+            <div class="ifceinfo">
+                <img src="{% static 'imgs/IF_logo.png' %}" height="120" width="80">
+                <div class="IFCE_instagram">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="#000"><path d="M16.98 0a6.9 6.9 0 0 1 5.08 1.98A6.94 6.94 0 0 1 24 7.02v9.96c0 2.08-.68 3.87-1.98 5.13A7.14 7.14 0 0 1 16.94 24H7.06a7.06 7.06 0 0 1-5.03-1.89A6.96 6.96 0 0 1 0 16.94V7.02C0 2.8 2.8 0 7.02 0h9.96zm.05 2.23H7.06c-1.45 0-2.7.43-3.53 1.25a4.82 4.82 0 0 0-1.3 3.54v9.92c0 1.5.43 2.7 1.3 3.58a5 5 0 0 0 3.53 1.25h9.88a5 5 0 0 0 3.53-1.25 4.73 4.73 0 0 0 1.4-3.54V7.02a5 5 0 0 0-1.3-3.49 4.82 4.82 0 0 0-3.54-1.3zM12 5.76c3.39 0 6.2 2.8 6.2 6.2a6.2 6.2 0 0 1-12.4 0 6.2 6.2 0 0 1 6.2-6.2zm0 2.22a3.99 3.99 0 0 0-3.97 3.97A3.99 3.99 0 0 0 12 15.92a3.99 3.99 0 0 0 3.97-3.97A3.99 3.99 0 0 0 12 7.98zm6.44-3.77a1.4 1.4 0 1 1 0 2.8 1.4 1.4 0 0 1 0-2.8z"/></svg>
+                    <a class="link-instagram" href="https://www.instagram.com/ifcejuazeiro/">@ifcejuazeiro</a>
+                </div>
+            </div>
+
+            <div class="liquids">
+                <h3>Liquidos</h3>
+                <a href="#"> Ativos Líquidos </a>
+                <a href="#"> Passivos Líquidos </a>
+                <a href="#"> Soluções </a>
+                <a href="#"> Reagentes </a>
+                <a href="#"> Itens Líquidos </a>
+            </div>
+
+            <div class="solids">
+                <h3>Sólidos</h3>
+                <a href="#"> Ativos Sólidos </a>
+                <a href="#"> Passivos Sólidos </a>
+                <a href="#"> Reagentes </a>
+                <a href="#"> Itens Sólidos </a>
+            </div>
+
+            <div class="Geral-Stock">
+                <h3>Estoque Geral</h3>
+                <a href="#"> Itens </a>
+                <a href="#"> Cadastro </a>
+                <a href="#"> Solicitar aprovação de usuário </a>
+                <a href="#"> Suporte </a>
+            </div>
+
+        </div>
+        <div class="end">
+            <p>2024@IFCE. Todos os direitos reservados - O Estoque reserva-se no direito de corrigir ou alterar informações como: Itens alterados, excluídos, em falta e etc.</p>
+        </div>
+    </div>
 </body>
+<script>
+    document.querySelectorAll('.interactive-header a').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+
+        const targetId = this.getAttribute('href').substring(1);
+        const targetElement = document.getElementById(targetId);
+
+        window.scrollTo({
+            top: targetElement.offsetTop - 80,  // Subtrai 80px, caso você tenha um header fixo
+            behavior: 'smooth'
+        });
+    });
+});
+
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+let carousel = document.querySelector(".carousel");
+let items = carousel.querySelectorAll(".item");
+let dotsContainer = document.querySelector(".dots");
+
+  // Insert dots into the DOM
+items.forEach((_, index) => {
+    let dot = document.createElement("span");
+    dot.classList.add("dot");
+    if (index === 0) dot.classList.add("active");
+    dot.dataset.index = index;
+    dotsContainer.appendChild(dot);
+});
+
+let dots = document.querySelectorAll(".dot");
+
+  // Function to show a specific item
+function showItem(index) {
+    items.forEach((item, idx) => {
+    item.classList.remove("active");
+    dots[idx].classList.remove("active");
+    if (idx === index) {
+        item.classList.add("active");
+        dots[idx].classList.add("active");
+    }
+    });
+}
+
+  // Event listeners for buttons
+document.querySelector(".prev").addEventListener("click", () => {
+    let index = [...items].findIndex((item) =>
+    item.classList.contains("active")
+    );
+    showItem((index - 1 + items.length) % items.length);
+});
+
+document.querySelector(".next").addEventListener("click", () => {
+    let index = [...items].findIndex((item) =>
+    item.classList.contains("active")
+    );
+    showItem((index + 1) % items.length);
+});
+
+  // Event listeners for dots
+dots.forEach((dot) => {
+    dot.addEventListener("click", () => {
+    let index = parseInt(dot.dataset.index);
+    showItem(index);
+    });
+});
+});
+
+</script>
+
+
+<script> configObj = {"buttonD":"M8 18.568L10.8 21.333 16 16.198 21.2 21.333 24 18.568 16 10.667z",
+"buttonT":"translate(-1148 -172) translate(832 140) translate(32 32) translate(284)",
+"shadowSize":"0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
+"roundnessSize":"999px",
+"buttonDToBottom":"40px",
+"buttonDToRight":"40px",
+"selectedBackgroundColor":"#19882c",
+"selectedIconColor":"#ffffff",
+"buttonWidth":"48px",
+"buttonHeight":"48px",
+"svgWidth":"40px",
+"svgHeight":"40px"};
+
+function createButton(obj, pageSimulator) {   
+    const body = document.querySelector("body");    
+    backToTopButton = document.createElement("span");    
+    backToTopButton.classList.add("softr-back-to-top-button");    
+    backToTopButton.id = "softr-back-to-top-button";    
+    pageSimulator      ? pageSimulator.appendChild(backToTopButton)      : body.appendChild(backToTopButton);    
+    backToTopButton.style.width = obj.buttonWidth;    
+    backToTopButton.style.height = obj.buttonHeight;   
+    backToTopButton.style.marginRight = obj.buttonDToRight;    
+    backToTopButton.style.marginBottom = obj.buttonDToBottom;    
+    backToTopButton.style.borderRadius = obj.roundnessSize;    
+    backToTopButton.style.boxShadow = obj.shadowSize;    
+    backToTopButton.style.color = obj.selectedBackgroundColor;    
+    backToTopButton.style.backgroundColor = obj.selectedBackgroundColor;    
+    pageSimulator ? backToTopButton.style.position = "absolute" : backToTopButton.style.position = "fixed";    
+    backToTopButton.style.outline = "none";    
+    backToTopButton.style.bottom = "0px";    
+    backToTopButton.style.right = "0px";    
+    backToTopButton.style.cursor = "pointer";    
+    backToTopButton.style.textAlign = "center";    
+    backToTopButton.style.border = "solid 2px currentColor";    
+    backToTopButton.innerHTML =      '<svg class="back-to-top-button-svg" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" > <g fill="none" fill-rule="evenodd"> <path d="M0 0H32V32H0z" transform="translate(-1028 -172) translate(832 140) translate(32 32) translate(164) matrix(1 0 0 -1 0 32)" /> <path class="back-to-top-button-img" fill-rule="nonzero" d="M11.384 13.333h9.232c.638 0 .958.68.505 1.079l-4.613 4.07c-.28.246-.736.246-1.016 0l-4.613-4.07c-.453-.399-.133-1.079.505-1.079z" transform="translate(-1028 -172) translate(832 140) translate(32 32) translate(164) matrix(1 0 0 -1 0 32)" /> </g> </svg>';    
+    backToTopButtonSvg = document.querySelector(".back-to-top-button-svg");    
+    backToTopButtonSvg.style.verticalAlign = "middle";    
+    backToTopButtonSvg.style.margin = "auto";    
+    backToTopButtonSvg.style.justifyContent = "center";   
+    backToTopButtonSvg.style.width = obj.svgWidth;    
+    backToTopButtonSvg.style.height = obj.svgHeight;    
+    backToTopButton.appendChild(backToTopButtonSvg);    
+    backToTopButtonImg = document.querySelector(".back-to-top-button-img");    
+    backToTopButtonImg.style.fill = obj.selectedIconColor;    
+    backToTopButtonSvg.appendChild(backToTopButtonImg);    
+    backToTopButtonImg.setAttribute("d", obj.buttonD);    
+    backToTopButtonImg.setAttribute("transform", obj.buttonT);        
+    if(!pageSimulator) {      backToTopButton.style.display = "none";      
+    window.onscroll = function() {        
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {          
+            backToTopButton.style.display = "block";        } 
+            else {          backToTopButton.style.display = "none";        }      };        
+            backToTopButton.onclick = function() {        
+                document.body.scrollTop = 0;        
+                document.documentElement.scrollTop = 0;      };
+                    }  };
+                    document.addEventListener("DOMContentLoaded", function() { 
+                        createButton(configObj, null); });
+                        
+</script>
 </html>
