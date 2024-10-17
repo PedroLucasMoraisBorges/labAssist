@@ -13,9 +13,10 @@ from .utilits import *
 
 from auth_user.decorators import *
 from auth_user.forms import *
-# Create your views here.
+
 
 class LandingPage(View):
+    @method_decorator(logged_out_required)
     def get(self, request):
         return render(request, 'landingPage.html')
 
@@ -65,6 +66,36 @@ class RegisterReagent(View):
             }
 
             return render(request, 'reagents/register.html', context)
+
+class EditReagent(View):
+    def get(self, request, id):
+        reagent = Reagent.objects.get(id=id)
+        form = ReagentForm(instance=reagent)
+
+        context = {
+            'reagent' : reagent,
+            'form' : form
+        }
+
+        return render(request, 'reagents/editReagent.html', context)
+
+    def post(self, request, id):
+        reagent = Reagent.objects.get(id=id)
+        form = ReagentForm(request.POST, instance=reagent)
+        errors = getErrors([form])
+
+        if form.is_valid():
+            form.save()
+
+            return redirect('home_admin')
+
+        context = {
+            'errors' : errors,
+            'reagent' : reagent,
+            'form' : form
+        }
+
+        return render(request, 'reagents/editReagent.html', context)
 
 class ViewLiquids(View):
     @method_decorator(login_required)

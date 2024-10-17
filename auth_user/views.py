@@ -17,7 +17,7 @@ class Redirect(View):
     def get(self, request):
         user = request.user
         if user.is_authenticated:
-            if user.is_staff:
+            if user.is_staff or user.is_superuser:
                 return redirect('home_admin')
             else:
                 return redirect('home')
@@ -25,7 +25,11 @@ class Redirect(View):
             return redirect('landing_page')
 
 class Login(View):
+    @method_decorator(logged_out_required)
     def get(self, request):
+        if request.user.is_authenticated:
+            return redirect('')
+        
         form = AuthenticationForm()
 
         context = {
@@ -54,7 +58,11 @@ class Login(View):
         return render(request, 'authentication/login.html', context)
     
 class RegisterUser(View):
+    @method_decorator(logged_out_required)
     def get(self, request):
+        if request.user.is_authenticated:
+            return redirect('')
+        
         registerForm = CustomUserCreationForm()
 
         context = {
@@ -63,6 +71,7 @@ class RegisterUser(View):
 
         return render(request, 'authentication/registerUser.html', context)
     
+    @method_decorator(logged_out_required)
     def post(self, request):
         registerForm = CustomUserCreationForm(request.POST)
 
@@ -90,10 +99,10 @@ class Users(View):
         context = {
             'users' : users
         }
-        
-        
 
-class UserPermissions(View):
+        return render(request, 'admin/usersPage.html', context)      
+
+class UserPage(View):
     @method_decorator(login_required)
     @method_decorator(superuser_required)
     def get(self, request, id):

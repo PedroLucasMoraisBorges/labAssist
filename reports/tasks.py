@@ -10,7 +10,7 @@ import threading
 
 # tasks.py
 
-def send_activation_email(user):
+def send_liberation_user_email(user):
     def threadingFunction():
         subject = 'Conta ativada'
         body = render_to_string(
@@ -27,7 +27,7 @@ def send_activation_email(user):
 
     return Response({'message' : 'User ativado com sucesso'}, status=status.HTTP_200_OK)
 
-def send_cancellation_email(user):
+def send_cancellation_user_email(user):
     def threadingFunction():
         subject = 'Conta deletada'
         body = render_to_string(
