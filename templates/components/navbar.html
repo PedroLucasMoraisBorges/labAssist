@@ -1,5 +1,22 @@
 {% load static %}
 
+<style>
+    .header{
+        background: linear-gradient(90deg, #19882C 0%, #569F62 100%);
+        display: flex;
+    }
+
+    .header h2{
+        color: white;
+        font-weight: 800;
+        font-size: 40px;
+        margin-left: 10px;
+        margin-right: 30px;
+        transition: text-decoration 50ms;
+        text-decoration: underline;
+    }
+</style>
+
 <div class="header">
     <h2>LEAS</h2>
     <img src="{% static 'imgs/header_IF_logo.png' %}" width="200">

@@ -1,18 +1,106 @@
 {% load static %}
 
+<style>
+   #sidebar {
+      background-image: linear-gradient(#CAF3D1, #CDFFD6);
+      color: #1E1E1E;
+      padding: 25px;
+   }
 
-<aside>
+   .perfil {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+   }
+
+   .perfil .info {
+      margin-left: .5rem;
+   }
+
+   .perfil .info .name{
+     font-weight: 500;
+     font-size: 1.2rem;
+   }
+
+   .perfil .info .sector{
+      color: #0a55179c;
+      font-weight: bold;
+      font-size: .8rem;
+   }
+
+   .profile_picture {
+      background-color: white;
+      border-radius: 50%;
+      width: min-content;
+      padding: 6px 7px;
+      font-weight: bold;
+   }
+
+   .logout {
+      background-color: #0A5517;
+      color: white;
+      border-radius: 25px;
+      font-weight: bold;
+      padding: .4rem 1rem;
+      margin-left: .4rem;
+   }
+
+   .links {
+      padding-bottom: .2rem;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid #1E1E1E;
+   }
+
+   .solids {
+      border-bottom: 0;
+   }
+
+   .links a{
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      font-weight: 600;
+      font-size: .9rem;
+      box-sizing: border-box;
+      width: fit-content;
+      padding: .5rem;
+      border-radius: 30px;
+      transition: .3s;
+   }
+
+   .links a:hover{
+      background-color: #FFCFCF;
+      box-shadow: 0px 2px 3px #1e1e1e9c;
+      padding: .5rem .7rem;
+   }
+
+   .links a p{
+      margin-left: .8rem;
+   }
+</style>
+
+<aside id="sidebar">
    <div class="perfil">
+      
+      <div class="profile_picture">
+         {{user.user_image}}
+      </div>
+       
+      <div class="info">
+         <p class="name">{{user}}</p>
+         <p class="sector">{{user.get_sector_display}}</p>
+      </div>
 
+      <a class="logout"  href="{% url 'logout' %}">SAIR</a>
    </div>
 
-   <div class="geralLinks">
-      <a href="">
+   <div class="geralLinks links">
+      <a href="{% url 'pendings' %}">
          <img src="{% static 'imgs/icons/pendencias.svg' %}" alt="">
          <p>Pendências</p>
       </a>
 
-      <a href="">
+      <a href="{% url 'register_reagent' %}">
          <img src="{% static 'imgs/icons/add.svg' %}" alt="">
          <p>Cadastrar Reagente</p>
       </a>
@@ -22,23 +110,23 @@
          <p>Administrar Estoque</p>
       </a>
 
-      <a href="">
+      <a href="{% url 'users' %}">
          <img src="{% static 'imgs/icons/users.svg' %}" alt="">
          <p>Administrar Usuários</p>
       </a>
 
       <a href="">
-         <img src="{% static 'imgs/icons/relatorios.svg.png' %}" alt="">
+         <img src="{% static 'imgs/icons/relatorios.svg' %}" alt="">
          <p>Relatórios</p>
       </a>
 
-      <a href="">
+      <a href="{% url 'movements' %}">
          <img src="{% static 'imgs/icons/movimentações.svg' %}" alt="">
          <p>Movimentações</p>
       </a>
    </div>
 
-   <div class="liquids">
+   <div class="liquids links">
       <p>Líquidos</p>
 
       <a href="">
@@ -56,13 +144,13 @@
          <p>Soluções</p>
       </a>
 
-      <a href="">
+      <a href="{% url 'stock_liquids' %}">
          <img src="{% static 'imgs/icons/estoque.svg' %}" alt="">
          <p>Visão Geral</p>
       </a>
    </div>
 
-   <div class="solids">
+   <div class="solids links">
       <p>Sólidos</p>
 
       <a href="">
@@ -75,7 +163,7 @@
          <p>Passivos</p>
       </a>
 
-      <a href="">
+      <a href="{% url 'stock_solids' %}">
          <img src="{% static 'imgs/icons/estoque.svg' %}" alt="">
          <p>Visão Geral</p>
       </a>
