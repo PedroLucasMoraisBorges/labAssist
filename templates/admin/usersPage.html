@@ -10,98 +10,65 @@
 {% block content %}
     {% include 'components/navbar.html' %}
 
-    <!-- Nova seção abaixo do header -->
-    <section class="info-section">
-        <div class="info-container">
-            <div class="info-text">
-                <h1>Lista de Usuários</h1>
-                <p>Nesta seção estarão listadas itens do seu estoque, sua visão geral, movimentações e muito mais.</p>
+    <main>
+        <section>
 
-                
-            </div>
-            <div class="info-icon">
-                <img src="{% static 'imgs/icon-document.png' %}" alt="Ícone de documento">
-            </div>
-        </div>
-    </section>
+            <!-- Nova seção abaixo do header -->
+            <article class="info-section">
+                <div class="info-container">
+                    <div class="info-text">
+                        <h1>Lista de Usuários</h1>
+                        <p>Nesta seção estarão listadas itens do seu estoque, sua visão geral, movimentações e muito mais.</p>
 
-    <!-- Campo de pesquisa -->
-    <div class="search-bar">
-        <img src="{% static 'imgs/hamburger-icon.png' %}" alt="Menu" class="hamburger-icon">
-        <input type="text" placeholder="Pesquisar usuário">
-        <img src="{% static 'imgs/search-icon.png' %}" alt="Buscar" class="search-icon">
-    </div>
-
-    <!-- Barra lateral direita
-    <aside class="side-navbar">
-        <ul class="side-menu">
-            <div class="user-info">
-                <img src="{% static 'imgs/Avatar.png' %}" alt="Avatar do Usuário" class="avatar">
-                <div class="user-details">
-                    <p class="user-name">Anna Maria</p>
-                    <p class="user-role">Administrador</p>
+                        
+                    </div>
+                    <div class="info-icon">
+                        <img src="{% static 'imgs/icon-document.png' %}" alt="Ícone de documento">
+                    </div>
                 </div>
-                <button class="logout-btn">SAIR</button>
-            </div>
+            </article>
 
-            <span class="span"><strong>Mensagens</strong></span>
-            <li><a href="#"><img src="{% static 'imgs/icons/pendencias.png' %}" alt="Pendências Ícone"> Pendências</a></li>
-            <li><a href="#"><img src="{% static 'imgs/icons/cadastrar-item.png' %}" alt="Cadastrar Ícone"> Cadastrar Item</a></li>
-            <li><a href="#"><img src="{% static 'imgs/icons/estoque.png' %}" alt="Estoque Ícone"> Administrar Estoque</a></li>
-            <li><a href="#"><img src="{% static 'imgs/icons/usuarios.png' %}" alt="Usuários Ícone"> Administrar Usuários</a></li>
-            <li><a href="#"><img src="{% static 'imgs/icons/relatorios.png' %}" alt="Relatórios Ícone"> Relatórios</a></li>
-            <li><a href="#"><img src="{% static 'imgs/icons/movimentacoes.png' %}" alt="Movimentações Ícone"> Movimentações</a></li>
-            <hr>
-            <span class="span"><strong>Líquidos</strong></span>
-            <li><a href="#"><img src="{% static 'imgs/icons/Icon (4).png' %}" alt="Ativos Líquidos Ícone"> Ativos Líquidos</a></li>
-            <li><a href="#"><img src="{% static 'imgs/icons/Icon (4).png' %}" alt="Passivos Líquidos Ícone"> Passivos Líquidos</a></li>
-            <li><a href="#"><img src="{% static 'imgs/icons/Icon (4).png' %}" alt="Soluções Ícone"> Soluções</a></li>
-            <li><a href="#"><img src="{% static 'imgs/icons/Icon (4).png' %}" alt="Reagentes Ícone"> Reagentes</a></li>
-            <hr>
-            <span class="span"><strong>Sólidos</strong></span>
-            <li><a href="#"><img src="{% static 'imgs/icons/Icon (4).png' %}" alt="Ativos Sólidos Ícone"> Ativos Sólidos</a></li>
-            <li><a href="#"><img src="{% static 'imgs/icons/Icon (4).png' %}" alt="Passivos Sólidos Ícone"> Passivos Sólidos</a></li>
-            <li><a href="#"><img src="{% static 'imgs/icons/Icon (4).png' %}" alt="Soluções Ícone"> Soluções</a></li>
-            <li><a href="#"><img src="{% static 'imgs/icons/Icon (4).png' %}" alt="Reagentes Ícone"> Reagentes</a></li>
-        </ul>
-    </aside> -->
+            
+            <!-- Container maior com informações gerais -->
+            <article class="info-section">
+                <!-- Título da tabela de usuários -->
+                <div class="user-header">
+                    <div class="user-title">
+                        <h2>NOME</h2>
+                        <h2>FUNÇÃO</h2>
+                        <h2>AÇÕES</h2>
+                    </div>
+                </div>
 
-    <!-- Container maior com informações gerais -->
-    <section class="info-section">
-        <!-- Título da tabela de usuários -->
-        <div class="user-header">
-            <div class="user-title">
-                <h2>NOME</h2>
-                <h2>FUNÇÃO</h2>
-                <h2>AÇÕES</h2>
-            </div>
-        </div>
+                <!-- container de gerenciar -->
+                <div class="user-list">
+                    <div class="user-row">
+                        <div class="user-info">
+                            <div class="user-icon">FJ</div>
+                            <div class="user-name">Francisco José</div>
+                        </div>
+                        <div class="user-role">Administrador</div>
+                        <div class="user-action">
+                            <button class="action-btn">VER MAIS</button>
+                        </div>
+                    </div>
+                    <div class="user-row">
+                        <div class="user-info">
+                            <div class="user-icon">UT</div>
+                            <div class="user-name">User Teste</div>
+                        </div>
+                        <div class="user-role">Usuário Geral</div>
+                        <div class="user-action">
+                            <button class="action-btn">VER MAIS</button>
+                        </div>
+                    </div>
+                    <!-- Adicione mais usuários aqui -->
+                </div>
+            </article>
+        </section>
 
-        <!-- container de gerenciar -->
-        <div class="user-list">
-            <div class="user-row">
-                <div class="user-info">
-                    <div class="user-icon">FJ</div>
-                    <div class="user-name">Francisco José</div>
-                </div>
-                <div class="user-role">Administrador</div>
-                <div class="user-action">
-                    <button class="action-btn">VER MAIS</button>
-                </div>
-            </div>
-            <div class="user-row">
-                <div class="user-info">
-                    <div class="user-icon">UT</div>
-                    <div class="user-name">User Teste</div>
-                </div>
-                <div class="user-role">Usuário Geral</div>
-                <div class="user-action">
-                    <button class="action-btn">VER MAIS</button>
-                </div>
-            </div>
-            <!-- Adicione mais usuários aqui -->
-        </div>
-    </section>
+        {% include 'components/sidebar.html' %}
+    </main>
 {% endblock %}
 
 {% block scripts %}

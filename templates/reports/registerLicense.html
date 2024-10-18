@@ -5,17 +5,25 @@
 {% endblock %}
 
 {% block content %}
-    {% include 'components/errorModal.html' %}
+    {% include 'components/navbar.html' %}
 
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {% for field in form %}
-            {{field.label_tag}}
-            {{field}}
-        {% endfor %}
+    <main>
+        <section>
+            {% include 'components/errorModal.html' %}
 
-        <button type="submit">Cadastrar</button>
-    </form>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% for field in form %}
+                    {{field.label_tag}}
+                    {{field}}
+                {% endfor %}
+
+                <button type="submit">Cadastrar</button>
+            </form>
+        </section>
+
+        {% include 'components/sidebar.html' %}
+    </main>
 {% endblock %}
 
 {% block scripts %}

@@ -125,4 +125,4 @@ class ViewSolids(View):
             'active_liquids' : agrupar_reagents_por_letra(ordenar_lista(active_solids)),
             'passive_liquids' : agrupar_reagents_por_letra(ordenar_lista(passive_solids))
         }
-        return render(request, 'reagents/liquids.html', context)
+        return render(request, 'reagents/solids.html', context)

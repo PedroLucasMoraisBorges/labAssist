@@ -11,18 +11,6 @@
 </head>
 
 <body>
-<<<<<<< HEAD
-    <div>
-        <img src="{% static 'imgs/leas_login_logo.png' %}"
-        alt="Logo do Laboratório de Engenharia Ambiental e Sanitária LEAS"
-        classname="object-cover h-48 w-96">
-        <div>
-        <form method="POST">
-            {% csrf_token %}
-            {% for field in form %}
-                <div>
-                    {{field}}
-=======
     <div class="container" id="container">
         <!-- Formulário de Login -->
         <div class="formContainer">
@@ -34,7 +22,6 @@
                 {% endfor %}
                 <div class="btns">
                     <button type="submit">ENTRAR</button>
->>>>>>> f9cab55920150a0f453fc74d67ed0e2b68c7f9a1
                 </div>
             </form>
         </div>
@@ -48,16 +35,6 @@
                 <a href="{% url 'register' %}" class="btn_register" id="register">CADASTRE-SE AQUI</a>
             </div>
         </div>
-<<<<<<< HEAD
-        </form>
-        <div>
-            <h1>Olá, Usuário!</h1>
-            <h2>É seu primeiro acesso?</h2>
-            <p>Realize seu cadastro para ter acesso as informações do LEAS.</p>
-            <button>CADASTRE-SE AQUI</button>
-        </div>
-=======
->>>>>>> f9cab55920150a0f453fc74d67ed0e2b68c7f9a1
     </div>
 </body>
 </html>
