@@ -56,7 +56,13 @@ class Login(View):
             'errors': errors,
         }
         return render(request, 'authentication/login.html', context)
-    
+
+class Logout(View):
+    @method_decorator(login_required)
+    def get(self, request):
+        logout(request)
+        return redirect('/')
+
 class RegisterUser(View):
     @method_decorator(logged_out_required)
     def get(self, request):

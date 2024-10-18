@@ -9,10 +9,9 @@
 {% endblock %}
 
 {% block content %}
-    <div class="header">
-        <h2>LEAS</h2>
-        <img src="{% static 'imgs/header_IF_logo.png' %}" height="50" width="200">
-    </div>
+    {% include 'components/navbar.html' %}
+
+    {% include 'components/sidebar.html' %}
 
     <div class="presentation">
         <div class="presentation_text">
@@ -26,11 +25,11 @@
     </div>
 
     <div class="welcome">
-        <h2>Bem-vindo, usuárioADMIN!</h2>
+        <h2>Bem-vindo, {{user}}!</h2>
         <p>O que deseja fazer?</p>
         <div class="adm_option">
-            <button class="option_move">Fazer Movimentação</button>
-            <button class="option_item">Cadastrar Novo Item</button>
+            <a href=""><button class="option_move">Fazer Movimentação</button></a>
+            <a href="{% url 'register_reagent' %}"><button class="option_item">Cadastrar Novo Item</button></a>
         </div>
     </div>
 
@@ -141,8 +140,6 @@
             <button type="submit">Cadastrar</button>
         </form>
     </div> -->
-
-    {% include 'components/sidebar.html' %}
 
     <!-- <a href="#" class="top">Voltar ao topo</a> -->
 {% endblock %}
