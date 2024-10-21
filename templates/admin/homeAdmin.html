@@ -23,6 +23,7 @@
                     <path d="M14 3v5h5M16 13H8M16 17H8M10 9H8"/>
                 </svg>
             </div>
+
             <div class="welcome">
                 <h2>Bem-vindo, {{user}}!</h2>
                 <p>O que deseja fazer?</p>
@@ -78,6 +79,7 @@
                     </button>
                 </div>
             </div>
+
             <!-- Separações entre visão geral, movimentação recente e Balanço de estoque -->
             <div class="container">
                 <div class="tab-box">
@@ -93,23 +95,29 @@
                 </div>
                 <div class="content-box">
                     <div class="content active" id="geral">
-                        {% for reagent in geralVision %}
-                        <div>{{reagent}}</div>
-                        <!-- para fins de teste da separação das tabs -->
-                        {% endfor %}
-                        <p>CONTENT VISÃO GERAL
-                            123 Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus, dicta a voluptatum non mollitia asperiores culpa exercitationem at consectetur, facilis labore aspernatur aut voluptatem magnam neque officiis, eius consequuntur maxime?
-                        </p>
+                        <div class="liquids">
+                            {% for grupo in liquids %}
+                                {% for letter, reagents in grupo.items %}
+                                    {% include 'components/group_reagents.html' %}
+                                {% endfor %}
+                            {% endfor %}
+                        </div>
+
+                        <div class="solids">
+                            {% for grupo in solids %}
+                                {% for letter, reagents in grupo.items %}
+                                    {% include 'components/group_reagents.html' %}
+                                {% endfor %}
+                            {% endfor %}
+                        </div>
                     </div>
             
                     <div class="content" id="move">
-                        {% for reagent in recentMovement %}
-                        <div>{{reagent}}</div>
-                        <!-- para fins de teste da separação das tabs -->
-                        {% endfor %}
-                        <p>CONTENT MOVIMENTO
-                            456 Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus, dicta a voluptatum non mollitia asperiores culpa exercitationem at consectetur, facilis labore aspernatur aut voluptatem magnam neque officiis, eius consequuntur maxime?
-                        </p>
+                        <div class="list_movements">
+                            {% for movement in recentMovement %}
+                                {% include 'components/movements/card.html' %}
+                            {% endfor %}
+                        </div>
                     </div>
                     <div class="content" id="inventory">
                         {% for reagent in inventoryBalance %}
@@ -233,4 +241,6 @@ Já é funcional, mas ainda não pega nenhuma informação real-->
 
     verificarLetrasAtivas();
 </script>
+
+<script src="{% static 'js/modal_conduct.js' %}"></script>
 {% endblock %}

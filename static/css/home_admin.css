@@ -247,9 +247,6 @@ ainda não consigo trazer as tabelas, não sei se fica melhor como componente ou
 .tab-box .tab2-btn:hover {
     background-color: #CBF4D2;
 }
-.content-box{
-    padding: 20px;
-}
 
 .content-box .content{
     display: none;

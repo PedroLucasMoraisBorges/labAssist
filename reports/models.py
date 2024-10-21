@@ -24,6 +24,10 @@ class Movement(models.Model):
     fk_reagent = models.ForeignKey(Reagent, related_name='reagent_movement', null=False, on_delete=models.CASCADE)
     fk_user = models.ForeignKey(User, related_name='responsible_movement', null=False,  on_delete=models.CASCADE)
 
+    @property
+    def formatted_dt_movement(self):
+        return self.dt_movement.strftime('%d/%m/%Y')
+    
     def __str__(self):
         year = str(self.dt_movement.year)
         month = str(self.dt_movement.month)
