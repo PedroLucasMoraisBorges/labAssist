@@ -46,7 +46,7 @@ class User(AbstractUser):
     @property
     def user_image(self):
         if " " in self.name:
-           name = self.name.split('')
+           name = self.name.split(" ")
         else: name = self.name
 
         firstName = name[0]

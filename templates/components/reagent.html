@@ -1,0 +1,91 @@
+{% load static %}
+
+<style>
+    .reagent {
+        width: 22.5%;
+        margin: .5rem;
+        border: #00000078 1px solid;
+        border-radius: 0px 0px 10px 10px;
+    }
+
+    .top {
+        background-color: #19882C;
+    }
+
+    .top p {
+        color: white;
+        font-weight: 600;
+        text-align: center;
+    }
+
+    .body {
+        background-color: #CDFFD6;
+        border-radius: 0px 0px 10px 10px;
+        padding: 0 .5rem .5rem .5rem;
+    }
+
+    .card_info {
+        background-color: white;
+        border-radius: 0px 0px 10px 10px;
+        padding: .3rem;
+    }
+
+    .reagent_name {
+        color: #0A5517;
+        font-weight: 600;
+        font-size: 1.2rem;
+    }
+
+    .details p {
+        font-weight: 500;
+        font-size: .8rem;
+    }
+
+    .btns {
+        display: flex;
+        justify-content: center;
+        margin-top: .4rem;
+    }
+
+    .btn_show {
+        width: 65%;
+        border-radius: 25px;
+        background-color: #19882C;
+        color: white;
+        text-align: center;
+        font-weight: 500;
+        font-size: .9rem;
+        transition: .3s;
+        padding: .2rem 0;
+    }
+
+    .btn_show:hover {
+        transform: scale(1.1);
+    }
+</style>
+
+<div class="reagent">
+    <div class="top">
+        <p>ITEM</p>
+    </div>
+
+    <div class="body">
+        <div class="card_info">
+            <h3 class="reagent_name">
+                {{reagent.name}}
+            </h3>
+            <div class="details">
+                <p>{{reagent.formula}} ; {{reagent.amount}}</p>
+                <p>{{reagent.classification}}</p>
+            </div>
+
+            <div class="btns">
+                <button class="btn_show" card_id="reagent{{reagent.id}}">
+                    VER MAIS
+                </button>
+            </div>
+
+            {% include 'components/reagent/modal.html' %}
+        </div>
+    </div>
+</div>
