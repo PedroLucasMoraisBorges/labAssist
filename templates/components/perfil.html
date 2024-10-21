@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perfil</title>
+  <link rel="stylesheet" href="{% static 'css/perfil.css'%}">
+</head>
+<body>
+
+  <div class="profile-card">
+    <h2>Informações de perfil</h2>
+    
+    <form action="processar_perfil.php" method="POST" enctype="multipart/form-data" id="senhaForm" onsubmit="return validarSenhas()">
+        <div class="profile-left">
+            <div class="image-left">
+              <img id="profile-image" src="/assests/Avatar-vazio.svg" alt="Foto de Perfil" class="profile-image">
+            </div>
+            <div class="profile-left-text">
+              <span class="user-name">Nome do Usuário</span>
+              <span class="user-department">Setor</span>
+              <div class="input-group">
+                <input id="file-upload" type="file" accept="image/*" style="display: none;" />
+                <button type="button" class="change-photo-btn" onclick="document.getElementById('file-upload').click();">
+                  Alterar Foto
+                </button>
+              </div>
+            </div>
+          </div>
+
+      <div class="profile-geral">
+        <div class="input-row">
+          <div class="input-group">
+            <input type="text" name="nome" placeholder="Nome" class="profile-input" required>
+            <i class="icon"><img src="assests/edit.svg" alt="edit-icon"></i>
+          </div>
+
+          <div class="input-group">
+            <input type="email" name="email" placeholder="E-mail" class="profile-input" required>
+            <i class="icon"><img src="assests/edit.svg" alt="edit-icon"></i>
+          </div>
+        </div>
+
+        <div class="input-row">
+            <div class="input-group">
+                <input type="tel" name="celular" placeholder="Celular" class="profile-input" required maxlength="11" pattern="\d{11}" title="Por favor, insira um número de celular válido com 11 dígitos">
+                <i class="icon"><img src="assests/edit.svg" alt="edit-icon"></i>
+            </div>
+
+          <div class="input-group">
+            <input list="setores" name="setor" placeholder="setor" class="profile-input">
+            <i class="icon"><img src="assests/edit.svg" alt="edit-icon"></i>
+            <datalist id="setores">
+              <option value="LEAS- Bolsista">
+              <option value="Aluno">
+              <option value="Professor">
+              <option value="Aluno externo"></option>
+            </datalist>
+          </div>
+        </div>
+
+        <div class="input-row">
+          <div class="input-group">
+            <input type="date" name="aniversario" placeholder="Aniversário" class="profile-input">
+          </div>
+
+          <div class="input-group">
+            <input list="localizacoes" name="localizacao" placeholder="Localização" class="profile-input">
+            <i class="icon"><img src="assests/edit.svg" alt="edit-icon"></i>
+            <datalist id="localizacoes">
+              <option value="Laboratório 1">
+              <option value="Laboratório 2">
+              <option value="Laboratório 3">
+            </datalist>
+          </div>
+        </div>
+
+        <div class="input-group full-width">
+            <ul id="permissoes-list" class="permissions-list">
+                <p>permissões:</p>
+              <!-- As permissões serão adicionadas aqui dinamicamente -->
+            </ul>
+          </div>
+          
+          <div class="input-group full-width">
+            <input type="password" id="senha" name="senha" placeholder="Senha" class="profile-input" required>
+            <i class="icon"><img src="assests/edit.svg" alt="edit-icon"></i>
+          </div>
+
+          <div class="input-group full-width">
+            <input type="password" id="confirmacao_senha" name="confirmacao_senha" placeholder="Confirmação de Senha" class="profile-input" required>
+            <i class="icon"><img src="assests/edit.svg" alt="edit-icon"></i>
+          </div>
+          <div id="mensagem" style="color: red; display: none; margin-left: 12px; margin-top: 1rem;"></div> <!-- Para mostrar a mensagem de erro -->
+        </div>
+
+        <div class="submit-btn-container">
+            <button type="submit" class="submit-btn">Salvar Informações</button>
+        </div>
+    </form>
+
+    
+  </div>
+
+  <script>
+    // Adiciona um evento para o input de arquivo
+    const fileInput = document.getElementById('file-upload');
+    const profileImage = document.getElementById('profile-image');
+  
+    fileInput.addEventListener('change', function() {
+      if (fileInput.files.length > 0) {
+        const file = fileInput.files[0]; // Obtém o arquivo selecionado
+        const reader = new FileReader(); // Cria um novo FileReader
+  
+        reader.onload = function(e) {
+          profileImage.src = e.target.result; // Altera a src da imagem de perfil
+        };
+  
+        reader.readAsDataURL(file); // Lê o arquivo como URL de dados
+      }
+    });
+
+    // Suponha que você receba as permissões do banco de dados como um array
+    const permissoesDoBanco = ["Adicionar", "Remover", "Movimentar"]; // Exemplo de dados do banco
+    const permissoesList = document.getElementById('permissoes-list');
+          
+    // Adiciona as permissões recebidas ao DOM
+    permissoesDoBanco.forEach(permissao => {
+        const listItem = document.createElement('li');
+        listItem.textContent = permissao;
+        permissoesList.appendChild(listItem);
+    });
+
+    function validarSenhas() {
+        const senha = document.getElementById('senha').value;
+        const confirmacaoSenha = document.getElementById('confirmacao_senha').value;
+        const mensagemDiv = document.getElementById('mensagem');
+
+        if (senha !== confirmacaoSenha) {
+            mensagemDiv.textContent = "As senhas não coincidem. Tente novamente.";
+            mensagemDiv.style.display = "block";
+            return false;
+        } else {
+            mensagemDiv.style.display = "none";
+            return true;
+        }
+    }
+  </script>
+</body>
+</html>
