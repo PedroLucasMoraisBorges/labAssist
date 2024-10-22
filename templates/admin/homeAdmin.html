@@ -11,6 +11,8 @@
 {% block content %}
     {% include 'components/navbar.html' %}
 
+    {% include 'components/movements/form_modal.html' %}
+
     <main>
         <section>
             <div class="presentation">
@@ -28,7 +30,7 @@
                 <h2>Bem-vindo, {{user}}!</h2>
                 <p>O que deseja fazer?</p>
                 <div class="adm_option">
-                    <a href=""><button class="option_move">Fazer Movimentação</button></a>
+                    <button onclick="open_movement_form_modal()" class="option_move">Fazer Movimentação</button>
                     <a href="{% url 'register_reagent' %}"><button class="option_item">Cadastrar Novo Item</button></a>
                 </div>
             </div>
@@ -243,4 +245,15 @@ Já é funcional, mas ainda não pega nenhuma informação real-->
 </script>
 
 <script src="{% static 'js/modal_conduct.js' %}"></script>
+
+<script>
+    function open_movement_form_modal(){
+        var open_form_modal = document.querySelector('.option_move')
+
+        open_form_modal.addEventListener("click", function(e) {
+            var form_modal = document.querySelector('#movement_form')
+            form_modal.classList.remove("none")
+        })
+    }
+</script>
 {% endblock %}

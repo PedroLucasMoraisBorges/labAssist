@@ -53,7 +53,7 @@
     margin-top: 20px;
     font-weight: 700; 
     transform: translateY(0);
-    transition: all 0.5s linear;
+    transition: .3s;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
 }
 
@@ -63,10 +63,7 @@
 }
 
 .welcome .option_item:hover{
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
-    color: #19882C;
-    transform: translateY(-0.5rem);
-    background: #CBF4D2;
+    transform: scale(1.1);
 }
 
 .welcome .option_move{
@@ -76,10 +73,7 @@
 }
 
 .welcome .option_move:hover{
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
-    color: #19882C;
-    transform: translateY(-0.5rem);
-    background: #CBF4D2;
+    transform: scale(1.1);
 }
 
 /* Localizador Alfabeto  */
