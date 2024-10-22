@@ -68,7 +68,7 @@ def send_request_movement(request):
         for user in users:
             subject = 'Requisição de ativação de conta'
             body = render_to_string(
-                'components/emails/request_movement.html',
+                '../components/emails/request_movement.html',
                 {
                     'admin':user,
                     'request': request,

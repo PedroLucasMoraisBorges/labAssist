@@ -43,3 +43,38 @@ class LicenseForm(forms.ModelForm):
     class Meta:
         model=License
         fields=['pdf']
+    
+class MovementForm(forms.ModelForm):
+    motivation = forms.CharField(
+        label='Motivação',
+        required=True,
+        widget=forms.Textarea()
+    )
+
+    amount = forms.IntegerField(
+        label='Quantidade',
+        required=True,
+        widget=forms.NumberInput()
+    )
+
+    movement_type = forms.ChoiceField(
+        label='Tipo de movimentação',
+        required=True,
+        choices=[('', 'Selecione um tipo')] + typeMovementChoices,
+        widget=forms.Select()
+    )
+
+    fk_reagent = forms.ModelChoiceField(
+        label='Reagente',
+        required=True,
+        queryset=Reagent.objects.filter(Q(amount__gt=0))
+    )
+
+    validity = forms.DateField(
+        label='Validade',
+        widget=forms.DateInput(attrs={'type' : 'date'})
+    )
+
+    class Meta:
+        model=Movement
+        fields=['motivation', 'amount', 'movement_type', 'fk_reagent']

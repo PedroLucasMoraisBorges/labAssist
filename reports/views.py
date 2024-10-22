@@ -88,12 +88,13 @@ class Movements(View):
 
         return render(request, 'reports/movements.html', context)
 
-class CrateMovement(APIView):
+class CreateMovement(APIView):
     @method_decorator(login_required)
     @method_decorator(permission_required('Reports.can_add_movement', login_url='/'))
     def post(self, request):
         movementForm = MovementForm(request.POST)
 
+        print("jjj")
         errors = getErrors([movementForm])
 
         if movementForm.is_valid():
@@ -112,6 +113,8 @@ class CrateMovement(APIView):
                 dt_request = movement.dt_movement,
                 fk_movement = movement
             )
+
+            print('jjjkj')
             requestMovement.save()
             
             return send_request_movement(requestMovement)
