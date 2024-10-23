@@ -122,7 +122,7 @@ class ViewSolids(View):
         active_solids = search_for_reagent(search, 'S')['actives']
 
         context = {
-            'active_liquids' : agrupar_reagents_por_letra(ordenar_lista(active_solids)),
-            'passive_liquids' : agrupar_reagents_por_letra(ordenar_lista(passive_solids))
+            'active_solids' : agrupar_reagents_por_letra(ordenar_lista(active_solids)),
+            'passive_solids' : agrupar_reagents_por_letra(ordenar_lista(passive_solids))
         }
         return render(request, 'reagents/solids.html', context)

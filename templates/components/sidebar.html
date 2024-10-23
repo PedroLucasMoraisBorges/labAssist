@@ -95,6 +95,11 @@
    </div>
 
    <div class="geralLinks links">
+      <a href="{% url 'home_admin' %}">
+         <img src="{% static 'imgs/icons/admin_estoque.svg' %}" alt="">
+         <p>Início</p>
+      </a>
+
       <a href="{% url 'pendings' %}">
          <img src="{% static 'imgs/icons/pendencias.svg' %}" alt="">
          <p>Pendências</p>
@@ -103,11 +108,6 @@
       <a href="{% url 'register_reagent' %}">
          <img src="{% static 'imgs/icons/add.svg' %}" alt="">
          <p>Cadastrar Reagente</p>
-      </a>
-
-      <a href="">
-         <img src="{% static 'imgs/icons/admin_estoque.svg' %}" alt="">
-         <p>Administrar Estoque</p>
       </a>
 
       <a href="{% url 'users' %}">

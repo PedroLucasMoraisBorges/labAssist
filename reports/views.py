@@ -94,7 +94,6 @@ class CreateMovement(APIView):
     def post(self, request):
         movementForm = MovementForm(request.POST)
 
-        print("jjj")
         errors = getErrors([movementForm])
 
         if movementForm.is_valid():
@@ -114,7 +113,11 @@ class CreateMovement(APIView):
                 fk_movement = movement
             )
 
-            print('jjjkj')
+            if request.user.is_superuser:
+                requestMovement.approved == True
+                requestMovement.dt_response == requestMovement.dt_request
+                requestMovement.save()
+
             requestMovement.save()
             
             return send_request_movement(requestMovement)
@@ -138,11 +141,24 @@ class ApproveRequestMovement(APIView):
             reagent = movement.fk_reagent
 
             if movement.movement_type == 'A':
-                reagent.amount += movement.amount
+                new_reagent = Reagent.objects.create(
+                    name = reagent.name,
+                    formula = reagent.formula,
+                    size= reagent.size,
+                    amount=movement.amount,
+                    limit=reagent.limit,
+                    validity=movement.validity,
+                    classification=reagent.classification,
+                    incompatibility=reagent.incompatibility,
+                    control=reagent.control,
+                    state=reagent.state,
+                    opening_date=reagent.opening_date,
+                    is_active=reagent.is_active
+                )
+                new_reagent.save()
+
             elif movement.movement_type in ['R', 'T']:
                 reagent.amount -= movement.amount
-            
-            reagent.save()
             
             return Response({'message': 'Requisição aprovada com sucesso'}, status=status.HTTP_200_OK)
         
