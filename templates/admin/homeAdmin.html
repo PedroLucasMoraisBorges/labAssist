@@ -1,72 +1,231 @@
 {% extends 'components/base.html' %}
 {% load reports_tags %}
+{% load static %}
+
 
 {% block head %}
+<link rel="stylesheet" href="{% static 'css/home_admin.css'%}">
+<link rel="stylesheet" href="{% static 'css/output.css'%}">
 {% endblock %}
 
 {% block content %}
+    {% include 'components/navbar.html' %}
 
-{% for reagent in geralVision %}
-    <div>
-        {{reagent}}
-    </div>
-{% endfor %}
+    {% include 'components/movements/form_modal.html' %}
 
-<hr>
+    <main>
+        <section>
+            {% include 'components/page_indication/presentation.html' with page="Seu estoque" text="Nesta seção estarão listados itens do seu estoque, sua visão geral, movimentações e muito mais." %}
 
-{% for reagent in recentMovement %}
-    <div>
-        {{reagent}}
-    </div>
-{% endfor %}
+            {% include 'components/page_indication/welcome.html' with text='Bem-vindo, {{user}}!' %}
 
-<hr>
+            <!-- Essa parte vai ser a seleção da letra do composto requisitado, ainda não pega nenhuma informação -->
+            <div class="alfabeto">
+                <div class=" tab_alfa tag_inicio">
+                    <button class="inicio">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0A5517" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 12H6M12 5l-7 7 7 7"/>
+                        </svg>
+                        Início
+                    </button>
+                </div>
+                <div class="letras">
+                    <button class="letra active"> A </button>
+                    <button class="letra"> B </button>
+                    <button class="letra"> C </button>
+                    <button class="letra"> D </button>
+                    <button class="letra"> E </button>
+                    <button class="letra"> F </button>
+                    <button class="letra"> G </button>
+                    <button class="letra"> H </button>
+                    <button class="letra"> I </button>
+                    <button class="letra"> J </button>
+                    <button class="letra"> K </button>
+                    <button class="letra"> L </button>
+                    <button class="letra"> M </button>
+                    <button class="letra"> N </button>
+                    <button class="letra"> O </button>
+                    <button class="letra"> P </button>
+                    <button class="letra"> Q </button>
+                    <button class="letra"> R </button>
+                    <button class="letra"> S </button>
+                    <button class="letra"> T </button>
+                    <button class="letra"> U </button>
+                    <button class="letra"> V </button>
+                    <button class="letra"> W </button>
+                    <button class="letra"> X </button>
+                    <button class="letra"> Y </button>
+                    <button class="letra"> Z </button>
+                </div>
+                <div class="tab_alfa tab_fim">
+                    <button class="fim">
+                        Fim
+                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0A5517" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 12h13M12 5l7 7-7 7"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
 
-{% for reagent in inventoryBalance %}
-    <div>
-        {{reagent}}
-        {{reagent.amount}}
-    </div>
-{% endfor %}
+            <!-- Separações entre visão geral, movimentação recente e Balanço de estoque -->
+            <div class="container">
+                <div class="tab-box">
+                    <div class="tabs primary-tabs">
+                        <button class="tab-btn active" content-id="geral"> Visão Geral</button>
+                        <button class="tab-btn" content-id="move"> Movimentações Recentes</button>
+                        <button class="tab-btn" content-id="inventory"> Balanços de Estoque</button>
+                    </div>
+                    <div class="tabs secondary-tabs">
+                        <button class="tab2-btn tab-liquids active" content-id="liquids"> Líquidos</button>
+                        <button class="tab2-btn tab-solids" content-id="solids"> Sólidos</button>
+                    </div>
+                </div>
+                <div class="content-box">
+                    <div class="content active" id="geral">
+                        <div class="liquids">
+                            {% for grupo in liquids %}
+                                {% for letter, reagents in grupo.items %}
+                                    {% include 'components/group_reagents.html' %}
+                                {% endfor %}
+                            {% endfor %}
+                        </div>
 
+                        <div class="solids">
+                            {% for grupo in solids %}
+                                {% for letter, reagents in grupo.items %}
+                                    {% include 'components/group_reagents.html' %}
+                                {% endfor %}
+                            {% endfor %}
+                        </div>
+                    </div>
+            
+                    <div class="content" id="move">
+                        <div class="list_movements">
+                            {% for movement in recentMovement %}
+                                {% include 'components/movements/card.html' %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="content" id="inventory">
+                        {% for reagent in inventoryBalance %}
+                        <div>{{reagent}} - {{reagent.amount}}</div>
+                        <!-- para fins de teste da separação das tabs -->
+                        {% endfor %}
+                        <p>CONTENT INVENTÁRIO
+                            789 Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus, dicta a voluptatum non mollitia asperiores culpa exercitationem at consectetur, facilis labore aspernatur aut voluptatem magnam neque officiis, eius consequuntur maxime?
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- funcionalidade de Criação de movimento, não foi implementado ainda, por isso está comentado -->
+            <!-- <div class="form_move">
+                <form id="movementForm" action="{% url 'create_movement' %}" method="post">
+                    {% csrf_token %}
+                    {% for field in movementForm %}
+                        {{field.label_tag}}
+                        {{field}}
+                    {% endfor %}
+                    <button type="submit">Cadastrar</button>
+                </form>
+            </div> -->
+            <!-- <a href="#" class="top">Voltar ao topo</a> -->
+        </section>
 
-<form id="movementForm" action="{% url 'create_movement' %}" method="post">
-    {% csrf_token %}
-
-    {% for field in movementForm %}
-        {{field.label_tag}}
-        {{field}}
-    {% endfor %}
-
-    <button type="submit">Cadastrar</button>
-</form>
-
+        {% include 'components/sidebar.html' %}
+    </main>
 {% endblock %}
 
 {% block scripts %}
+<!-- Cração de movimento dentro da página -->
 <script>
-    document.getElementById('movementForm').addEventListener('submit', function(event) {
-        event.preventDefault()
+    document.getElementById('movementForm')?.addEventListener('submit', function(event) {
+        event.preventDefault();
         const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-
         const formData = new FormData(this);
 
         fetch(this.action, {
             method: 'POST',
-            headers: {
-                'X-CSRFToken': csrfToken, 
-            },
+            headers: { 'X-CSRFToken': csrfToken },
             body: formData
         })
         .then(response => response.json())
         .then(data => {
             if (data.message) {
                 alert(data.message);
-            }
-            else if (data.error) {
+            } else if (data.error) {
                 alert('Erro: ' + data.error);
             }
-        })
+        });
     });
+</script>
+
+<!-- lógica para a troca de tabs PRINCIPAIS, ainda falta implementar as secundárias, que vão estar atreladas somente à tab "Visão Geral" 
+Já é funcional, mas ainda não pega nenhuma informação real-->
+
+<script>
+    const tabs = document.querySelectorAll('.tab-btn');
+    const all_content = document.querySelectorAll('.content');
+    const secondaryTabs = document.querySelectorAll('.tab2-btn');
+
+    tabs.forEach((tab, index) => {
+        tab.addEventListener('click', (e) => {
+            tabs.forEach(tab => tab.classList.remove('active'));
+            tab.classList.add('active');
+
+            all_content.forEach(content => content.classList.remove('active'));
+            all_content[index].classList.add('active');
+
+            // Verifica se a aba "Visão Geral" está ativa
+            if (tab.getAttribute('content-id') === 'geral') {
+                secondaryTabs.forEach(tab2 => tab2.classList.remove('disabled'));
+            } else {
+                secondaryTabs.forEach(tab2 => tab2.classList.add('disabled'));
+            }
+        });
+    });
+</script>
+
+<!-- Lógica para a troca com o Alfabeto, ainda falta interligar com os elementos que vão aparecer na tela. -->
+<script>
+    const letras = document.querySelectorAll('.letra');
+    const botaoInicio = document.querySelector('.inicio');
+    const botaoFim = document.querySelector('.fim');
+    
+    function verificarLetrasAtivas() {
+        const letraAtiva = document.querySelector('.letra.active');
+        if (letraAtiva.textContent.trim() === 'A') {
+            botaoInicio.disabled = true;
+        } else {
+            botaoInicio.disabled = false;
+        }
+
+        if (letraAtiva.textContent.trim() === 'Z') {
+            botaoFim.disabled = true;
+        } else {
+            botaoFim.disabled = false;
+        }
+    }
+
+    function selecionarLetra(index) {
+        letras.forEach(letra => letra.classList.remove('active'));
+        letras[index].classList.add('active');
+        verificarLetrasAtivas();
+    }
+
+    letras.forEach((alfa, index) => {
+        alfa.addEventListener('click', () => {
+            selecionarLetra(index);
+        });
+    });
+
+    botaoInicio.addEventListener('click', () => {
+        selecionarLetra(0);
+    });
+
+    botaoFim.addEventListener('click', () => {
+        selecionarLetra(letras.length - 1); 
+    });
+
+    verificarLetrasAtivas();
 </script>
 {% endblock %}

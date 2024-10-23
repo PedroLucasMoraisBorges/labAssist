@@ -1,0 +1,76 @@
+.container{
+    background-color: white;
+    padding:30px;
+    margin: 20px
+}
+
+.tab-box{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    justify-content: space-between;
+    justify-content: space-between;
+}
+
+.primary-tabs {
+    display: flex;
+}
+
+.secondary-tabs {
+    display: flex;
+    margin-left: auto;
+}
+
+.tab-box .tab-btn,
+.tab-box .tab2-btn{
+    font-size: 12px;
+    font-weight: 600;
+    color: black;
+    background: none;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    background-color: white;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-style: solid;
+    border-width: thin;
+    border-color: rgba(0, 0, 0, 0.30)
+}
+
+.tab-box .tab-btn.active, 
+.tab-box .tab2-btn.active {
+    background-color: #CBF4D2;
+    border-color: #19882C;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.tab-box .tab-btn:hover, 
+.tab-box .tab2-btn:hover {
+    background-color: #CBF4D2;
+}
+
+.content-box .content{
+    display: none;
+    animation: moving .5s ease;
+}
+
+@keyframes moving{
+    from{transform: translateX(50px);opacity:0;}
+    to{transform: translateX(0px);opacity:1;}
+}
+.content-box .content.active{
+    display: block;
+}
+
+.tab2-btn {
+    opacity: 1;
+    pointer-events: auto;
+    transition: opacity 0.3s;
+}
+
+.tab2-btn.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}

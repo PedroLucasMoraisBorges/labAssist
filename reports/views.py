@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.views import View
 from django.utils import timezone
@@ -15,7 +15,13 @@ from rest_framework import status
 from core.settings import HOST
 from GeralUtilits import *
 
-class Requests(View):
+from django.contrib.auth.decorators import login_required, permission_required
+from django.utils.decorators import method_decorator
+from auth_user.decorators import *
+
+class Pendings(View):
+    @method_decorator(login_required)
+    @method_decorator(superuser_required)
     def get(self, request):
         users = User.objects.filter(is_active = False)
         requests = Request.objects.filter(approved=False, dt_response=None)
@@ -59,6 +65,8 @@ class Requests(View):
 # MOVEMENT
 
 class Movements(View):
+    @method_decorator(login_required)
+    @method_decorator(superuser_required)
     def get(self, request):
         movements = Movement.objects.all()
         
@@ -80,7 +88,9 @@ class Movements(View):
 
         return render(request, 'reports/movements.html', context)
 
-class CrateMovement(APIView):
+class CreateMovement(APIView):
+    @method_decorator(login_required)
+    @method_decorator(permission_required('Reports.can_add_movement', login_url='/'))
     def post(self, request):
         movementForm = MovementForm(request.POST)
 
@@ -102,6 +112,12 @@ class CrateMovement(APIView):
                 dt_request = movement.dt_movement,
                 fk_movement = movement
             )
+
+            if request.user.is_superuser:
+                requestMovement.approved == True
+                requestMovement.dt_response == requestMovement.dt_request
+                requestMovement.save()
+
             requestMovement.save()
             
             return send_request_movement(requestMovement)
@@ -109,6 +125,8 @@ class CrateMovement(APIView):
         return Response({'error': 'Formulário incorreto'}, status=status.HTTP_400_BAD_REQUEST)
         
 class ApproveRequestMovement(APIView):
+    @method_decorator(login_required)
+    @method_decorator(superuser_required)
     def get(self, request):
         id = request.query_params.get('id', None)
         
@@ -123,17 +141,32 @@ class ApproveRequestMovement(APIView):
             reagent = movement.fk_reagent
 
             if movement.movement_type == 'A':
-                reagent.amount += movement.amount
+                new_reagent = Reagent.objects.create(
+                    name = reagent.name,
+                    formula = reagent.formula,
+                    size= reagent.size,
+                    amount=movement.amount,
+                    limit=reagent.limit,
+                    validity=movement.validity,
+                    classification=reagent.classification,
+                    incompatibility=reagent.incompatibility,
+                    control=reagent.control,
+                    state=reagent.state,
+                    opening_date=reagent.opening_date,
+                    is_active=reagent.is_active
+                )
+                new_reagent.save()
+
             elif movement.movement_type in ['R', 'T']:
                 reagent.amount -= movement.amount
-            
-            reagent.save()
             
             return Response({'message': 'Requisição aprovada com sucesso'}, status=status.HTTP_200_OK)
         
         return Response({'error': 'ID não fornecido'}, status=status.HTTP_400_BAD_REQUEST)
     
 class DesapproveRequestMovement(APIView):
+    @method_decorator(login_required)
+    @method_decorator(superuser_required)
     def get(self, request):
         id = request.query_params.get('id', None)
         
@@ -145,12 +178,47 @@ class DesapproveRequestMovement(APIView):
             return Response({'message': 'Requisição aprovada com sucesso'}, status=status.HTTP_200_OK)
         
         return Response({'error': 'ID não fornecido'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+# LICENSE
+
+class RegisterLicense(View):
+    @method_decorator(login_required)
+    @method_decorator(superuser_required)
+    def get(self, request):
+        form = LicenseForm()
+
+        context = {
+            'form' : form
+        }
+
+        return render(request, 'reports/registerLicense.html', context)
     
+    @method_decorator(login_required)
+    @method_decorator(superuser_required)
+    def post(self, request):
+        form = LicenseForm(request.POST, request.FILES)
+        errors = getErrors([form])
+
+        if form.is_valid():
+            license_instance = form.save(commit=False)
+            license_instance.dt_register = date.today()
+            license_instance.save()
+
+            return redirect('/')
+        
+        context = {
+            'form' : form,
+            'errors' : errors
+        }
+
+        return render(request, 'reports/registerLicense.html', context)
 
 # USER
 
-
 class ApproveUser(APIView):
+    @method_decorator(login_required)
+    @method_decorator(superuser_required)
     def get(self, request):
         codifiquedId = request.query_params.get('id', None)
 
@@ -161,13 +229,15 @@ class ApproveUser(APIView):
 
             if user:
                 user.save()
-                return send_activation_email(user)  
+                return send_liberation_user_email(user)  
                       
             return Response({'error': 'User não encontrado'}, status=status.HTTP_400_BAD_REQUEST)
             
         return Response({'error': 'ID não fornecido'}, status=status.HTTP_400_BAD_REQUEST)
 
 class DisapproveUser(APIView):
+    @method_decorator(login_required)
+    @method_decorator(superuser_required)
     def get(self, request):
         codifiquedId = request.query_params.get('id', None)
 
@@ -176,7 +246,7 @@ class DisapproveUser(APIView):
             user = User.objects.get(id=decoded_id)
 
             if user:
-                return send_cancellation_email(user)
+                return send_cancellation_user_email(user)
                       
             return Response({'error': 'User não encontrado'}, status=status.HTTP_400_BAD_REQUEST)
             

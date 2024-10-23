@@ -1,0 +1,126 @@
+{% load static %}
+
+<style>
+    .list_movements {
+        border: 1px solid black;
+        display: grid;
+        grid-template-columns: 20% 20% 20% 20% 20%;
+        padding: 1.2rem;
+        justify-content: space-between;
+    }
+
+    .movement_card {
+        background-color: #CDFFD6;
+        padding: .9rem;
+        border: 1px solid #0A5517;
+        border-radius: 10px;
+        margin: .6rem;
+    }
+
+    .responsible {
+        display: flex;
+        background-color: white;
+        box-shadow: 1px 4px 4px rgba(0, 0, 0, 0.49);
+        border-radius: 25px;
+        align-items: center;
+        padding: .4rem;
+        margin-bottom: .8rem;
+    }
+
+    .responsible .img_perfil {
+        background-color: #19882C;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 40px;
+        height: 40px;
+        color: white;
+        font-weight: 600;
+        margin-right: .4rem;
+    }
+
+    .personal_info .name {
+        font-weight: 500;
+    }
+
+    .personal_info .sector {
+        font-size: .85rem;
+    }
+
+    .movement_info {
+        background-color: white;
+    }
+
+    .card_header {
+        background-color: #19882C;
+        color: white;
+        font-weight: 600;
+        text-align: center;
+    }
+
+    .movement_info .card_body {
+        padding: .5rem;
+        border-radius: 0px 0px 10px 10px;
+        box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.321);
+        margin-bottom: 1rem;
+    }
+
+    .movement_info .card_body p {
+        font-weight: 500;
+    }
+
+    .card_body .name_reagent {
+        font-size: 1.2rem;
+        color: #0A5517;
+        font-size: 1.4rem;
+        font-weight: 600;
+    }
+
+    .btn_show_move {
+        border-radius: 25px;
+        width: 100%;
+        padding: .6rem 0rem;
+        color: white;
+        font-weight: 600;
+        border: 2px solid white;
+        box-shadow: 1px 3px 3px rgba(0, 0, 0, 0.268);
+        transition: .3s;
+        font-size: 1.1rem;
+    }
+
+    .btn_show:hover {
+        transform: scale(1.1);
+    }
+</style>
+
+<div class="movement_card">
+    <div class="responsible">
+        <div class="img_perfil">
+            {{movement.fk_user.user_image}}
+        </div>
+
+        <div class="personal_info">
+            <p class="name">{{movement.fk_user.name}}</p>
+            <p class="sector">{{movement.fk_user.get_sector_display}}</p>
+        </div>
+    </div>
+
+    <div class="movement_info">
+        <div class="card_header">
+            <h2>Item</h2>
+        </div>
+
+        <div class="card_body">
+            <p class="name_reagent">{{movement.fk_reagent.name}}</p>
+            <p>{{movement.fk_reagent.formula}}</p>
+            <p>{{movement.fk_reagent.classification}}</p>
+            <p>{{movement.get_movement_type_display}}</p>
+            <p>{{movement.formatted_dt_movement}}</p>
+        </div>
+    </div>
+
+    <button class="btn_show btn_show_move" card_id="movement{{movement.id}}">Ver Movimentação</button>
+</div>
+
+{% include 'components/movements/modal.html' %}

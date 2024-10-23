@@ -1,0 +1,170 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
+  
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f5f5f5;
+    margin: 8%;
+  }
+  h2{
+    margin-top: 30px;
+  }
+  .profile-card {
+    width: 70%;
+    height: 125%;
+    background-color: white;
+    border-radius: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    
+  }
+  .profile-left{
+    display: flex;
+    margin: 1rem;
+  }
+  .profile-left-text{
+    margin-left: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+  }
+  .profile-image {
+    width: 9.3rem;
+    height: 9.3rem;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .change-photo-btn {
+    margin-top: 1rem;
+    padding: 10px;
+    width: 180px;
+    background-color: #19882C;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: bolder;
+    cursor: pointer;
+    transition: background-color 0.5s ease, border 0.5s ease; /* Transição suave */
+  }
+  
+  .change-photo-btn:hover {
+    color: #CDFFD6;
+    background-color: #32292F;
+  }
+  
+  .user-info {
+    text-align: center;
+  }
+  
+  .user-name {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  .user-department {
+    font-size: 16px;
+    color: #777;
+  }
+
+  
+  .input-row {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  .input-row-full{
+    display: block;
+    margin-bottom: 1rem;
+  }
+  
+  .input-group {
+    position: relative;
+    width: 48%;
+    
+  }
+  
+  .profile-input {
+    width: 100%;
+    padding: 30px;
+    border: 1px solid #F0F0F0;
+    border-radius: 15px;
+    font-size: 16px;
+    background-color: #CDFFD6; /* Cor de fundo dos inputs */
+    transition: background-color 0.3s ease, border 0.3s ease; /* Transição suave */
+  }
+  .profile-input:focus {
+    outline: none; /* Remove a borda preta ao focar */
+    border: 1.5px solid #ddd; /* Remove a borda de foco */
+    background-color: #F0F0F0; /* Cor de fundo branco gelo acinzentado ao focar */
+  }
+  
+  .icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #777;
+  }
+  
+  .full-width {
+    margin-top: 1rem;
+    margin-left: 10px;
+    width: 98%;
+  }
+  .submit-btn-container{
+    display: flex;
+    justify-content: center;
+  }
+  .submit-btn{
+    margin-top: 1.5rem;
+    padding: 15px;
+    width: 300px;
+    background-color: #19882C;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: bolder;
+    cursor: pointer;
+    transition: background-color 0.5s ease, border 0.5s ease; /* Transição suave */
+  }
+  
+  .submit-btn:hover {
+    color: #CDFFD6;
+    background-color: #32292F;
+  }
+  .permissions-list {
+    background-color: #CDFFD6;
+    padding: 30px;
+    border: 1px solid #F0F0F0;
+    border-radius: 15px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    list-style-type: none; /* Remove as bolinhas da lista */
+    padding: 20px; 
+  }
+
+  .permissions-list li {
+    margin-right: 1rem;
+    margin-left: 20px;
+    background-color: #ffffff; /* Cor de fundo para os itens */
+    padding: 8px; /* Adiciona um preenchimento aos itens */
+    border-radius: 25px; /* Arredonda os cantos */
+    margin-bottom: 5px; /* Espaçamento entre os itens */
+    font-size: 16px; /* Tamanho da fonte */
+  }
+  #mensagem-erro{
+    margin-left: 10px;
+    color: red; 
+    display: none;
+  }

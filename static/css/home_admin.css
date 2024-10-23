@@ -1,0 +1,191 @@
+/* Localizador Alfabeto  */
+
+.alfabeto {
+    padding-block: 5px;
+    border-radius: 100px;
+    padding-inline: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
+    margin-inline: 20px;
+    margin-top: 50px;
+    margin-bottom: 30px;
+}
+    
+.alfabeto .tab_alfa {
+    display: flex;
+    margin-inline: 10px;
+    font-size: 14px;
+}
+
+.tab_alfa:hover{
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
+    color: #0A5517;
+    text-decoration: underline;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.letras {
+    display: flex;
+    gap: 10px;
+    flex-grow: 1;
+    justify-content: center;
+}
+
+.letras .letra {
+    
+    font-family: 'Inter', sans-serif;
+    transform: translateY(0);
+    transition: all 0.25s linear;
+    border-radius: 50px;
+    padding-inline: 13px;
+    padding-block: 8px;
+}
+
+.letra:hover{
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
+    color: #19882C;
+    background: #CBF4D2;
+}
+
+.letras .letra.active{
+    color: white;
+    background-color: #0A5517;
+}
+
+.tag_inicio,
+.tab_fim {
+    display: flex;
+    align-items: center;
+}
+
+.tag_inicio button,
+.tab_fim button {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+}
+
+.tag_inicio button:hover,
+.tab_fim button:hover {
+    color: #0A5517;
+}
+
+.tag_inicio svg,
+.tab_fim svg {
+    pointer-events: none;
+}
+
+.inicio:disabled,
+.fim:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+/* .top { 
+    --offset: 50px; 
+    position: sticky; 
+    bottom: 20px; 
+    margin-right: 10px;
+    place-self: end; 
+    margin-top: calc(100vh + var(--offset));
+    width: 45px; aspect-ratio: 1; 
+    background: #569F62; 
+    border-radius: 10px; 
+} 
+.top:before { 
+    content: ""; 
+    position: absolute; 
+    inset: 30%; transform: translateY(20%) rotate(-45deg); 
+    border-top: 5px solid #fff; 
+    border-right: 5px solid #fff; 
+}  */
+
+/* Tabs, essa é a parte central da página, ainda falta inplementar a usabilidade real da parada
+ainda não consigo trazer as tabelas, não sei se fica melhor como componente ou não, tenho que testar */
+
+.container{
+    background-color: white;
+    padding:30px;
+    margin: 20px
+}
+
+.tab-box{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    justify-content: space-between;
+    justify-content: space-between;
+}
+
+.primary-tabs {
+    display: flex;
+}
+
+.secondary-tabs {
+    display: flex;
+    margin-left: auto;
+}
+
+.tab-box .tab-btn,
+.tab-box .tab2-btn{
+    font-size: 12px;
+    font-weight: 600;
+    color: black;
+    background: none;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    background-color: white;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-style: solid;
+    border-width: thin;
+    border-color: rgba(0, 0, 0, 0.30)
+}
+
+.tab-box .tab-btn.active, 
+.tab-box .tab2-btn.active {
+    background-color: #CBF4D2;
+    border-color: #19882C;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.tab-box .tab-btn:hover, 
+.tab-box .tab2-btn:hover {
+    background-color: #CBF4D2;
+}
+
+.content-box .content{
+    display: none;
+    animation: moving .5s ease;
+}
+
+@keyframes moving{
+    from{transform: translateX(50px);opacity:0;}
+    to{transform: translateX(0px);opacity:1;}
+}
+.content-box .content.active{
+    display: block;
+}
+
+.tab2-btn {
+    opacity: 1;
+    pointer-events: auto;
+    transition: opacity 0.3s;
+}
+
+.tab2-btn.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+/* Tenho que fazer a customização e a lógica das tabs secundárias */

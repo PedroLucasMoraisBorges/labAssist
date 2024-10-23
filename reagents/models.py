@@ -30,3 +30,15 @@ class Reagent(models.Model):
 
     def __str__(self):
         return self.name
+    
+    @property
+    def formatted_validity(self):
+        return self.validity.strftime('%d/%m/%Y')
+    
+    class Meta:
+        permissions = [
+            ("can_add_reagent", "Can add reagent"),
+            ("can_change_reagent", "Can change reagent"),
+            ("can_delete_reagent", "Can delete reagent"),
+            ("can_view_reagent", "Can view reagent"),
+        ]

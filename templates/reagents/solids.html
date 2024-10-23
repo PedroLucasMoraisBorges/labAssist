@@ -1,0 +1,53 @@
+{% extends 'components/base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/liquids.css' %}">s
+{% endblock %}
+
+{% block content %}
+    {% include 'components/navbar.html' %}
+
+    {% include 'components/movements/form_modal.html' %}
+    <main>
+        <section>
+            {% include 'components/page_indication/welcome.html' with text='Sólidos' %}
+            
+            {% include 'components/search.html' %}
+            
+            <div class="container">
+                <div class="tab-box">
+                    <div class="tabs primary-tabs">
+                        <button class="tab-btn active" content-id="geral"> Ativos</button>
+                        <button class="tab-btn" content-id="move"> Passivos</button>
+                    </div>
+                </div>
+                <div class="content-box">
+                    <div class="content active" id="geral">
+                        <div class="actives">
+                            {% for grupo in active_solids %}
+                                {% for letter, reagents in grupo.items %}
+                                    {% include 'components/group_reagents.html' %}
+                                {% endfor %}
+                            {% endfor %}
+                        </div>
+
+                        <div class="passives">
+                            {% for grupo in passive_solids %}
+                                {% for letter, reagents in grupo.items %}
+                                    {% include 'components/group_reagents.html' %}
+                                {% endfor %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        {% include 'components/sidebar.html' %}
+    </main>
+
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

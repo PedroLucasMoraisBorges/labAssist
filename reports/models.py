@@ -20,15 +20,25 @@ class Movement(models.Model):
     amount = models.IntegerField()
     movement_type = models.CharField(max_length=64, choices=typeMovementChoices)
     dt_movement = models.DateTimeField()
+    validity = models.DateField(null=True)
 
     fk_reagent = models.ForeignKey(Reagent, related_name='reagent_movement', null=False, on_delete=models.CASCADE)
     fk_user = models.ForeignKey(User, related_name='responsible_movement', null=False,  on_delete=models.CASCADE)
 
+    @property
+    def formatted_dt_movement(self):
+        return self.dt_movement.strftime('%d/%m/%Y')
+    
     def __str__(self):
         year = str(self.dt_movement.year)
         month = str(self.dt_movement.month)
         day = str(self.dt_movement.day)
         return self.fk_reagent.name + ' ' + self.movement_type + ' '+ day + '/' + month + '/' + year
+    
+    class Meta:
+        permissions = [
+            ("can_add_movement", "Criar Movimentação")
+        ]
 
 class Request(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

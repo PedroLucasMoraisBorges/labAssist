@@ -1,0 +1,424 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin-top: 100px;
+}
+
+/* Customização do Header da página */
+.header{
+    background: linear-gradient(90deg, #19882C 0%, #569F62 100%);
+    display: flex;
+    padding-left:30px ;
+    padding-block: 20px;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; 
+}
+
+.interactive-header{
+    margin-left: 20px;
+}
+
+.interactive-header .login,
+.hero .hero-login{
+    color: white ;
+    background-color: #19882C;
+    padding-block: 15px;
+    border: solid;
+    border-color: #0A5517;
+    border-radius: 100px;
+    box-shadow:0 2px 5px rgba(0, 0, 0, 0.35); 
+    border-width: thin;
+    padding-inline: 30px;
+    font-weight: 600;
+    margin-inline: 20px;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+.interactive-header .login:hover,
+.hero .hero-login:hover{
+    color: #19882C;
+    background-color: white;
+    padding-inline: 40px;
+}
+
+.interactive-header .register,
+.hero .hero-register{
+    background-color: white;
+    padding: 15px;
+    border: solid;
+    border-color: #0A5517;
+    border-radius: 100px;
+    box-shadow:0 2px 5px rgba(0, 0, 0, 0.35); 
+    border-width: thin;
+    padding-inline: 30px;
+    font-weight: 600;
+    margin-right: 20px;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+.interactive-header .register:hover,
+.hero .hero-register:hover{
+    color: white;
+    background-color: #0A5517;
+    padding-inline: 40px;
+}
+
+.interactive-header .header-btn{
+    color: white;
+    font-size: 13px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.5s;
+    padding-inline: 20px;
+    padding-block: 10px;
+    border-radius: 100px;
+}
+
+.interactive-header .header-btn:hover{
+    background-color: white;
+    color: black;
+    box-shadow:0 2px 5px rgba(0, 0, 0, 0.35); 
+}
+
+.header-btn.active{
+    background-color: white;
+    color: black;
+    box-shadow:0 2px 5px rgba(0, 0, 0, 0.35); 
+}
+
+/* Customização do Hero da página */
+.hero{
+    background-image: url('../imgs/background-hero.png');
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 500px;
+}
+
+.hero h1{
+    font-size: 50px;
+    font-weight: 800;
+}
+
+.hero h2{
+    font-size: 20px;
+    color: #757575;
+    font-weight: 500;
+    margin-block: 10px;
+    margin-bottom: 20px;
+}
+
+/* Customização do Slider/Carrocel da página */
+.slider-container{
+    width: 80%;
+    height: 80vh;
+    margin: auto;
+    position: relative;
+}
+
+/* .slider-container .images {
+    display: none;
+} */
+.carousel-container {
+    width: 80%;
+    margin: auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Diminui o espaço entre os elementos da galeria */
+    align-items: center;
+    margin-top: -150px;
+
+    .carousel {
+        aspect-ratio: 16/9;
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .item {
+            opacity: 0;
+            width: 900px;
+            height: 300px;
+            display: none;
+            transition: opacity 0.5s ease-in-out;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: center;
+            }
+            &.active {
+                opacity: 1;
+                display: block;
+            }
+        }
+    }
+
+    .btn {
+        padding: 1em;
+        position: absolute;
+        transform: translateY(-50%);
+        top: 50%;
+        outline: none;
+        border: none;
+        cursor: pointer;
+        text-transform: uppercase;
+        font-size: 12px;
+        font-weight: 900;
+        color: white;
+        background-color: #19882C;
+        transition: transform 0.5s ease-in-out;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35); 
+        border-radius: 100px;
+
+        &:active,
+        &:focus {
+            transform: translateY(-50%) scale(0.9);
+        }
+
+        &:hover {
+            transform: translateY(-50%) scale(0.96);
+            color: #A5FEB4;
+            box-shadow: none;
+        }
+    }
+
+    .prev {
+        left: 5%; 
+    }
+
+    .next {
+        right: 5%;
+    }
+
+    .dots {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-top: -100px;
+        margin-bottom: 50px;
+
+        .dot {
+            cursor: pointer;
+            height: 10px;
+            width: 10px;
+            background-color: #878787;
+            transition: background-color 0.2s ease;
+            border-radius: 130px;
+
+            &.active,
+            &:hover {
+                background-color: #19882C;
+            }
+        }
+    }
+}
+
+
+
+/* Customização da apresentação do LEAS para o usuário */
+.presentation {
+    background: linear-gradient(90deg, #A5FEB4 0%, #B6F9C2 100%);
+    display: flex;
+    padding-block: 100px ;
+    padding-left: 100px;
+    align-items: center;
+    margin-bottom: 100px;
+}
+
+.presentation-text {
+    max-width: 600px;
+    min-width:min-content;
+}
+
+.presentation img {
+    margin-left: auto;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
+}
+
+.presentation h2{
+    font-size: 35px;
+    margin-bottom: 10px;
+}
+
+.presentation h3{
+    font-weight: 500;
+    font-size: 20px;
+    color: #0A5517;
+    margin-bottom: 10px;
+}
+
+.presentation-text .pText1{
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+
+.presentation-text .pText2{
+    font-size: 13px;
+    margin-bottom: 50px;
+}
+
+.presentation a{
+    text-decoration: none;
+    color: white;
+    background-color: #19882C;
+    padding-inline: 100px;
+    padding-block: 10px ;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 100px;
+    transition: all 0.5s;
+}
+
+.presentation a:hover{
+    color: #0A5517;
+    background-color: white;
+    box-shadow:0 2px 5px rgba(0, 0, 0, 0.35);
+}
+
+.imgs{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: row;
+}
+
+.imgs .img1,
+.imgs .img2,
+.imgs .img3,
+.imgs .img4{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.imgs img,
+.imgs img,
+.imgs img,
+.imgs img{
+    border-radius: 100px;
+    border-style: solid;
+    border-color: #19882C;
+    border-width:thick;
+}
+
+.imgs h2{
+    font-weight: 700;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+.questions{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-bottom: 50px;
+}
+
+.questions .text-questions{
+    background-color: #A5FEB4;
+    padding-block: 50px;
+    padding-inline: 350px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.text-questions button{
+    cursor: pointer;
+    border: none;
+    padding-inline: 100px;
+    padding-block: 10px;
+    border-radius: 100px;
+    background-color: #19882C;
+    color: white;
+    font-weight: 600;
+    margin-top: 20px;
+    transition: all 0.5s;
+}
+
+.text-questions button:hover{
+    color: #19882C;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
+}
+
+.footer {
+    background: linear-gradient(90deg, #CDFED5 0%, #9DFFAE 100%);
+    padding-top: 100px;
+    position: relative;
+    min-height: 400px; 
+}
+
+.footer .infoFooter {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.footer .ifceinfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.ifceinfo .IFCE_instagram {
+    display: flex;
+    align-items: center;
+}
+
+.liquids a,
+.solids a,
+.Geral-Stock a {
+    text-decoration: none;
+    color: black;
+    display: flex;
+    transition: all 0.1s;
+    margin-block: 5px;
+}
+
+.liquids a:hover,
+.solids a:hover,
+.Geral-Stock a:hover {
+    text-decoration: solid;
+    color: #0A5517;
+    font-weight: 800;
+}
+
+.footer .end {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    padding-bottom: 20px;
+}

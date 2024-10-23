@@ -1,18 +1,31 @@
 {% load static %}
 {% load reports_tags %}
 {% load static tailwind_tags %}
-{% get_movement_form as movementForm %}
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/css/output.css">
     <title>LabAssist</title>
+    
+    <!-- style -->
+    <link rel="stylesheet" href="/static/css/output.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
     {% tailwind_css %}
-    <!-- Tudo que for carregado em todas as páginas pode colocar fora do bloco -->
+
+    <!-- scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <style>
+        main {
+            display: grid;
+            grid-template-columns: 82.5% 17.5%;
+        }
+    </style>
+    
     {% block head %}
     {% endblock %}
 </head>
@@ -22,6 +35,8 @@
     {% endblock %}
 
     <!-- Tudo que for carregado em todas as páginas pode colocar fora do bloco -->
+    
+    <script src="{% static 'js/modals_conduct.js' %}"></script>
     {% block scripts %}
     {% endblock %}
 </body>
