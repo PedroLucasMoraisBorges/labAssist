@@ -85,3 +85,14 @@ class Users(View):
         }
         
         return render(request,'admin/usersPage.html', context)
+    
+    
+class ViewUserProfile(View):
+    @method_decorator(login_required)
+    def get (self, request):
+        usuario = request.user
+        contexto = {
+            'usuario': usuario,
+        }
+        return render(request, 'user_profile.html', contexto)
+    

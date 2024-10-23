@@ -56,29 +56,3 @@ class RegisterReagent(View):
             }
 
             return render(request, 'reagents/register.html', context)
-
-class ViewLiquids(View):
-    def get(self, request):
-        search = request.GET.get('search', "")
-
-        passive_liquids = search_for_reagent(search, 'L')['passives']
-        active_liquids = search_for_reagent(search, 'L')['actives']
-
-        context = {
-            'active_liquids' : agrupar_reagents_por_letra(ordenar_lista(active_liquids)),
-            'passive_liquids' : agrupar_reagents_por_letra(ordenar_lista(passive_liquids))
-        }
-        return render(request, 'reagents/liquids.html', context)
-    
-class ViewSolids(View):
-    def get(self, request):
-        search = request.GET.get('search', "")
-
-        passive_solids = search_for_reagent(search, 'S')['passives']
-        active_solids = search_for_reagent(search, 'S')['actives']
-
-        context = {
-            'active_liquids' : agrupar_reagents_por_letra(ordenar_lista(active_solids)),
-            'passive_liquids' : agrupar_reagents_por_letra(ordenar_lista(passive_solids))
-        }
-        return render(request, 'reagents/liquids.html', context)
