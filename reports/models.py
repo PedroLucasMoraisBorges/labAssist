@@ -20,6 +20,7 @@ class Movement(models.Model):
     amount = models.IntegerField()
     movement_type = models.CharField(max_length=64, choices=typeMovementChoices)
     dt_movement = models.DateTimeField()
+    validity = models.DateField(null=True)
 
     fk_reagent = models.ForeignKey(Reagent, related_name='reagent_movement', null=False, on_delete=models.CASCADE)
     fk_user = models.ForeignKey(User, related_name='responsible_movement', null=False,  on_delete=models.CASCADE)

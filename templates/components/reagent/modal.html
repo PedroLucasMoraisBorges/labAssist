@@ -116,8 +116,8 @@
     .none {
         display: none;
     }
-
 </style>
+
 <div class="back none" id="reagent{{reagent.id}}">
     <article class="modal">
         <div class="modal_header">
@@ -148,7 +148,12 @@
 
             <div class="body_item">
                 <p class="title">Estado do Item</p>
-                <p class="reagent_info">{{reagent.is_active}}</p>
+
+                {% if reagent.is_active %}
+                    <p class="reagent_info">Ativo</p>
+                {% else %}
+                    <p class="reagent_info">Passivo</p>
+                {% endif %}
             </div>
 
             <div class="body_item">

@@ -46,7 +46,7 @@
         align-items: start;
     }
 
-    .body_item {
+    #movement_form .body_item {
         margin-bottom: 1rem;
         width: 100%;
         display: flex;
@@ -173,6 +173,8 @@
                 </div>
             </div>
 
+
+
             <div class="body_item wide">
                 {{form.motivation.label_tag}}
                 {{form.motivation}}
@@ -194,34 +196,33 @@
 
 <script>
     document.getElementById('movements_form_id').addEventListener('submit', function(event) {
-    event.preventDefault(); // Evita o envio padrão do formulário
+        event.preventDefault(); // Evita o envio padrão do formulário
 
-    const formData = new FormData(this); // Coleta os dados do formulário
-    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value; // Captura o token CSRF
+        const formData = new FormData(this); // Coleta os dados do formulário
+        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value; // Captura o token CSRF
 
-    fetch('{% url "create_movement" %}', { // Substitua pelo endpoint correto da sua API
-        method: 'POST',
-        body: formData,
-        headers: {
-            'X-CSRFToken': csrfToken // Inclui o token CSRF nos cabeçalhos
-        }
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Erro na requisição: ' + response.statusText);
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log('Success:', data);
-        close_modal()
-        alert('Movimentação Criada')
-    })
-    .catch((error) => {
-        console.error('Error:', error);
-        // Aqui você pode tratar o erro
-        // Ex: Mostrar mensagem de erro para o usuário
+        fetch('{% url "create_movement" %}', { // Substitua pelo endpoint correto da sua API
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': csrfToken // Inclui o token CSRF nos cabeçalhos
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro na requisição: ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+            close_modal()
+            alert('Movimentação Criada')
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            // Aqui você pode tratar o erro
+            // Ex: Mostrar mensagem de erro para o usuário
+        });
     });
-});
-
 </script>

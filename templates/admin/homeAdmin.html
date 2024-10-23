@@ -15,25 +15,10 @@
 
     <main>
         <section>
-            <div class="presentation">
-                <div class="presentation_text">
-                    <h2>Seu estoque</h2>
-                    <p>Nesta seção estarão listados itens do seu estoque, sua visão geral, movimentações e muito mais.</p>
-                </div>
-                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/>
-                    <path d="M14 3v5h5M16 13H8M16 17H8M10 9H8"/>
-                </svg>
-            </div>
+            {% include 'components/page_indication/presentation.html' with page="Seu estoque" text="Nesta seção estarão listados itens do seu estoque, sua visão geral, movimentações e muito mais." %}
 
-            <div class="welcome">
-                <h2>Bem-vindo, {{user}}!</h2>
-                <p>O que deseja fazer?</p>
-                <div class="adm_option">
-                    <button onclick="open_movement_form_modal()" class="option_move">Fazer Movimentação</button>
-                    <a href="{% url 'register_reagent' %}"><button class="option_item">Cadastrar Novo Item</button></a>
-                </div>
-            </div>
+            {% include 'components/page_indication/welcome.html' with text='Bem-vindo, {{user}}!' %}
+
             <!-- Essa parte vai ser a seleção da letra do composto requisitado, ainda não pega nenhuma informação -->
             <div class="alfabeto">
                 <div class=" tab_alfa tag_inicio">
@@ -242,18 +227,5 @@ Já é funcional, mas ainda não pega nenhuma informação real-->
     });
 
     verificarLetrasAtivas();
-</script>
-
-<script src="{% static 'js/modal_conduct.js' %}"></script>
-
-<script>
-    function open_movement_form_modal(){
-        var open_form_modal = document.querySelector('.option_move')
-
-        open_form_modal.addEventListener("click", function(e) {
-            var form_modal = document.querySelector('#movement_form')
-            form_modal.classList.remove("none")
-        })
-    }
 </script>
 {% endblock %}

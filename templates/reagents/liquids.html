@@ -2,46 +2,46 @@
 {% load static %}
 
 {% block head %}
+<link rel="stylesheet" href="{% static 'css/liquids.css' %}">s
 {% endblock %}
 
 {% block content %}
     {% include 'components/navbar.html' %}
 
+    {% include 'components/movements/form_modal.html' %}
     <main>
         <section>
-            <form>
-                <input type="text" name="search" placeholder="Busque por reagents">
-                <button type="submit">Button</button>
-            </form>
+            {% include 'components/page_indication/welcome.html' with text='Líquidos' %}
             
+            {% include 'components/search.html' %}
             
-            <h1>Ativos</h1>
-            {% for grupo in active_liquids %}
-                {% for letra, reagents in grupo.items %}
-                    <div class="{{letra}} none">
-                        <h2>{{ letra }}</h2>
-                        <ul>
-                            {% for reagent in reagents %}
-                                <li>{{ reagent.name }}</li>
-                            {% endfor %}
-                        </ul>
+            <div class="container">
+                <div class="tab-box">
+                    <div class="tabs primary-tabs">
+                        <button class="tab-btn active" content-id="geral"> Ativos</button>
+                        <button class="tab-btn" content-id="move"> Passivos</button>
                     </div>
-                {% endfor %}
-            {% endfor %}
-            
-            <hr>
-            
-            <h1>Passivos</h1>
-            {% for grupo in passive_liquids %}
-                {% for letra, reagents in grupo.items %}
-                    <h2>{{ letra }}</h2>
-                    <ul>
-                        {% for reagent in reagents %}
-                            <li>{{ reagent.name }}</li>
-                        {% endfor %}
-                    </ul>
-                {% endfor %}
-            {% endfor %}
+                </div>
+                <div class="content-box">
+                    <div class="content active" id="geral">
+                        <div class="actives">
+                            {% for grupo in active_liquids %}
+                                {% for letter, reagents in grupo.items %}
+                                    {% include 'components/group_reagents.html' %}
+                                {% endfor %}
+                            {% endfor %}
+                        </div>
+
+                        <div class="passives">
+                            {% for grupo in passive_liquids %}
+                                {% for letter, reagents in grupo.items %}
+                                    {% include 'components/group_reagents.html' %}
+                                {% endfor %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
 
         {% include 'components/sidebar.html' %}

@@ -6,7 +6,11 @@ function close_modal() {
     });
 }
 
-buttons_card = document.querySelectorAll(".btn_show")
+function open_movement_form_modal(){
+    document.querySelector('#movement_form').classList.remove("none")
+}
+
+var buttons_card = document.querySelectorAll(".btn_show")
 
 buttons_card.forEach(button => {
     button.addEventListener("click", () => {
