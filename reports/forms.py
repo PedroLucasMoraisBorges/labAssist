@@ -77,4 +77,4 @@ class MovementForm(forms.ModelForm):
 
     class Meta:
         model=Movement
-        fields=['motivation', 'amount', 'movement_type', 'fk_reagent']
+        fields=['motivation', 'amount', 'movement_type', 'fk_reagent', 'validity']

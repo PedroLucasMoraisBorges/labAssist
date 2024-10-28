@@ -29,6 +29,12 @@ class Movement(models.Model):
     def formatted_dt_movement(self):
         return self.dt_movement.strftime('%d/%m/%Y')
     
+    @property
+    def formatted_dt_validity(self):
+        if self.validity == None:
+            return ''
+        return self.validity.strftime('%d/%m/%Y')
+    
     def __str__(self):
         year = str(self.dt_movement.year)
         month = str(self.dt_movement.month)
