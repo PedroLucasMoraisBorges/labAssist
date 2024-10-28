@@ -1,0 +1,63 @@
+{% load static %}
+
+<style>
+    .user_request_card {
+        display: flex;
+        padding: .8rem;
+        border-radius: 10px;
+        border: 1px solid rgba(0, 0, 0, 0.25);
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.20);
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .user_request_card .user_name {
+        display: flex;
+        align-items: center;
+        font-weight: 500;
+    }
+
+    .user_img { 
+        background-color: #19882C;
+        border-radius: 50%;
+        padding: .5rem .6rem;
+        font-size: .9rem;
+        color: white;
+        font-weight: 500;
+        margin-right: .5rem;
+    }
+
+    .btns_user button {
+        font-weight: 600;
+        color: white;
+        padding: .3rem .6rem;
+        border-radius: 10px;
+        transition: .3s;
+    }
+
+    .btns_user button:hover {
+        transform: scale(1.1);
+    }
+
+    .approve {
+        background-color: #58A365;
+    }
+
+    .disapprove {
+        background-color: #FF3E3E;
+    }
+</style>
+
+<div class="user_request_card">
+    <div class="user_name">
+        <p class="user_img">{{user.info.user_image}}</p>
+        <p>{{ user.info }}</p>
+    </div>
+    
+    <p>{{user.info.get_sector_display}}</p>
+
+    <div class="btns_user">
+        <button class="actionButtons approve" url="{{user.urls.approve}}" data-id="{{ user.codifiqued_id }}">Aprovar</button>
+        <button class="actionButtons disapprove" url="{{user.urls.desapprove}}" data-id="{{ user.codifiqued_id }}">Negar</button>
+    </div>
+</div>

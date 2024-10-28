@@ -92,9 +92,37 @@
     .btn_show:hover {
         transform: scale(1.1);
     }
+
+    .show_more {
+        background-color: #0A5517;
+        font-size: 1rem;
+        padding: .1rem;
+        margin-top: .3rem;
+    }
+
+    .request_m_btns {
+        display: grid;
+        grid-template-columns: 47.5% 47.5%;
+        justify-content: space-between;
+        color: white;
+        font-weight: 500;
+    }
+
+    .request_m_btns button {
+        font-weight: 600;
+        color: white;
+        padding: .3rem .6rem;
+        border-radius: 15px;
+        transition: .3s;
+        margin: 0rem ;
+    }
+
+    .request_m_btns button:hover {
+        transform: scale(1.1);
+    }
 </style>
 
-<div class="movement_card">
+<div  class="movement_card {% if is_request %} card_request {% endif %}">
     <div class="responsible">
         <div class="img_perfil">
             {{movement.fk_user.user_image}}
@@ -117,10 +145,22 @@
             <p>{{movement.fk_reagent.classification}}</p>
             <p>{{movement.get_movement_type_display}}</p>
             <p>{{movement.formatted_dt_movement}}</p>
+
+            {% if is_request %}
+                <button class="btn_show sty btn_show_move show_more" card_id="movement{{movement.id}}">Ver Mais</button>
+            {% endif %}
         </div>
+
     </div>
 
-    <button class="btn_show btn_show_move" card_id="movement{{movement.id}}">Ver Movimentação</button>
+    {% if is_request %}
+        <div class="request_m_btns">
+            <button class="approve actionButtons" url="{{request.urls.approve}}" data-id="{{ request.info.id }}">Aprovar</button>
+            <button class="disapprove actionButtons" url="{{request.urls.desapprove}}" data-id="{{ request.info.id }}">Negar</button>
+        </div>
+    {% else %}
+        <button class="btn_show btn_show_move" card_id="movement{{movement.id}}">Ver Movimentação</button>
+    {% endif %}
 </div>
 
 {% include 'components/movements/modal.html' %}

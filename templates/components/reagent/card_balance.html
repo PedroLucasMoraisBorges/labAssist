@@ -1,0 +1,37 @@
+{% load static %}
+
+<style>
+    .card_balance {
+        display: flex;
+        justify-content: space-between;
+        padding: .4rem .8rem;
+        margin-bottom: .8rem;
+        box-shadow: 0px 4px 3px rgba(0, 0, 0, 0.20);
+        border-radius: 10px;
+        border: 1px solid #1e1e1e;
+        align-items: center;
+        font-weight: 500;
+    }
+    
+    .card_balance .basic_info {
+        display: flex;
+        align-items: center;
+    }
+
+    .card_balance .basic_info img {
+        margin-right: .4rem;
+    }
+</style>
+
+<div class="card_balance">
+    <div class="basic_info">
+        <img src="{% static 'imgs/icons/balance.svg' %}" alt>
+        {{reagent.name}}
+    </div>
+
+    <p class="validity">
+        {{reagent.validity}}
+    </p>
+
+    <img src="{% static 'imgs/icons/drop_down_button.svg' %}" alt>
+</div>
