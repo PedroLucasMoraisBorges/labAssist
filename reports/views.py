@@ -207,7 +207,18 @@ class DesapproveRequestMovement(APIView):
 
 # LICENSE
 
+class LicensePage(View):
+    def get(self, request):
+        license = License.objects.filter(is_expired=False).first()
+        expiredLicenses = License.objects.filter(is_expired=True).order_by("dt_register")
 
+        context = {
+            'license' : license,
+            'expiredLicenses' : expiredLicenses
+        }
+
+        return render(request, 'reports/licensePage.html', context)
+    
 class RegisterLicense(View):
     @method_decorator(login_required)
     @method_decorator(superuser_required)
