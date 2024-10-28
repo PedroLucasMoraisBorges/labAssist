@@ -27,6 +27,7 @@ class Pendings(View):
     def get(self, request):
         users = User.objects.filter(is_active=False)
         requests = Request.objects.filter(approved=False, dt_response=None)
+        license = License.objects.filter(is_expired=False).first()
         inactiveUsers = []
         listRequests = []
 
@@ -62,6 +63,7 @@ class Pendings(View):
             "users": inactiveUsers,
             "requests_movement": listRequests,
             "balance_maturity": balance_maturity,
+            "license" : license
         }
 
         return render(request, "reports/requests.html", context)

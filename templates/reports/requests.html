@@ -123,6 +123,55 @@
                     {% endfor %}
                 </div>
             </article>
+
+            <article class="pendings_section licenses" >
+                <div class="section_header licenses_header">
+                    <div class="title">
+                        <img src="{% static 'imgs/icons/alert_w.svg' %}" alt="">
+                        <h2>LICENÇAS</h2>
+                    </div>
+                    <p>Nesta seção estão listadas os dias para o vencimento das licenças.</p>
+                </div>
+
+                <style>
+                    .license_card {
+                        width: 20%;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+                        border: 1px solid black;
+                        box-shadow: 0px 4px 3px rgba(0, 0, 0, 0.20);
+                        padding: .8rem;
+                        border-radius: 10px;
+                        margin-top: 1rem;
+                    }
+
+                    .license_card img {
+                        width: 50px;
+                        margin-bottom: .8rem;
+                    }
+
+                    .name_license, .days_until {
+                        font-size: 1.3rem;
+                        text-align: center;
+                        font-weight: 700;
+                        color: #0A5517;
+                    }
+                </style>
+
+                <div class="pendings_section_body licenses_body">
+                    <div class="license_card">
+                        <img src="{% static 'imgs/icons/time.svg' %}" alt="">
+                        <p class="name_license">SIPROQUIM</p>
+                        <p class="days_until">Vence em {{license.days_until_expiration}} dias</p>
+
+                        {% if license.days_until_expiration < 60 %}
+                            <p>Está na hora de renovar a licença</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </article>
         </section>
 
         {% include 'components/sidebar.html' %}
