@@ -58,5 +58,10 @@
     <div class="adm_option">
         <button onclick="open_movement_form_modal()" class="option_move">Fazer Movimentação</button>
         <a href="{% url 'register_reagent' %}"><button class="option_item">Cadastrar Novo Item</button></a>
+        {% if license %}
+            {% if license.days_until_expiration < 60 %}
+                <a href="{% url 'register_license' %}"><button class="option_move">Cadastrar Nova Lisença</button></a>
+            {% endif %}
+        {% endif %}
     </div>
 </div>

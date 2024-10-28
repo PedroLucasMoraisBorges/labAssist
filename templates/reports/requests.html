@@ -54,6 +54,31 @@
         grid-template-columns: 20% 20% 20% 20%;
         justify-content: space-between;
     }
+
+    .license_card {
+        width: 20%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid black;
+        box-shadow: 0px 4px 3px rgba(0, 0, 0, 0.20);
+        padding: .8rem;
+        border-radius: 10px;
+        margin-top: 1rem;
+    }
+
+    .license_card img {
+        width: 50px;
+        margin-bottom: .8rem;
+    }
+
+    .name_license, .days_until {
+        font-size: 1.3rem;
+        text-align: center;
+        font-weight: 700;
+        color: #0A5517;
+    }
 </style>
 {% endblock %}
 
@@ -132,33 +157,6 @@
                     </div>
                     <p>Nesta seção estão listadas os dias para o vencimento das licenças.</p>
                 </div>
-
-                <style>
-                    .license_card {
-                        width: 20%;
-                        display: flex;
-                        flex-direction: column;
-                        justify-content: center;
-                        align-items: center;
-                        border: 1px solid black;
-                        box-shadow: 0px 4px 3px rgba(0, 0, 0, 0.20);
-                        padding: .8rem;
-                        border-radius: 10px;
-                        margin-top: 1rem;
-                    }
-
-                    .license_card img {
-                        width: 50px;
-                        margin-bottom: .8rem;
-                    }
-
-                    .name_license, .days_until {
-                        font-size: 1.3rem;
-                        text-align: center;
-                        font-weight: 700;
-                        color: #0A5517;
-                    }
-                </style>
 
                 <div class="pendings_section_body licenses_body">
                     <div class="license_card">

@@ -12,5 +12,6 @@ urlpatterns = [
 
     # ROTA NORMAL
     path('movimentações/', Movements.as_view(), name='movements'),
+    path('licenças/', LicensePage.as_view(), name='licenses'),
     path('cadastroLisença/', RegisterLicense.as_view(), name='register_license'),
 ]
