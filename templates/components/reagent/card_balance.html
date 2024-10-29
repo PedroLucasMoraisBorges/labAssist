@@ -26,11 +26,11 @@
 <div class="card_balance">
     <div class="basic_info">
         <img src="{% static 'imgs/icons/balance.svg' %}" alt>
-        {{reagent.name}}
+        {{batch.fk_reagent.name}}
     </div>
 
     <p class="validity">
-        {{reagent.validity}}
+        {{batch.validity}}
     </p>
 
     <img src="{% static 'imgs/icons/drop_down_button.svg' %}" alt>

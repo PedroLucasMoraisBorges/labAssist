@@ -20,19 +20,30 @@ class LandingPage(View):
     def get(self, request):
         return render(request, 'landingPage.html')
 
+def organize_reagents(queryset):
+    formatted_queryset = []
+    for reagent in queryset:
+        reagent_batches = ReagentBatch.objects.filter(fk_reagent=reagent, amount__gt=0)  # Filtra batches com quantidade > 0
+        formatted_queryset.append({
+            'info': reagent,
+            'batches': reagent_batches  # Associa os batches ao reagente
+        })
+
+    return agrupar_reagents_por_letra(ordenar_lista(formatted_queryset))
+
 class HomeAdmin(View):
     @method_decorator(login_required)
     @method_decorator(superuser_required)
     def get(self, request):     
         liquids = Reagent.objects.filter(state='L')
         solids = Reagent.objects.filter(state='S')
-
+            
         recentMovement = Movement.objects.filter().order_by('dt_movement')
-        inventoryBalance = Reagent.objects.filter().order_by('amount')
+        inventoryBalance = Reagent.objects.filter()
 
         context = {
-            'solids' : agrupar_reagents_por_letra(ordenar_lista(solids)),
-            'liquids' : agrupar_reagents_por_letra(ordenar_lista(liquids)),
+            'solids' : organize_reagents(solids),
+            'liquids' : organize_reagents(liquids),
             'recentMovement' : recentMovement,
             'inventoryBalance' : inventoryBalance,
         }
@@ -56,8 +67,14 @@ class RegisterReagent(View):
 
         errors = getErrors([reagentForm])
 
-        if reagentForm.is_valid():
-            reagentForm.save()
+        validity = request.POST.get('validity')
+        amount = request.POST.get('amount')
+        size = request.POST.get('size')
+
+        if reagentForm.is_valid() and validity != None and amount != None and size != None:
+            reagent = reagentForm.save()
+            reagentBatch = ReagentBatch.objects.create(amount=amount, validity=validity, size=size, fk_reagent = reagent)
+            reagentBatch.save()
             return redirect('/')
         else:
             context = {
@@ -95,6 +112,7 @@ class EditReagent(View):
             'form' : form
         }
 
+
         return render(request, 'reagents/editReagent.html', context)
 
 class ViewLiquids(View):
@@ -107,8 +125,8 @@ class ViewLiquids(View):
         active_liquids = search_for_reagent(search, 'L')['actives']
 
         context = {
-            'active_liquids' : agrupar_reagents_por_letra(ordenar_lista(active_liquids)),
-            'passive_liquids' : agrupar_reagents_por_letra(ordenar_lista(passive_liquids))
+            'active_liquids' : organize_reagents(active_liquids),
+            'passive_liquids' : organize_reagents(passive_liquids)
         }
         return render(request, 'reagents/liquids.html', context)
     
@@ -122,7 +140,7 @@ class ViewSolids(View):
         active_solids = search_for_reagent(search, 'S')['actives']
 
         context = {
-            'active_solids' : agrupar_reagents_por_letra(ordenar_lista(active_solids)),
-            'passive_solids' : agrupar_reagents_por_letra(ordenar_lista(passive_solids))
+            'active_solids' : organize_reagents(active_solids),
+            'passive_solids' : organize_reagents(passive_solids)
         }
         return render(request, 'reagents/solids.html', context)

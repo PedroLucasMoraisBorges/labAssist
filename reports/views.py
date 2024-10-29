@@ -8,6 +8,8 @@ from .forms import *
 from .models import *
 from auth_user.models import *
 
+from reagents.models import *
+from reagents.utilits import *
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -57,7 +59,7 @@ class Pendings(View):
                 }
             )
 
-        balance_maturity = Reagent.objects.filter(amount__gt=0).order_by("amount")[:5]
+        balance_maturity = ReagentBatch.objects.filter(amount__gt=0).order_by("amount")[:5]
 
         context = {
             "users": inactiveUsers,
@@ -113,28 +115,33 @@ class CreateMovement(APIView):
             movement.save()
 
             if movement.movement_type in ["R", "T"]:
-                if movement.fk_reagent.amount - movement.amount < 0:
+                reagentBatches = ReagentBatch.objects.filter(amount__gt=0, fk_reagent=movement.fk_reagent).order_by('validity')
+
+                if get_num_of_reagents(reagentBatches) < movement.amount:
                     movement.delete()
                     return Response(
-                        {"error": "O reagente não tem tantas unidades"},
-                        status=status.HTTP_400_BAD_REQUEST,
+                        {"message": "O reagente não tem tantas unidades"},
                     )
 
             requestMovement = Request.objects.create(
-                dt_request=movement.dt_movement, fk_movement=movement
-            )
+                    dt_request=movement.dt_movement, fk_movement=movement, 
+                )
 
             if request.user.is_superuser:
                 requestMovement.approved == True
                 requestMovement.dt_response == requestMovement.dt_request
-                requestMovement.save()
+
+                if movement.movement_type == "A":
+                    create_new_batch_by_movement(movement)
+                elif movement.movement_type in ["R", "T"]:
+                    remove_reagent_from_stock(movement)
 
             requestMovement.save()
 
             return send_request_movement(requestMovement)
 
         return Response(
-            {"error": "Formulário incorreto"}, status=status.HTTP_400_BAD_REQUEST
+            {"message": "Formulário incorreto"}, status=status.HTTP_400_BAD_REQUEST
         )
 
 
@@ -155,29 +162,19 @@ class ApproveRequestMovement(APIView):
             reagent = movement.fk_reagent
 
             if movement.movement_type == "A":
-                new_reagent = Reagent.objects.create(
-                    name=reagent.name,
-                    formula=reagent.formula,
-                    size=reagent.size,
-                    amount=movement.amount,
-                    limit=reagent.limit,
-                    validity=movement.validity,
-                    classification=reagent.classification,
-                    incompatibility=reagent.incompatibility,
-                    control=reagent.control,
-                    state=reagent.state,
-                    opening_date=reagent.opening_date,
-                    is_active=reagent.is_active,
-                )
-                new_reagent.save()
+                create_new_batch_by_movement(movement)
 
             elif movement.movement_type in ["R", "T"]:
-                reagent.amount -= movement.amount
-
-            return Response(
-                {"message": "Requisição aprovada com sucesso"},
-                status=status.HTTP_200_OK,
-            )
+                is_removed = remove_reagent_from_stock(movement)
+                if is_removed:
+                    return Response(
+                        {"message": "Requisição aprovada com sucesso"},
+                        status=status.HTTP_200_OK,
+                    )
+                else:
+                    return Response(
+                        {"error": "A quantidade de itens no estoque é menor do que está tentando retirar"}, status=status.HTTP_400_BAD_REQUEST
+                    )
 
         return Response(
             {"error": "ID não fornecido"}, status=status.HTTP_400_BAD_REQUEST
@@ -262,6 +259,7 @@ class ApproveUser(APIView):
             user = User.objects.get(id=decoded_id)
 
             if user:
+                user.is_active = True
                 user.save()
                 return send_liberation_user_email(user)
 

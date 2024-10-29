@@ -48,7 +48,7 @@
         margin-bottom: 1rem;
     }
 
-    .body_item .title, .incompatibilities .title {
+    .body_item .title, .incompatibilities .title, .batches .title {
         font-weight: 500;
     }
 
@@ -118,7 +118,7 @@
     }
 </style>
 
-<div class="back none" id="reagent{{reagent.id}}">
+<div class="back none" id="reagent{{reagent.info.id}}">
     <article class="modal">
         <div class="modal_header">
             <img src="{% static 'imgs/icons/info.svg' %}" alt="">
@@ -128,35 +128,36 @@
         <div class="modal_body">
             <div class="body_item">
                 <p class="title">Nome do Item</p>
-                <p class="reagent_info">{{reagent.name}}</p>
+                <p class="reagent_info">{{reagent.info.name}}</p>
             </div>
 
             <div class="body_item">
                 <p class="title">Fórmula Química</p>
-                <p class="reagent_info">{{reagent.formula}}</p>
+                <p class="reagent_info">{{reagent.info.formula}}</p>
             </div>
 
             <div class="body_item">
                 <p class="title">Classificação Química</p>
-                <p class="reagent_info">{{reagent.classification}}</p>
+                <p class="reagent_info">{{reagent.info.classification}}</p>
             </div>
 
             <div class="body_item">
                 <p class="title">Tipo de Item</p>
-                <p class="reagent_info">{{reagent.get_state_display}}</p>
+                <p class="reagent_info">{{reagent.info.get_state_display}}</p>
             </div>
 
             <div class="body_item">
                 <p class="title">Estado do Item</p>
 
-                {% if reagent.is_active %}
+                {% if reagent.info.is_active %}
                     <p class="reagent_info">Ativo</p>
                 {% else %}
                     <p class="reagent_info">Passivo</p>
                 {% endif %}
             </div>
 
-            <div class="body_item">
+            
+            <!-- <div class="body_item">
                 <p class="title">Tamanho do Frasco</p>
                 <p class="reagent_info">{{reagent.size}}
                     {% if reagent.state == 'L' %}
@@ -165,21 +166,21 @@
                         G
                     {% endif %}
                 </p>
-            </div>
+            </div> -->
 
-            <div class="body_item">
+            <!-- <div class="body_item">
                 <p class="title">Estoque</p>
                 <p class="reagent_info">{{reagent.amount}}</p>
-            </div>
+            </div> -->
 
-            <div class="body_item">
+            <!-- <div class="body_item">
                 <p class="title">Validade</p>
                 <p class="reagent_info">{{reagent.formatted_validity}}</p>
-            </div>
+            </div> -->
 
             <div class="body_item">
                 <p class="title">Controlado</p>
-                <p class="reagent_info">{{reagent.get_control_display}}</p>
+                <p class="reagent_info">{{reagent.info.get_control_display}}</p>
             </div>
         </div>
 
@@ -187,7 +188,7 @@
             <p class="title">Incompatibilidades</p>
             
             <div class="list">
-                {% for inc in reagent.incompatibility.all %}
+                {% for inc in reagent.info.incompatibility.all %}
                     <p>
                         {{inc}}
                     </p>
@@ -195,9 +196,22 @@
             </div>
         </div>
 
+        <div class="batches">
+            <p class="title">Variantes</p>
+
+            <div class="batchesList">
+                {% for batch in reagent.batches %}
+                    <div class="batch_item">
+                        <p>{{batch.amount}} unidades</p>
+                        <p>Vence em: {{batch.formatted_validity}}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
         <div class="modal_btns">
             <button onclick="close_modal()" class="close_modal">FECHAR ITEM</button>
-            <a class="edit" href="{% url 'edit_reagent' id=reagent.id %}">
+            <a class="edit" href="{% url 'edit_reagent' id=reagent.info.id %}">
                 <img src="{% static 'imgs/icons/edit.svg' %}" alt="">
                 <p>EDITAR ITEM</p>
             </a>
