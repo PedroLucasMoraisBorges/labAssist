@@ -22,6 +22,7 @@ class Movement(models.Model):
     movement_type = models.CharField(max_length=64, choices=typeMovementChoices)
     dt_movement = models.DateTimeField()
     validity = models.DateField(null=True)
+    size = models.IntegerField(null=True)
 
     fk_reagent = models.ForeignKey(Reagent, related_name='reagent_movement', null=False, on_delete=models.CASCADE)
     fk_user = models.ForeignKey(User, related_name='responsible_movement', null=False,  on_delete=models.CASCADE)
@@ -52,6 +53,7 @@ class Request(models.Model):
     approved = models.BooleanField(default=False)
     dt_request = models.DateTimeField()
     dt_response = models.DateTimeField(null=True, default=None, blank=True)
+    size = models.IntegerField(null=True)
 
     fk_movement = models.ForeignKey(Movement, related_name='request_movement', null=False, on_delete=models.CASCADE)
 

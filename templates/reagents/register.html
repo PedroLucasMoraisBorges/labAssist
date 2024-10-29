@@ -47,7 +47,7 @@
                             </button>
                         </div>
                         <!-- Modal body -->
-                        <form class="p-4 md:p-5">
+                        <form class="p-4 md:p-5" method="post">
                             {% csrf_token %}
                             <div class="">
                                 <label for="id_name" class="block mb-2 text-sm font-medium">Nome do
@@ -100,15 +100,37 @@
                                     </label>
                                     {{form.control}}
                                 </div>
+
+                                <div class="">
+                                    <label for="id_control" class="block mb-2 text-sm font-medium">
+                                        Incompatível com
+                                    </label>
+                                    {{form.incompatibility}}
+                                </div>
+
+                                <div class="">
+                                    <label for="id_control" class="block mb-2 text-sm font-medium">
+                                        É ativo
+                                    </label>
+                                    {{form.is_active}}
+                                </div>
+
+                                <div class="">
+                                    <label for="id_control" class="block mb-2 text-sm font-medium">
+                                        Limite
+                                    </label>
+                                    {{form.limit}}
+                                </div>
+
                             </div>
-                            <div class="mb-4">
+                            <!-- <div class="mb-4">
                                 <label class="block mb-2 text-sm font-medium" for="id_incompatibility">Incompatível com</label>
                                 <select class="js-example-basic-multiple " name="states[]" multiple="multiple">
                                     <option value="AL">Alabama</option>
                                     ...
                                     <option value="WY">Wyoming</option>
                                 </select>
-                            </div>
+                            </div> -->
                             <button type="submit"
                                 class="text-white border-l w-full overflow-hidden font-medium transition-all bg-green-800 rounded-2xl hover:bg-green-900 group py-2.5 px-2.5">
                                 CADASTRAR ITEM
