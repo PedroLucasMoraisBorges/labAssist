@@ -1,0 +1,32 @@
+{% load static %}
+
+<style>
+    .search {
+        margin: 20px;
+        border: 1px solid rgba(0, 0, 0, 0.4);
+        width: 30%;
+        display: flex;
+        justify-content: space-between;
+        border-radius: 25px;
+        padding: .1rem 1rem;
+        box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    .search input {
+        padding: 0rem 1rem;
+        width: 100%;
+        border-radius: 25px;
+    }
+
+    .search input:focus {
+        border: 0;
+        outline: none;
+    }
+</style>
+
+<form class="search">
+    <input type="text" id="search" name="search" placeholder="Busque por reagents" >
+    <button type="submit">
+        <img src="{% static 'imgs/icons/search.svg' %}" alt="">
+    </button>
+</form>

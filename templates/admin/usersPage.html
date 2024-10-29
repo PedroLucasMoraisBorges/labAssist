@@ -1,0 +1,76 @@
+{% extends 'components/base.html' %}
+{% load static %}
+
+{% block head %}
+    <title>Usuários</title>
+    <link rel="stylesheet" href="{% static 'css/paginaUsuario.css' %}">
+{% endblock %}
+
+
+{% block content %}
+    {% include 'components/navbar.html' %}
+
+    <main>
+        <section>
+
+            <!-- Nova seção abaixo do header -->
+            <article class="info-section">
+                <div class="info-container">
+                    <div class="info-text">
+                        <h1>Lista de Usuários</h1>
+                        <p>Nesta seção estarão listadas itens do seu estoque, sua visão geral, movimentações e muito mais.</p>
+
+                        
+                    </div>
+                    <div class="info-icon">
+                        <img src="{% static 'imgs/icon-document.png' %}" alt="Ícone de documento">
+                    </div>
+                </div>
+            </article>
+
+            
+            <!-- Container maior com informações gerais -->
+            <article class="info-section">
+                <!-- Título da tabela de usuários -->
+                <div class="user-header">
+                    <div class="user-title">
+                        <h2>NOME</h2>
+                        <h2>FUNÇÃO</h2>
+                        <h2>AÇÕES</h2>
+                    </div>
+                </div>
+
+                <!-- container de gerenciar -->
+                <div class="user-list">
+                    <div class="user-row">
+                        <div class="user-info">
+                            <div class="user-icon">FJ</div>
+                            <div class="user-name">Francisco José</div>
+                        </div>
+                        <div class="user-role">Administrador</div>
+                        <div class="user-action">
+                            <button class="action-btn">VER MAIS</button>
+                        </div>
+                    </div>
+                    <div class="user-row">
+                        <div class="user-info">
+                            <div class="user-icon">UT</div>
+                            <div class="user-name">User Teste</div>
+                        </div>
+                        <div class="user-role">Usuário Geral</div>
+                        <div class="user-action">
+                            <button class="action-btn">VER MAIS</button>
+                        </div>
+                    </div>
+                    <!-- Adicione mais usuários aqui -->
+                </div>
+            </article>
+        </section>
+
+        {% include 'components/sidebar.html' %}
+    </main>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'js/script.js' %}"></script>
+{% endblock %}

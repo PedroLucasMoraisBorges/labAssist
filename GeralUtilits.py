@@ -1,4 +1,5 @@
 from django.core.paginator import Paginator
+import locale
 
 # Retorna erros de formulários
 def getErrors(Forms):
@@ -16,3 +17,11 @@ def paginate(querySet, request):
         vaga_paginator = Paginator(querySet, 12)
         page = request.GET.get('page')
         return vaga_paginator.get_page(page)
+
+def ordenar_array(array):
+    # Define a localidade para que os acentos sejam considerados corretamente
+    locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
+    
+    # Ordena o array
+    array_ordenado = sorted(array, key=locale.strxfrm)
+    return array_ordenado

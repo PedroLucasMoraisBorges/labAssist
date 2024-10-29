@@ -1,3 +1,4 @@
+
 """
 Django settings for labAssist project.
 
@@ -26,6 +27,7 @@ SECRET_KEY = 'django-insecure-zb@7)f0gxk*u6hudnv2m&3)akm^&7dlo5szjkwhei3#0w(jv88
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+HOST = 'http://127.0.0.1:8000/'
 ALLOWED_HOSTS = []
 
 
@@ -40,7 +42,17 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'auth_user',
     'reagents',
-    'reports'
+    'reports',
+    'tailwind',
+    'theme',
+    'django_browser_reload'
+]
+
+TAILWIND_APP_NAME = 'theme'
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
@@ -51,6 +63,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_browser_reload.middleware.BrowserReloadMiddleware',
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -69,12 +82,13 @@ TEMPLATES = [
             ],
             'libraries' : {
                 'reports_tags' : 'reports.custom_tags',
-                'reagent_tags' : 'reagents.custom_tags'
+                'reagent_tags' : 'reagents.custom_tags',
             },
         },
     },
 ]
 
+NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"
 WSGI_APPLICATION = 'core.wsgi.application'
 
 
@@ -141,3 +155,11 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+EMAIL_HOST_USER = 'projetolabquim@gmail.com'
+EMAIL_HOST_PASSWORD = 't a k q h d d l l b s g x c m b'

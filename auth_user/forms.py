@@ -3,7 +3,10 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import *
 from django.core.exceptions import ValidationError
 from .models import *
-
+from django.contrib.contenttypes.models import ContentType
+from reagents.models import Reagent
+from reports.models import Movement
+from django.db.models import Q
 from django.contrib.auth import authenticate, get_user_model
 
 UserModel = get_user_model()
@@ -11,13 +14,13 @@ UserModel = get_user_model()
 class AuthenticationForm(forms.Form):
     username = forms.EmailField(
         label="Email", 
-        widget=forms.TextInput(attrs={"autofocus": True, 'placeholder': 'E-mail institucional'})
+        widget=forms.TextInput(attrs={"autofocus": True, 'placeholder': 'EMAIL'})
     )
     
     password = forms.CharField(
         label="Password",
         strip=False,
-        widget=forms.PasswordInput(attrs={"autocomplete": "current-password"}),
+        widget=forms.PasswordInput(attrs={"autocomplete": "current-password", 'placeholder': 'SENHA'}),
     )
 
     error_messages = {
@@ -183,3 +186,28 @@ class CustomUserCreationForm(UserCreationForm):
         if User.objects.filter(email=email).exists():
             raise ValidationError('Usuário com este Endereço de email já existe.')
         return email
+
+class PermissionForm(forms.ModelForm):
+    content_type_movement = ContentType.objects.get_for_model(Movement)
+    content_type_reagent = ContentType.objects.get_for_model(Reagent)
+
+    # Filtrar as permissões específicas das duas models
+    permissions = Permission.objects.filter(
+        Q(content_type=content_type_movement, codename="can_add_movement") |
+        Q(content_type=content_type_reagent, codename__in=[
+            "can_add_reagent", 
+            "can_change_reagent", 
+            "can_delete_reagent", 
+            "can_view_reagent"
+        ])
+    )
+
+    user_permissions = forms.ModelMultipleChoiceField(
+        label = 'Permissões',
+        queryset=permissions,
+        widget= forms.SelectMultiple(),
+    )
+
+    class Meta:
+        model = User
+        fields = ['user_permissions']

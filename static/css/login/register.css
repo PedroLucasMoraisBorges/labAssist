@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.leas_logo {
+    box-shadow: 5px 5px 5px rgb(130, 130, 130);
+    margin-bottom: 20px;
+}
+
+.container {
+    border-radius: 30px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
+    position: relative;
+    overflow: hidden;
+    width: 1147px;
+    max-width: 100%;
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+}
+
+.formContainer {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    background-image: url('../../imgs/background_lab_register.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.formContainer input, select {
+    width: 400px;
+    height: 50px;
+    margin: 10px 0;
+    padding-left: 20px;
+    border-radius: 30px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    outline: none;
+    box-shadow: 0px 2px 2px rgb(130, 130, 130);
+}
+
+.formContainer button {
+    color: #fff; 
+    width: 400px;
+    height: 50px;
+    margin: 20px 0;
+    border-radius: 100px;
+    box-shadow: 0px 2px 2px rgb(130, 130, 130);
+    border: none;
+    font-weight: 700;
+    text-decoration: none;
+    background-size: 100% 100%; 
+    background-image: linear-gradient(rgba(25, 136, 44, 1), rgba(94, 174, 108, 1));
+    background-repeat: no-repeat;
+    cursor: pointer;
+    transition: all 0.5s linear;
+}
+
+.formContainer button:hover {
+    background-size: 0% 100%; 
+    background-color: #6db758; 
+    color: rgb(25, 136, 44); 
+    transition: all 0.5s cubic-bezier(0.000, 0.000, 0.230, 1);
+}
+
+.Greetings-Login {
+    background: linear-gradient(90deg, rgba(138, 255, 158, 1) 0%, rgba(83, 153, 95, 1) 100%);
+    background-size: cover;
+    flex: 1; 
+    width: 50%; 
+    padding: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-top-right-radius: 200px;
+    border-bottom-right-radius: 100px;
+    color: white;
+    text-align: center;
+    height: 100%;
+}
+
+.Greetings-Login h1 {
+    font-size: 50px;
+    text-shadow: 0px 2px 2px rgb(130, 130, 130);
+}
+
+.Greetings-Login h2 {
+    font-size: 30px;
+    margin: 20px 0;
+    text-shadow: 0px 2px 2px rgb(130, 130, 130);
+}
+
+.Greetings-Login p {
+    font-size: 16px;
+    margin-bottom: 20px;
+    text-shadow: 0px 2px 2px rgb(130, 130, 130);
+}
+
+.Greetings-Login a {
+    background-color: white;
+    color: #0A5517;
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-weight: bold;
+    box-shadow: 3px 3px 2px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    text-decoration: none;
+}
+
+.Greetings-Login a:hover {
+    background-color: #0A5517;
+    color: white;
+}

@@ -16,6 +16,7 @@ sectorChoices= [
 ]
 
 # Create your models here.
+
 class User(AbstractUser):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     username = None
@@ -44,7 +45,10 @@ class User(AbstractUser):
     
     @property
     def user_image(self):
-        name = self.name.split('')
+        if " " in self.name:
+           name = self.name.split(" ")
+        else: name = self.name
+
         firstName = name[0]
         secondName = name[1]
         

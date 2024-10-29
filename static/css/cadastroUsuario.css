@@ -1,0 +1,151 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Estilos gerais para o body */
+body {
+    background-size: cover;
+    background-position: center;
+    height: 50vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Container principal que envolve as áreas de login e cadastro */
+.container {
+    display: flex;
+    width: 80%;
+    max-width: 1200px;
+    background-color: transparent;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    margin-top: 400px;
+    background-image: url('../imgs/background-geral.jpg');
+    background-repeat: repeat-x;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Seção da esquerda para o login */
+.login-left {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background-image: url('../imgs/background-verde.png');
+    background-position: center;
+    background-size: 770px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Estilos do texto de boas-vindas no login */
+.login-left h2 {
+    font-size: 32px;
+    margin-bottom: 20px;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+}
+
+/* Estilos específicos para o texto "Olá, usuário!" */
+.ola-usuario {
+    font-size: 40px;
+    font-weight: bold;
+}
+
+/* Botão de login */
+.login-btn {
+    background-color: white;
+    color: #357537;
+    border: none;
+    padding: 15px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Seção da direita para o cadastro */
+.login-right {
+    flex: 1;
+    background-color: #f0f0f0;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+}
+
+/* Imagem de fundo para a seção de cadastro */
+.login-right::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../imgs/background-geral.jpg');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.4;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Estilos da logo */
+.logo {
+    width: 400px;
+    margin-bottom: 20px;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilo dos títulos */
+h2 {
+    font-size: 28px;
+    margin-bottom: 30px;
+}
+
+/* Formulário de cadastro */
+.form-cadastro {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 400px;
+}
+
+/* Estilos dos campos de entrada do formulário */
+.form-cadastro input {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 30px;
+    font-size: 16px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+}
+
+/* Botão de envio do formulário */
+button[type="submit"] {
+    background-color: #19882C;
+    color: white;
+    border: none;
+    padding: 15px;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 30px;
+}
+
+/* Efeito hover no botão de envio */
+button[type="submit"]:hover {
+    background-color: #45a049;
+}
