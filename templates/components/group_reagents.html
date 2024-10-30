@@ -1,0 +1,44 @@
+{% load static %}
+
+<style>
+    .list_reagents {
+        display: grid;
+        grid-template-columns: 4% 96%;
+    }
+
+    .letter {
+        background-color: #CDFFD6;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: #074912 1px solid;
+    }
+
+    .letter h2 {
+        text-decoration: underline;
+        font-weight: 600;
+        font-size: 1.4rem;
+    }
+
+    .group_reagents {
+        padding: 1rem;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        border: #074912 1px solid;
+    }
+</style>
+
+
+<div class="{{letter}} list_reagents">
+    <div class="letter">
+        <h2>{{ letter }}</h2>
+    </div>
+
+    <div class="group_reagents">
+        {% for reagent in reagents %}
+            {% include 'components/reagent.html' %}
+        {% endfor %}
+    </div>
+
+</div>

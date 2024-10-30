@@ -5,50 +5,93 @@ class ReagentForm(forms.ModelForm):
     name = forms.CharField(
         required=True,
         label='NOME DO ITEM',
+        widget = forms.TextInput(
+            attrs={
+                'class' : 'shadow-lg text-sm rounded-full focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:focus:border-primary-500'
+            }
+        )   
     )
 
     formula = forms.CharField(
         required=True,
-        label='FÓRMULA QUÍMICA'
+        label='FÓRMULA QUÍMICA',
+        widget = forms.TextInput(
+            attrs={
+                'class' : 'shadow-lg text-sm rounded-full focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:focus:border-primary-500'
+            }
+        )   
     )
 
     classification = forms.CharField(
         required=True,
-        label='CLASSIFICAÇÃO QUÍMICA'
+        label='CLASSIFICAÇÃO QUÍMICA',
+        widget = forms.TextInput(
+            attrs={
+                'class' : 'shadow-lg text-sm rounded-full focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:focus:border-primary-500'
+            }
+        ) 
     )
 
     state = forms.ChoiceField(
         required=True,
         label='CLASSIFIQUE O ITEM',
         choices=[('Líquido/Sólido' , '')] + statesChoices,
-        widget=forms.Select()
+        widget=forms.Select(
+            attrs={
+                'class' : 'shadow-lg text-sm rounded-full focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:focus:border-primary-500'
+            }
+        )
     )
 
     amount = forms.IntegerField(
         required= True,
-        label='QUANTIDADE'
+        label='QUANTIDADE',
+        widget = forms.TextInput(
+            attrs={
+                'class' : 'shadow-lg text-sm rounded-full focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:focus:border-primary-500'
+            }
+        )
     )
 
     size = forms.IntegerField(
         required=True,
-        label='TAMANHO DO FRASCO'
+        label='TAMANHO DO FRASCO',
+        widget = forms.TextInput(
+            attrs={
+                'class' : 'shadow-lg text-sm rounded-full focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:focus:border-primary-500'
+            }
+        )
     )
 
     limit = forms.IntegerField(
         required=True,
-        label='LIMITE PARA AVISO'
+        label='LIMITE PARA AVISO',
+        widget = forms.TextInput(
+            attrs={
+                'class' : 'shadow-lg text-sm rounded-full focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:focus:border-primary-500'
+            }
+        )
     )
 
     validity = forms.DateField(
         required=True,
         label='VALIDADE',
-        widget=forms.DateInput()
+        widget=forms.DateInput(
+            attrs={
+                'type' : 'date',
+                'class' : 'shadow-lg text-sm rounded-full focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:focus:border-primary-500'
+            }
+        )
     )
 
     control = forms.ChoiceField(
         label='CONTROLADO',
         choices=controlChoices,
-        widget=forms.Select()
+        widget=forms.Select(
+            attrs={
+                'class' : 'shadow-lg text-sm rounded-full focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:focus:border-primary-500'
+            }
+        )
     )
 
     incompatibility = forms.ModelMultipleChoiceField(
@@ -57,10 +100,15 @@ class ReagentForm(forms.ModelForm):
         queryset=Reagent.objects.all(),
         widget= forms.SelectMultiple(),
     )
+
+    is_active = forms.BooleanField(
+        required=True,
+        label='É ativo?'
+    )
     
     class Meta():
         model = Reagent
-        fields = ['name', 'formula', 'classification', 'state', 'amount', 'validity', 'control', 'incompatibility', 'size', 'limit']
+        fields = ['name', 'formula', 'classification', 'state', 'control', 'incompatibility', 'limit', 'is_active']
 
     def save(self, commit=True):
         instance = super().save(commit=False)

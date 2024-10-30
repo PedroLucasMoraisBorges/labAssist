@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.contrib.auth import login, logout
 from django.views import View
 from django.contrib.auth.forms import PasswordChangeForm
@@ -7,12 +8,16 @@ from GeralUtilits import *
 from .forms import *
 from .models import *
 
+from django.contrib.auth.decorators import login_required, permission_required
+from django.utils.decorators import method_decorator
+from .decorators import *
+
 # Create your views here.
 class Redirect(View):
     def get(self, request):
         user = request.user
         if user.is_authenticated:
-            if user.is_staff:
+            if user.is_staff or user.is_superuser:
                 return redirect('home_admin')
             else:
                 return redirect('home')
@@ -20,7 +25,11 @@ class Redirect(View):
             return redirect('landing_page')
 
 class Login(View):
+    @method_decorator(logged_out_required)
     def get(self, request):
+        if request.user.is_authenticated:
+            return redirect('')
+        
         form = AuthenticationForm()
 
         context = {
@@ -47,9 +56,19 @@ class Login(View):
             'errors': errors,
         }
         return render(request, 'authentication/login.html', context)
-    
-class RegisterUser(View):
+
+class Logout(View):
+    @method_decorator(login_required)
     def get(self, request):
+        logout(request)
+        return redirect('/')
+
+class RegisterUser(View):
+    @method_decorator(logged_out_required)
+    def get(self, request):
+        if request.user.is_authenticated:
+            return redirect('')
+        
         registerForm = CustomUserCreationForm()
 
         context = {
@@ -58,6 +77,7 @@ class RegisterUser(View):
 
         return render(request, 'authentication/registerUser.html', context)
     
+    @method_decorator(logged_out_required)
     def post(self, request):
         registerForm = CustomUserCreationForm(request.POST)
 
@@ -75,3 +95,26 @@ class RegisterUser(View):
         }
 
         return render(request, 'authentication/registerUser.html', context)
+    
+class Users(View):
+    @method_decorator(login_required)
+    @method_decorator(superuser_required)
+    def get(self, request):
+        users = User.objects.filter()
+
+        context = {
+            'users' : users
+        }
+        
+        return render(request,'admin/usersPage.html', context)
+    
+    
+class ViewUserProfile(View):
+    @method_decorator(login_required)
+    def get (self, request):
+        usuario = request.user
+        contexto = {
+            'usuario': usuario,
+        }
+        return render(request, 'user_profile.html', contexto)
+    

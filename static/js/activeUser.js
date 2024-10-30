@@ -1,5 +1,17 @@
 const buttons = document.querySelectorAll('.actionButtons');
 
+function del_card(element) {
+    var new_element = element
+    while(true) {
+        if (new_element.classList.contains("card_request")) {
+            new_element.style.display = 'none';
+            break
+        }
+        else {
+            new_element = new_element.parentElement
+        }
+    }
+}
 buttons.forEach(button => {
     button.addEventListener('click', function() {
         // Obtém o ID da requisição de movimentação do atributo data-id
@@ -17,7 +29,7 @@ buttons.forEach(button => {
         .then(data => {
             if (data.message) {
                 alert('Ação feita com sucesso');
-                this.parentElement.style.display = 'none';
+                del_card(this)
             } else if (data.error) {
                 alert('Erro: ' + data.error);
             }

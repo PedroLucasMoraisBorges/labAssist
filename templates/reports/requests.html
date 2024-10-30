@@ -2,6 +2,84 @@
 {% load static %}
 
 {% block head %}
+<style>
+    .pendings_section {
+        margin: 25px;
+        border-radius: 15px;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.20);
+        padding: 1rem;
+    }
+
+    .section_header {
+        color: white;
+        background-color: #19882C;
+        padding: .8rem;
+        border-radius: 10px;
+    }
+
+    .section_header .title {
+        display: flex;
+        align-items: start;
+    }
+
+    .section_header img {
+        width: 30px;
+        margin-top: .5rem;
+        margin-right: .7rem;
+    }
+
+    .section_header h2 {
+        font-size: 2.1rem;
+        font-weight: 600;
+    }
+
+    .balance_header {
+        color: #1E1E1E;
+        background-color: rgba(255, 232, 163, 1);
+        border: 1px solid #1E1E1E;
+        flex-direction: column;
+        margin-bottom: .9rem;
+    }
+
+    .pendings_section_body .body_header {
+        display: flex;
+        justify-content: space-between;
+        padding: 0rem 3rem;
+        margin-top: 1.2rem;
+        font-weight: 600;
+    }
+
+    .movements_body {
+        display: grid;
+        grid-template-columns: 20% 20% 20% 20%;
+        justify-content: space-between;
+    }
+
+    .license_card {
+        width: 20%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid black;
+        box-shadow: 0px 4px 3px rgba(0, 0, 0, 0.20);
+        padding: .8rem;
+        border-radius: 10px;
+        margin-top: 1rem;
+    }
+
+    .license_card img {
+        width: 50px;
+        margin-bottom: .8rem;
+    }
+
+    .name_license, .days_until {
+        font-size: 1.3rem;
+        text-align: center;
+        font-weight: 700;
+        color: #0A5517;
+    }
+</style>
 {% endblock %}
 
 {% block content %}
@@ -97,30 +175,7 @@
         {% include 'components/sidebar.html' %}
     </main>
 
-<div>
-    <h1 style="font-size: 2rem;">Requisição de usuários</h1>
-    {% for user in users %}
-        <div>
-            <p>{{ user.info }}</p>
-            <button class="actionButtons" url="{{user.urls.approve}}" data-id="{{ user.codifiqued_id }}">Aprovar</button>
-            <button class="actionButtons" url="{{user.urls.desapprove}}" data-id="{{ user.codifiqued_id }}">Desaprovar</button>
-        </div>
-        <hr>
-    {% endfor %}
-</div>
 
-<div>
-    <h1 style="font-size: 2rem;">Requisição de movimentação</h1>
-    {% for request in requests_movement %}
-        <div>
-            <p>{{ request.info }}</p>
-            <p>{{ request..info.fk_movement.motivation }}</p>
-            <button class="actionButtons" url="{{request.urls.approve}}" data-id="{{ request.info.id }}">Aprovar</button>
-            <button class="actionButtons" url="{{request.urls.desapprove}}" data-id="{{ request.info.id }}">Desaprovar</button>
-        </div>
-        <hr>
-    {% endfor %}
-</div>
 
 {% endblock %}
 

@@ -1,0 +1,180 @@
+{% load static %}
+
+<style>
+    .back {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%; 
+        background-color: rgba(0, 0, 0, 0.241);
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .modal {
+        width: 700px;
+        height: auto;
+        background-color: #CDFFD6;
+        padding: 1.6rem;
+        border-radius: 15px;
+    }
+
+    .modal_header {
+        display: flex;
+        margin-bottom: 1.2rem;
+    }
+
+    .modal_header img {
+        width: 20px;
+    }
+
+    .modal_header h2 {
+        font-size: 2rem;
+        font-weight: 600;
+        margin-left: .5rem;
+    }
+
+    .modal_body {
+        display: grid;
+        grid-template-columns: 30% 30% 30%;
+        justify-content: space-between;
+    }
+
+    .body_item {
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+
+    .wide {
+        grid-column: 1 / -1; /* Faz o item se estender da primeira até a última coluna */
+    }
+
+    .body_item .title, .incompatibilities .title {
+        font-weight: 500;
+    }
+
+    .body_item .reagent_info {
+        background-color: white;
+        font-weight: 400;
+        border-radius: 25px;
+        padding: .5rem .6rem;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    }
+
+    .incompatibilities .list {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .incompatibilities .list p {
+        margin: .3rem;
+        background-color: white;
+        padding: .2rem .5rem;
+        border-radius: 25px;
+        box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.255);
+    }
+
+    .modal_btns {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 2rem;
+    }
+
+    .movements .modal_btns {
+        justify-content: end;
+    }
+
+    .close_modal, .edit {
+        width: 47.5%;
+        border-radius: 25px;
+        font-weight: 600;
+        padding: .7rem 0rem;
+        transition: .3s;
+    }
+
+    .close_modal{
+        background-color: #19882C;
+        color: white;
+    }
+    
+    .close_modal:hover {
+        transform: scale(1.05);
+    }
+
+    .edit {
+        color: white;
+        background-color: white ;
+        color: black;
+        display: flex;
+        justify-content: center;
+        border: 1px black solid;
+    }
+
+    .edit:hover {
+        transform: scale(1.05);
+    }
+
+    .edit img {
+        margin-right: .3rem;
+    }
+
+    .none {
+        display: none;
+    }
+
+</style>
+<div class="back none" id="movement{{movement.id}}">
+    <article class="modal movements">
+        <div class="modal_header">
+            <img src="{% static 'imgs/icons/movimentações.svg' %}" alt="">
+            <h2>Informações da Movimentação</h2>
+        </div>
+
+        <div class="modal_body">
+            <div class="body_item">
+                <p class="title">Reagent</p>
+                <p class="reagent_info">{{movement.fk_reagent.name}}</p>
+            </div>
+
+            <div class="body_item">
+                <p class="title">Fórmula Química</p>
+                <p class="reagent_info">{{movement.fk_reagent.formula}}</p>
+            </div>
+
+            <div class="body_item">
+                <p class="title">Classificação Química</p>
+                <p class="reagent_info">{{movement.fk_reagent.classification}}</p>
+            </div>
+
+            <div class="body_item wide">
+                <p class="title">Motivação</p>
+                <p class="reagent_info">{{movement.motivation}}</p>
+            </div>
+
+            <div class="body_item">
+                <p class="title">Tipo de Movimentação</p>
+                <p class="reagent_info">{{movement.get_movement_type_display}}</p>
+            </div>
+
+            {% if movement.movement_type == 'A' %}
+                <div class="body_item">
+                    <p class="title">Validade</p>
+                    <p class="reagent_info">{{movement.formatted_dt_validity}}</p>
+                </div>
+            {% endif %}
+
+            <div class="body_item">
+                <p class="title">Responsável</p>
+                <p class="reagent_info">{{movement.fk_user}}</p>
+            </div>
+        </div>
+
+        <div class="modal_btns">
+            <button onclick="close_modal()" class="close_modal">FECHAR</button>
+            </a>
+        </div>
+    </article>
+</div>
