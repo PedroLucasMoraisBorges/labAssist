@@ -5,6 +5,97 @@
 {% endblock %}
 
 {% block content %}
+    {% include 'components/navbar.html' %}
+
+    {% include 'components/movements/form_modal.html' %}
+    <main>
+        <section>
+            {% include 'components/page_indication/welcome.html' with text='Pendências' %}
+
+            <article class="pendings_section">
+                <div class="section_header">
+                    <div class="title">
+                        <img src="{% static 'imgs/icons/alert_w.svg' %}" alt="">
+                        <h2>Aguardando aprovação - Usuários</h2>
+                    </div>
+                    <p>Nesta seção estão listados as requisições para ativação de conta dos usuários.</p>
+                </div>
+
+                <div class="pendings_section_body">
+                    <div class="body_header">
+                        <p>NOME</p>
+                        <p>CARGO</p>
+                        <p>AÇÕES</p>
+                    </div>
+
+                    {% for user in users %}
+                        {% include 'components\pendings\users\card_user_request.html' %}
+                    {% endfor %}
+                </div>
+            </article>
+
+            <article class="pendings_section movements">
+                <div class="section_header">
+                    <div class="title">
+                        <img src="{% static 'imgs/icons/alert_w.svg' %}" alt="">
+                        <h2>Aguardando aprovação - Itens</h2>
+                    </div>
+                    <p>Nesta seção estão listados as movimentações pendentes no sistema.</p>
+                </div>
+            
+
+                <div class="pendings_section_body movements_body">
+                    {% for request in requests_movement %}
+                            <div>
+                                {% include 'components/movements/card.html' with movement=request.info.fk_movement is_request=True %}
+                            </div>
+                    {% endfor %}
+                </div>
+            </article>
+
+            <article class="pendings_section balance" >
+                <div class="section_header balance_header">
+                    <div class="title">
+                        <img src="{% static 'imgs/icons/alert_b.svg' %}" alt="">
+                        <h2>ITENS MAIS PRÓXIMOS AO VENCIMENTO</h2>
+                    </div>
+                    <p>Nesta seção estão listados os itens mais próximo de se vencerem.</p>
+                </div>
+
+                <div class="pendings_section_body balance_body">
+                    {% for batch in balance_maturity %}
+                        <div>
+                            {% include 'components/reagent/card_balance.html' with type=maturity %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </article>
+
+            <article class="pendings_section licenses" >
+                <div class="section_header licenses_header">
+                    <div class="title">
+                        <img src="{% static 'imgs/icons/alert_w.svg' %}" alt="">
+                        <h2>LICENÇAS</h2>
+                    </div>
+                    <p>Nesta seção estão listadas os dias para o vencimento das licenças.</p>
+                </div>
+
+                <div class="pendings_section_body licenses_body">
+                    <div class="license_card">
+                        <img src="{% static 'imgs/icons/time.svg' %}" alt="">
+                        <p class="name_license">SIPROQUIM</p>
+                        <p class="days_until">Vence em {{license.days_until_expiration}} dias</p>
+
+                        {% if license.days_until_expiration < 60 %}
+                            <p>Está na hora de renovar a licença</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        {% include 'components/sidebar.html' %}
+    </main>
 
 <div>
     <h1 style="font-size: 2rem;">Requisição de usuários</h1>

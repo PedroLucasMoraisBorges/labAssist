@@ -7,6 +7,7 @@ from .tasks import *
 from .forms import *
 from .models import *
 from auth_user.models import *
+from reagents.utilits import *
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -96,23 +97,35 @@ class CrateMovement(APIView):
             if movement.movement_type in ['R', 'T']:
                 if movement.fk_reagent.amount - movement.amount < 0:
                     movement.delete()
-                    return Response({'error': 'O reagente não tem tantas unidades'}, status=status.HTTP_400_BAD_REQUEST)
-                
-            requestMovement = Request.objects.create(
-                dt_request = movement.dt_movement,
-                fk_movement = movement
-            )
-            requestMovement.save()
-            
+                    return Response(
+                        {"message": "O reagente não tem tantas unidades"},
+                    )
+
+            if request.user.is_superuser:
+                requestMovement = Request.objects.create(
+                    dt_request=movement.dt_movement, fk_movement=movement, approved=True, dt_response=movement.dt_movement
+                )
+                requestMovement.save()
+
+                if movement.movement_type == "A":
+                    create_new_batch_by_movement(movement)
+                elif movement.movement_type in ["R", "T"]:
+                    remove_reagent_from_stock(movement)
+            else:
+                requestMovement = Request.objects.create(
+                    dt_request=movement.dt_movement, fk_movement=movement, approved=True, dt_response=movement.dt_movement
+                )
+                requestMovement.save()
+
             return send_request_movement(requestMovement)
         
         return Response({'error': 'Formulário incorreto'}, status=status.HTTP_400_BAD_REQUEST)
         
 class ApproveRequestMovement(APIView):
     def get(self, request):
-        id = request.query_params.get('id', None)
-        
-        if id:            
+        id = request.query_params.get("id", None)
+
+        if len(id) > 0:
             request_movement = get_object_or_404(Request, id=id)
 
             request_movement.approved = True
@@ -122,29 +135,63 @@ class ApproveRequestMovement(APIView):
             movement = request_movement.fk_movement
             reagent = movement.fk_reagent
 
-            if movement.movement_type == 'A':
-                reagent.amount += movement.amount
-            elif movement.movement_type in ['R', 'T']:
-                reagent.amount -= movement.amount
-            
-            reagent.save()
-            
-            return Response({'message': 'Requisição aprovada com sucesso'}, status=status.HTTP_200_OK)
-        
-        return Response({'error': 'ID não fornecido'}, status=status.HTTP_400_BAD_REQUEST)
-    
+            if movement.movement_type == "A":
+                create_new_batch_by_movement(movement)
+                return Response(
+                    {"message" : "Requisição aprovada com sucesso"},
+                    status=status.HTTP_200_OK,
+                )
+
+            elif movement.movement_type in ["R", "T"]:
+                is_removed = remove_reagent_from_stock(movement)
+                if is_removed:
+                    return Response(
+                        {"message": "Requisição aprovada com sucesso"},
+                        status=status.HTTP_200_OK,
+                    )
+                else:
+                    return Response(
+                        {"error": "A quantidade de itens no estoque é menor do que está tentando retirar"}, status=status.HTTP_400_BAD_REQUEST
+                    )
+
+        return Response(
+            {"message": "ID não fornecido"}, status=status.HTTP_400_BAD_REQUEST
+        )
+
+
 class DesapproveRequestMovement(APIView):
     def get(self, request):
-        id = request.query_params.get('id', None)
-        
-        if id:            
+        id = request.query_params.get("id", None)
+
+        if len(id) >0:
             request_movement = get_object_or_404(Request, id=id)
             request_movement.dt_response = timezone.now()
             request_movement.save()
-            
-            return Response({'message': 'Requisição aprovada com sucesso'}, status=status.HTTP_200_OK)
-        
-        return Response({'error': 'ID não fornecido'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+            return Response(
+                {"message" : "Requisição negada com sucesso"},
+                status=status.HTTP_200_OK,
+            )
+
+        return Response(
+            {"error": "ID não fornecido"}, status=status.HTTP_400_BAD_REQUEST
+        )
+
+
+# LICENSE
+
+class LicensePage(View):
+    def get(self, request):
+        license = License.objects.filter(is_expired=False).first()
+        expiredLicenses = License.objects.filter(is_expired=True).order_by("dt_register")
+
+        context = {
+            'license' : license,
+            'expiredLicenses' : expiredLicenses
+        }
+
+        return render(request, 'reports/licensePage.html', context)
     
 
 # USER
@@ -154,9 +201,8 @@ class ApproveUser(APIView):
     def get(self, request):
         codifiquedId = request.query_params.get('id', None)
 
-        if codifiquedId:
-            decoded_id = base64.b64decode(codifiquedId).decode('utf-8')
-
+        if len(codifiquedId) >0:
+            decoded_id = base64.b64decode(codifiquedId).decode("utf-8")
             user = User.objects.get(id=decoded_id)
 
             if user:
@@ -171,8 +217,8 @@ class DisapproveUser(APIView):
     def get(self, request):
         codifiquedId = request.query_params.get('id', None)
 
-        if codifiquedId:
-            decoded_id = base64.b64decode(codifiquedId).decode('utf-8')
+        if len(codifiquedId) >0:
+            decoded_id = base64.b64decode(codifiquedId).decode("utf-8")
             user = User.objects.get(id=decoded_id)
 
             if user:

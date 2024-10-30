@@ -1,0 +1,69 @@
+{% load static %}
+
+<style>
+    .welcome {
+        background-color: white;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
+        padding: 15px;
+        margin: 20px;
+        font-size: 13px;
+        font-weight: 500;
+    }
+
+    .welcome h2{
+        font-weight: 700;
+        font-size: 20px;
+    }
+
+    .welcome p {
+        width: .9rem;
+        width: 100%;
+    }
+
+    .welcome button{
+        padding-inline: 20px;
+        padding-block: 10px;
+        border-radius: 100px;
+        margin: 10px;
+        margin-top: 20px;
+        font-weight: 700; 
+        transform: translateY(0);
+        transition: .3s;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
+    }
+
+    .welcome .option_item{
+        background-color:#19882C;
+        color: white;
+    }
+
+    .welcome .option_item:hover{
+        transform: scale(1.1);
+    }
+
+    .welcome .option_move{
+        background-color: white;
+        color: #19882C;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
+    }
+
+    .welcome .option_move:hover{
+        transform: scale(1.1);
+    }
+</style>
+
+<div class="welcome">
+    <h2>{{text}} {% if username %}{{username}}{% endif %}</h2>
+    <p>O que deseja fazer?</p>
+    <div class="adm_option">
+        <button onclick="open_movement_form_modal()" class="option_move">Fazer Movimentação</button>
+        <a href="{% url 'register_reagent' %}"><button class="option_item">Cadastrar Novo Item</button></a>
+        {% if license_page %}
+            {% if license.days_until_expiration < 60 %}
+                <a href="{% url 'register_license' %}"><button class="option_move">Cadastrar Nova Licença</button></a>
+            {% elif license == None %}
+                <a href="{% url 'register_license' %}"><button class="option_move">Cadastrar Nova Licença</button></a>
+            {% endif %}
+        {% endif %}
+    </div>
+</div>
