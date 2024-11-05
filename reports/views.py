@@ -296,3 +296,10 @@ class DisapproveUser(APIView):
         return Response(
             {"error": "ID não fornecido"}, status=status.HTTP_400_BAD_REQUEST
         )
+
+
+# REPORTS
+
+class Reports(View):
+    def get(self, request):
+        return render(request, 'reports/reports.html')

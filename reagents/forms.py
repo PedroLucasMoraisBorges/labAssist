@@ -98,7 +98,7 @@ class ReagentForm(forms.ModelForm):
         required=False,
         label='INCOMPATÍVEL COM',
         queryset=Reagent.objects.all(),
-        widget= forms.SelectMultiple(),
+        widget= forms.SelectMultiple(attrs={'class':'form-control input-search js-example-basic-multiple'})
     )
 
     is_active = forms.BooleanField(

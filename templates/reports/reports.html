@@ -1,0 +1,21 @@
+{% extends 'components/base.html' %}
+{% load static %}
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+    {% include 'components/navbar.html' %}
+
+    {% include 'components/movements/form_modal.html' %}
+    <main>
+        <section>
+            {% include 'components/page_indication/welcome.html' with text='Relatórios' %}
+        </section>
+
+        {% include 'components/sidebar.html' %}
+    </main>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}
