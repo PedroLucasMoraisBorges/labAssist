@@ -30,10 +30,10 @@ class Reagent(models.Model):
     
     class Meta:
         permissions = [
-            ("can_add_reagent", "Can add reagent"),
-            ("can_change_reagent", "Can change reagent"),
-            ("can_delete_reagent", "Can delete reagent"),
-            ("can_view_reagent", "Can view reagent"),
+            ("can_add_reagent", "Cadastrar Reagente"),
+            ("can_change_reagent", "Alterar Reagente"),
+            ("can_delete_reagent", "Deletar Reagente"),
+            ("can_view_reagent", "Ver Reagente"),
         ]
 
 class ReagentBatch(models.Model):

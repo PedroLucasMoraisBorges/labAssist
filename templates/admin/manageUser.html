@@ -1,0 +1,116 @@
+{% extends 'components/base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/perfil.css'%}">
+
+<style> 
+    #permissoes-list p{
+        margin-right: 1rem;
+    }
+    .js-example-basic-multiple {
+        width: 100%;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        $('.js-example-basic-multiple').select2();
+    });
+</script>
+{% endblock %}
+
+{% block content %}
+    {% include 'components/navbar.html' %}
+
+    {% include 'components/movements/form_modal.html' %}
+    <main>
+        <section>
+            {% include 'components/page_indication/welcome.html' with text='Líquidos' %}
+
+            <div class="profile-card">                
+                <div  onsubmit="return validarSenhas()">
+                    <div class="profile-left">
+                        <div class="profile-left-text">
+                          <span class="user-name">{{customUser.name}}</span>
+                          <span class="user-department">{{customUser.get_sector_display}}</span>
+                        </div>
+                      </div>
+            
+                  <div class="profile-geral">
+                    <div class="input-row">
+                      <div class="input-group">
+                        <p type="text" name="nome" placeholder="Nome" class="profile-input">{{customUser.name}}</p>
+                      </div>
+            
+                      <div class="input-group">
+                        <p type="email" name="email" placeholder="E-mail" class="profile-input">{{customUser.email}}</p>
+                      </div>
+                    </div>
+            
+                    <div class="input-row">
+                      <div class="input-group">
+                        <p list="setores" name="setor" placeholder="setor" class="profile-input">{{customUser.get_sector_display}}</p>
+                      </div>
+
+                      <div class="input-group">
+                        <p list="localizacoes" name="localizacao" placeholder="Localização" class="profile-input">{% if customUser.is_active %} Ativo {% else %} Inativo {% endif %}</p>
+                      </div>
+                    </div>
+            
+                    <form class="input-group full-width" method="post">
+                        {% csrf_token %}
+                        <ul id="permissoes-list" class="permissions-list">
+                            <p>Permissões:</p>
+                            {{permissionForm.user_permissions}}
+                        </ul>
+
+                        <div class="submit-btn-container">
+                            <button type="submit" class="submit-btn">Alterar Permissões</button>
+                        </div>
+                    </form>
+                </div>
+            
+                
+              </div>
+        </section>
+
+        {% include 'components/sidebar.html' %}
+    </main>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Adiciona um evento para o input de arquivo
+    const fileInput = document.getElementById('file-upload');
+    const profileImage = document.getElementById('profile-image');
+  
+    fileInput.addEventListener('change', function() {
+      if (fileInput.files.length > 0) {
+        const file = fileInput.files[0]; // Obtém o arquivo selecionado
+        const reader = new FileReader(); // Cria um novo FileReader
+  
+        reader.onload = function(e) {
+          profileImage.src = e.target.result; // Altera a src da imagem de perfil
+        };
+  
+        reader.readAsDataURL(file); // Lê o arquivo como URL de dados
+      }
+    });
+
+
+    function validarSenhas() {
+        const senha = document.getElementById('senha').value;
+        const confirmacaoSenha = document.getElementById('confirmacao_senha').value;
+        const mensagemDiv = document.getElementById('mensagem');
+
+        if (senha !== confirmacaoSenha) {
+            mensagemDiv.textContent = "As senhas não coincidem. Tente novamente.";
+            mensagemDiv.style.display = "block";
+            return false;
+        } else {
+            mensagemDiv.style.display = "none";
+            return true;
+        }
+    }
+  </script>
+{% endblock %}

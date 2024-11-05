@@ -2,7 +2,6 @@
 {% load static %}
 
 {% block head %}
-    <title>Usuários</title>
     <link rel="stylesheet" href="{% static 'css/paginaUsuario.css' %}">
 {% endblock %}
 
@@ -12,25 +11,12 @@
 
     <main>
         <section>
-
-            <!-- Nova seção abaixo do header -->
-            <article class="info-section">
-                <div class="info-container">
-                    <div class="info-text">
-                        <h1>Lista de Usuários</h1>
-                        <p>Nesta seção estarão listadas itens do seu estoque, sua visão geral, movimentações e muito mais.</p>
-
-                        
-                    </div>
-                    <div class="info-icon">
-                        <img src="{% static 'imgs/icon-document.png' %}" alt="Ícone de documento">
-                    </div>
-                </div>
-            </article>
+            {% include 'components/page_indication/welcome.html' with text='Usuários' %}
 
             
             <!-- Container maior com informações gerais -->
             <article class="info-section">
+                <h2>Usuários ativos</h2>
                 <!-- Título da tabela de usuários -->
                 <div class="user-header">
                     <div class="user-title">
@@ -42,26 +28,47 @@
 
                 <!-- container de gerenciar -->
                 <div class="user-list">
-                    <div class="user-row">
-                        <div class="user-info">
-                            <div class="user-icon">FJ</div>
-                            <div class="user-name">Francisco José</div>
+                    {% for user in activeUsers %}
+                        <div class="user-row">
+                            <div class="user-info">
+                                <div class="user-icon">{{user.user_image}}</div>
+                                <div class="user-name">{{user.name}}</div>
+                            </div>
+                            <div class="user-role">{{user.get_sector_display}}</div>
+                            <div class="user-action">
+                                <a href="{% url 'manage_user' id=user.id %}"><button class="action-btn">VER MAIS</button></a>
+                            </div>
                         </div>
-                        <div class="user-role">Administrador</div>
-                        <div class="user-action">
-                            <button class="action-btn">VER MAIS</button>
-                        </div>
+                    {% endfor %}
+                    <!-- Adicione mais usuários aqui -->
+                </div>
+            </article>
+
+            <article class="info-section">
+                <h2>Usuários inativos</h2>
+                <!-- Título da tabela de usuários -->
+                <div class="user-header">
+                    <div class="user-title">
+                        <h2>NOME</h2>
+                        <h2>FUNÇÃO</h2>
+                        <h2>AÇÕES</h2>
                     </div>
-                    <div class="user-row">
-                        <div class="user-info">
-                            <div class="user-icon">UT</div>
-                            <div class="user-name">User Teste</div>
+                </div>
+
+                <!-- container de gerenciar -->
+                <div class="user-list">
+                    {% for user in inactiveUsers %}
+                        <div class="user-row">
+                            <div class="user-info">
+                                <div class="user-icon">{{user.user_image}}</div>
+                                <div class="user-name">{{user.name}}</div>
+                            </div>
+                            <div class="user-role">{{user.get_sector_display}}</div>
+                            <div class="user-action">
+                                <a href="{% url 'manage_user' id=user.id %}"><button class="action-btn">VER MAIS</button></a>
+                            </div>
                         </div>
-                        <div class="user-role">Usuário Geral</div>
-                        <div class="user-action">
-                            <button class="action-btn">VER MAIS</button>
-                        </div>
-                    </div>
+                    {% endfor %}
                     <!-- Adicione mais usuários aqui -->
                 </div>
             </article>
