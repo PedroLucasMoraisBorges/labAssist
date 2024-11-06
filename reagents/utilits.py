@@ -78,10 +78,14 @@ def remove_reagent_from_stock(movement : Movement):
             if batch.amount >= quantityOfItems:
                 batch.amount -= quantityOfItems
                 batch.save()
+                movement.fk_reagentBatch.add(batch)
+                movement.save()
                 break
             else:
                 quantityOfItems -=  batch.amount
                 batch.amount = 0
-                batch.save()
+                movement.fk_reagentBatch.add(batch)
+                batch.save()   
+                movement.save()
     else:
         return False

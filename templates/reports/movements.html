@@ -2,43 +2,119 @@
 {% load static %}
 
 {% block head %}
+<style>
+    h1 {
+        font-size: 1.6rem;
+        font-weight: 500;
+        margin-bottom: 1rem;
+    }
+    .pendings_section {
+        margin: 25px 4rem 2rem 4rem;
+        border-radius: 15px;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.20);
+        padding: 1rem;
+    }
+
+    .section_header {
+        color: white;
+        background-color: #19882C;
+        padding: .8rem;
+        border-radius: 10px;
+    }
+
+    .section_header .title {
+        display: flex;
+        align-items: start;
+    }
+
+    .section_header img {
+        width: 30px;
+        margin-top: .5rem;
+        margin-right: .7rem;
+    }
+
+    .section_header h2 {
+        font-size: 2.1rem;
+        font-weight: 600;
+    }
+
+    .balance_header {
+        color: #1E1E1E;
+        background-color: rgba(255, 232, 163, 1);
+        border: 1px solid #1E1E1E;
+        flex-direction: column;
+        margin-bottom: .9rem;
+    }
+
+    .pendings_section_body .body_header {
+        display: flex;
+        justify-content: space-between;
+        padding: 0rem 3rem;
+        margin-top: 1.2rem;
+        font-weight: 600;
+    }
+
+    .movements_body {
+        display: grid;
+        grid-template-columns: 22% 22% 22% 22%;
+        justify-content: space-between;
+    }
+
+    .license_card {
+        width: 20%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid black;
+        box-shadow: 0px 4px 3px rgba(0, 0, 0, 0.20);
+        padding: .8rem;
+        border-radius: 10px;
+        margin-top: 1rem;
+    }
+
+    .license_card img {
+        width: 50px;
+        margin-bottom: .8rem;
+    }
+
+    .name_license, .days_until {
+        font-size: 1.3rem;
+        text-align: center;
+        font-weight: 700;
+        color: #0A5517;
+    }
+</style>
 {% endblock %}
 
 {% block content %}
     {% include 'components/navbar.html' %}
 
+    {% include 'components/movements/form_modal.html' %}
     <main>
         <section>
-            <div>
+            {% include 'components/page_indication/welcome.html' with text='Movimentações' %}
+
+            <div class="pendings_section">
                 <h1>Produtos adicionados</h1>
-                {% for movement in added_movements %}
-                    <p>{{movement.fk_user}}</p>
-                    <p>{{movement.fk_user.sector}}</p>
-                    <p>{{movement.fk_reagent.name}}</p>
-                    <p>{{movement.fk_reagent.formula}}</p>
-                    <p>{{movement.fk_reagent.classification}}</p>
-                    <p>{{movement.fk_reagent.amount}}</p>
-                    <p>{{movement.fk_reagent.size}}</p>
-                    <p>{{movement.dt_movement.date}}</p>
-                    <p>{{movement.motivation}}</p>
-                    <hr>
-                {% endfor %}
+                <div class="pendings_section_body movements_body">
+                    {% for movement in added_movements %}
+                            <div>
+                                {% include 'components/movements/card.html' with movement=movement is_request=False %}
+                            </div>
+                    {% endfor %}
+                </div>
             </div>
             
-            <div></div>
+            <div class="pendings_section">
                 <h1>Produtos removidos</h1>
-                {% for movement in removed_movements %}
-                    <p>{{movement.fk_user}}</p>
-                    <p>{{movement.fk_user.sector}}</p>
-                    <p>{{movement.fk_reagent.name}}</p>
-                    <p>{{movement.fk_reagent.formula}}</p>
-                    <p>{{movement.fk_reagent.classification}}</p>
-                    <p>{{movement.fk_reagent.amount}}</p>
-                    <p>{{movement.fk_reagent.size}}</p>
-                    <p>{{movement.dt_movement.date}}</p>
-                    <p>{{movement.motivation}}</p>
-                    <hr>
-                {% endfor %}
+                <div class="pendings_section_body movements_body">
+                    {% for movement in removed_movements %}
+                        <div>
+                            {% include 'components/movements/card.html' with movement=movement is_request=False is_removed=True %}
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
         </section>
 

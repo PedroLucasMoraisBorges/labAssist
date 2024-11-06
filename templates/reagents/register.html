@@ -1,4 +1,5 @@
 {% extends 'components/base.html' %}
+{% load static %}
 
 {% block head %}
     <style>
@@ -12,6 +13,77 @@
             $('.js-example-basic-multiple').select2();
         });
     </script>
+
+    <style>
+        #crud-modal {
+            display: flex;
+            width: 100%;
+            justify-content: center;
+        }
+
+        #crud-modal form {
+            display: flex;
+            flex-direction: column;
+            width: 90%;
+            border: 1px solid rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .form_header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem ;
+        }
+
+        .form_header img {
+            margin-right: .5rem;
+            width: 40px;
+        }
+
+        .form_header h2 {
+            font-weight: 400;
+            font-size: 1.5rem;
+        }
+
+        #crud-modal form label {
+            font-weight: 500;
+        }
+
+        #crud-modal form input, select {
+            border-radius: 15px;
+            box-shadow: 0px 4px 3px rgba(0, 0, 0, 0.25);
+            padding: .4rem .4rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #D9D9D9;
+        }
+
+        .group_inputs {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .group_inputs .field_div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 22.5%;
+        }
+
+        .incompatibility {
+            width: 100%;
+        }
+
+        #crud-modal .register_button {
+            background-color: rgba(29, 138, 48, 1);
+            color: white;
+            padding: .7rem;
+            border-radius: 20px;
+            margin-top: 1rem;
+            font-weight: 600;
+        }
+    </style>
 {% endblock %}
 
 {% block content %}
@@ -19,125 +91,71 @@
 
     <main>
         <section>
-            <div id="crud-modal" tabindex="-1"
-                class="overflow-y-auto fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-                <div class="relative p-4 w-full max-w-3xl max-h-full">
-                    <!-- Modal content -->
-                    <div class="relative bg-white rounded-lg shadow">
-                        <!-- Modal header -->
-                        <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                            <svg class="mr-3" xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <line x1="12" y1="8" x2="12" y2="16"></line>
-                                <line x1="8" y1="12" x2="16" y2="12"></line>
-                            </svg>
-                            <h3 class="text-4xl font-semibold">
-                                Cadastro de Item
-                            </h3>
-                            <button type="button"
-                                class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                                data-modal-toggle="crud-modal">
-                                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                    viewBox="0 0 14 14">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                                </svg>
-                                <span class="sr-only">Close modal</span>
-                            </button>
-                        </div>
-                        <!-- Modal body -->
-                        <form class="p-4 md:p-5" method="post">
-                            {% csrf_token %}
-                            <div class="">
-                                <label for="id_name" class="block mb-2 text-sm font-medium">Nome do
-                                    Item
-                                </label>
-                                {{form.name}}
-                            </div>
-                            <div class="grid gap-4 text-center mb-4 grid-cols-4 pt-4">
-                                <div class="">
-                                    <label for="id_formula" class="block mb-2 text-sm font-medium">
-                                        Fórmula Química
-                                    </label>
-                                    {{form.formula}}
-                                </div>
-                                <div class="">
-                                    <label for="id_classification" class="block mb-2 text-sm font-medium">
-                                        Classificação Química
-                                    </label>
-                                    {{form.classification}}
-                                </div>
-                                <div class="">
-                                    <label for="id_state" class="block mb-2 text-sm font-medium">
-                                        Tipo de Item
-                                    </label>
-                                    {{form.state}}
-                                </div>
-                                <div class="">
-                                    <label for="id_size" class="block mb-2 text-sm font-medium">
-                                        Tamanho do Frasco
-                                    </label>
-                                    {{form.size}}
-                                </div>
-                            </div>
-                            <div class="grid gap-4 text-center mb-4 grid-cols-4">
-                                <div class="">
-                                    <label for="id_amount" class="block mb-2 text-sm font-medium">
-                                        Quantidade
-                                    </label>
-                                    {{form.amount}}
-                                </div>
-                                <div class="">
-                                    <label for="id_validity" class="block mb-2 text-sm font-medium">
-                                        Validade
-                                    </label>
-                                    {{form.validity}}
-                                </div>
-                                <div class="">
-                                    <label for="id_control" class="block mb-2 text-sm font-medium">
-                                        Controlado
-                                    </label>
-                                    {{form.control}}
-                                </div>
+            {% include 'components/page_indication/presentation.html' with page="Cadastrar itens no seu estoque" text="Nesta seção você poderá adicionar facilmente itens no seu sistema." %}
 
-                                <div class="">
-                                    <label for="id_control" class="block mb-2 text-sm font-medium">
-                                        Incompatível com
-                                    </label>
-                                    {{form.incompatibility}}
-                                </div>
-
-                                <div class="">
-                                    <label for="id_control" class="block mb-2 text-sm font-medium">
-                                        É ativo
-                                    </label>
-                                    {{form.is_active}}
-                                </div>
-
-                                <div class="">
-                                    <label for="id_control" class="block mb-2 text-sm font-medium">
-                                        Limite
-                                    </label>
-                                    {{form.limit}}
-                                </div>
-
-                            </div>
-                            <!-- <div class="mb-4">
-                                <label class="block mb-2 text-sm font-medium" for="id_incompatibility">Incompatível com</label>
-                                <select class="js-example-basic-multiple " name="states[]" multiple="multiple">
-                                    <option value="AL">Alabama</option>
-                                    ...
-                                    <option value="WY">Wyoming</option>
-                                </select>
-                            </div> -->
-                            <button type="submit"
-                                class="text-white border-l w-full overflow-hidden font-medium transition-all bg-green-800 rounded-2xl hover:bg-green-900 group py-2.5 px-2.5">
-                                CADASTRAR ITEM
-                            </button>
-                        </form>
+            <div id="crud-modal" tabindex="-1">
+                <form class="" method="post">
+                    {% csrf_token %}
+                    <div class="form_header">
+                        <img src="{% static 'imgs/icons/add.svg' %}" alt="">
+                        <h2>Cadastro de Item</h2>
                     </div>
-                </div>
+
+                    <div class="field_name field_div">
+                        {{form.name.label_tag}}
+                        {{form.name}}
+                    </div>
+
+                    <div class="group_inputs">
+                        <div class="field_div">
+                            {{form.formula.label_tag}}
+                            {{form.formula}}
+                        </div>
+                        <div class="field_div">
+                            {{form.classification.label_tag}}
+                            {{form.classification}}
+                        </div>
+                        <div class="field_div">
+                            {{form.state.label_tag}}
+                            {{form.state}}
+                        </div>
+                        <div class="field_div">
+                            {{form.size.label_tag}}
+                            {{form.size}}
+                        </div>
+                    </div>
+
+                    <div class="group_inputs">
+                        <div class="field_div">
+                            {{form.amount.label_tag}}
+                            {{form.amount}}
+                        </div>
+                        <div class="field_div">
+                            {{form.validity.label_tag}}
+                            {{form.validity}}
+                        </div>
+                        <div class="field_div">
+                            {{form.control.label_tag}}
+                            {{form.control}}
+                        </div>
+                        <div class="field_div">
+                            {{form.limit.label_tag}}
+                            {{form.limit}}
+                        </div>
+                    </div>
+
+                    <div class="">
+                        {{form.is_active.label_tag}}
+                        {{form.is_active}}
+                    </div>
+
+                    <div class="field_div incompatibility">
+                        {{form.incompatibility.label_tag}}
+                        {{form.incompatibility}}
+                    </div>
+
+                    <button type="submit" class="register_button"> CADASTRAR ITEM </button>
+                </form>
             </div>
         </section>
 

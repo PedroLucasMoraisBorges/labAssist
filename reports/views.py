@@ -296,3 +296,146 @@ class DisapproveUser(APIView):
         return Response(
             {"error": "ID não fornecido"}, status=status.HTTP_400_BAD_REQUEST
         )
+
+
+# REPORTS
+
+class Reports(View):
+    def generate_movement_history(self, request):
+        name = request.POST.get('name')
+        item_status = request.POST.getlist('item_status')  # Use getlist para campos múltiplos
+        start_date = request.POST.get('start_date')
+        final_date = request.POST.get('final_date')
+
+        movementsList = []
+        if len(item_status) > 0:
+            movements = Movement.objects.filter(
+                Q(fk_reagent__state__in=item_status) &
+                Q(dt_movement__gte=start_date) &
+                Q(dt_movement__lte=final_date)  # Corrigido para usar final_date
+            )
+        else:
+            movements = Movement.objects.filter(
+                Q(dt_movement__gte=start_date) &
+                Q(dt_movement__lte=final_date)  # Corrigido para usar final_date
+            )
+        
+        for movement in movements:
+            m_request = Request.objects.get(fk_movement=movement)
+
+            if m_request.approved == True:
+                movementsList.append(movement)
+
+        return movementsList
+
+    def generate_user_performace(self, request):
+        user_id = request.POST.get('user')
+        user = User.objects.get(id=user_id)
+
+        name = request.POST.get('name_report_user')
+        startDate = request.POST.get('start_date_user')
+        finalDate = request.POST.get('final_date_user')
+
+        movements = Movement.objects.filter(fk_user=user, dt_movement__gte=startDate, dt_movement__lte=finalDate)
+
+        approved  = []
+        denied = []
+
+        for movement in movements:
+            request_m = Request.objects.get(fk_movement=movement)
+
+            if request_m.approved:
+                approved.append(movement)
+            else:
+                denied.append(movement)
+        
+        return {
+            'approved' : approved,
+            'denied' : denied
+        }
+
+    def generate_siproquim_map(self, request):
+        name = request.POST.get('name_report_siproquim')
+        type_map = request.POST.get('type_map')
+        startDate = request.POST.get('start_date_siproquim')
+        finalDate = request.POST.get('final_date_siproquim')
+
+        reagents_map = []
+        reagents_verify = []
+        # if type_map == 'Q':
+        #     movements = Movement.objects.filter(fk_reagent__control='PF', dt_movement__gte=startDate, dt_movement__lte=finalDate)
+        if type_map in ['R', 'T']:
+            movements = Movement.objects.filter(fk_reagent__control='PF', dt_movement__gte=startDate, dt_movement__lte=finalDate, movement_type__in=['R', 'T'])
+
+            for movement in movements:
+                total_quantity = 0
+
+                for batch in movement.fk_reagentBatch.all():
+                    total_quantity += batch.size * movement.amount
+
+                reagent = {
+                    'name' : movement.fk_reagent.name,
+                    'total_quantity' : total_quantity / 1000,
+                    'category' : movement.fk_reagent.state,
+                    'type_map' : 'Retirada'
+                }  
+
+                if reagent['name'] in reagents_verify:
+                    index = reagents_verify.index(reagent['name'])
+                    reagents_map[index]['total_quantity'] += reagent['total_quantity']
+                else:
+                    reagents_map.append(reagent)
+                    reagents_verify.append(reagent['name'])
+                
+            
+        else:
+            movements = Movement.objects.filter(fk_reagent__control='PF', dt_movement__gte=startDate, dt_movement__lte=finalDate, movement_type='A')
+
+            for movement in movements:
+                reagent = {
+                    'name' : movement.fk_reagent.name,
+                    'total_quantity' : (movement.amount * movement.size) /1000,
+                    'category' : movement.fk_reagent.state,
+                    'type_map' : 'Adição'
+                }     
+
+                if reagent['name'] in reagents_verify:
+                    index = reagents_verify.index(reagent['name'])
+                    reagents_map[index]['total_quantity'] += reagent['total_quantity']
+                else:
+                    reagents_map.append(reagent)
+                    reagents_verify.append(reagent['name'])
+            
+        print(reagents_map)
+        return reagents_map
+    
+    def get(self, request):
+        context = {
+            'movementForm' : MovementHistoryForm(),
+            'userPerformaceForm' : UserPerformanceForm(),
+            'siproquimMapForm' : SiproquimMapForm()
+        }
+        return render(request, 'reports/reports.html', context)
+    
+    def post(self, request):
+        submitted_form = request.POST.get('submitted_form')
+
+        context = {
+            'movementForm' : MovementHistoryForm(),
+            'userPerformaceForm' : UserPerformanceForm(),
+            'siproquimMapForm' : SiproquimMapForm()
+        }
+
+        if submitted_form == 'movementHistory':
+            movementsList = self.generate_movement_history(request)
+            context.update({'movement_history' : movementsList})
+
+        elif submitted_form == 'userPerformace':
+            userPerformace = self.generate_user_performace(request)
+            context.update({'userPerformace' : userPerformace})
+
+        elif submitted_form == 'siproquimMap':
+            siproquimMap = self.generate_siproquim_map(request)
+            context.update({'siproquimMap' : siproquimMap})
+
+        return render(request, 'reports/reports.html', context)
