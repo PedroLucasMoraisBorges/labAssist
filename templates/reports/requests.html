@@ -51,7 +51,7 @@
 
     .movements_body {
         display: grid;
-        grid-template-columns: 20% 20% 20% 20%;
+        grid-template-columns: 22% 22% 22% 22%;
         justify-content: space-between;
     }
 
@@ -124,9 +124,9 @@
 
                 <div class="pendings_section_body movements_body">
                     {% for request in requests_movement %}
-                            <div>
-                                {% include 'components/movements/card.html' with movement=request.info.fk_movement is_request=True %}
-                            </div>
+
+                        {% include 'components/movements/card.html' with movement=request.info.fk_movement is_request=True %}
+
                     {% endfor %}
                 </div>
             </article>

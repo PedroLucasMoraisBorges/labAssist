@@ -1,0 +1,76 @@
+{% load static %}
+
+{% load static %}
+
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: Arial, sans-serif;
+    }
+
+    /* Cabeçalho da tabela */
+    table thead th {
+        background-color: #1E1E1E;
+        color: white;
+        padding: 12px;
+        text-align: left;
+        font-weight: bold;
+        border-bottom: 2px solid #CDFFD6;
+    }
+
+    /* Corpo da tabela */
+    table tbody td {
+        padding: 10px;
+        border-bottom: 1px solid #CDFFD6;
+        color: #1E1E1E;
+    }
+
+    /* Linhas alternadas */
+    table tbody tr:nth-child(even) {
+        background-color: #CDFFD6;
+    }
+
+    table tbody tr:nth-child(odd) {
+        background-color: #FFFFFF;
+    }
+
+    /* Espaçamento e design dos elementos sem valor */
+    .no-data {
+        color: #888888;
+        font-style: italic;
+    }
+</style>
+
+<table>
+    <thead>
+        <tr>
+            <th>Reagente</th>
+            <th>Tipo de Movimentação</th>
+            <th>Total (KG)</th>
+            <th>Total (L)</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for reagent in siproquimMap %}
+            <tr>
+                <td>{{ reagent.name }}</td>
+                <td>{{ reagent.type_map }}</td>
+                <td>
+                    {% if reagent.category == 'S' %}
+                        {{ reagent.total_quantity }}
+                    {% else %}
+                        0000
+                    {% endif %}
+                </td>
+                <td>
+                    {% if reagent.category == 'L' %}
+                        {{ reagent.total_quantity }}
+                    {% else %}
+                        0000
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>   

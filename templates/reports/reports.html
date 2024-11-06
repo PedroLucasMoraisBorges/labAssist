@@ -2,6 +2,11 @@
 {% load static %}
 
 {% block head %}
+<script>
+    $(document).ready(function () {
+        $('.js-example-basic-multiple').select2();
+    });
+</script>
 {% endblock %}
 
 {% block content %}
@@ -11,6 +16,63 @@
     <main>
         <section>
             {% include 'components/page_indication/welcome.html' with text='Relatórios' %}
+
+            <article class="report_options">
+                <div class="reports_header">
+                    <img src="{% static 'imgs/icons/report.svg' %}" alt="">
+                    <h1>Opções de Relatório</h1>
+
+                    <div class="options">
+                        <button id="movementHistory">Histórico de movimentações</button>
+                        <button id="userPerformace">Atuação do usuário</button>
+                        <button id="siproquimMap">Mapa SIPROQUIM</button>
+                    </div>
+                </div>
+            </article>
+
+            <article class="forms">
+                <form class="movementHistory" method="post">
+                    {% csrf_token %}
+                    {% for field in movementForm %}
+                        {{field.label_tag}}
+                        {{field}}
+                    {% endfor %}
+
+                    <button name="submitted_form" value="movementHistory" class="generate">GERAR RELATÓRIO</button>
+                </form>
+
+                <form method="post" class="userPerformace">
+                    {% csrf_token %}
+                    {% for field in userPerformaceForm %}
+                        {{field.label_tag}}
+                        {{field}}
+                    {% endfor %}
+
+                    <button name="submitted_form" value="userPerformace" class="generate">GERAR RELATÓRIO</button>
+                </form>
+
+                <form method="post" class="siproquimMap">
+                    {% csrf_token %}
+                    {% for field in siproquimMapForm %}
+                        {{field.label_tag}}
+                        {{field}}
+                    {% endfor %}
+
+                    <button name="submitted_form" value="siproquimMap" class="generate">GERAR RELATÓRIO</button>
+                </form>
+            </article>
+
+            {% if movement_history %}    
+                {% include 'components/tables/movementHistory.html' %}         
+            {% endif %}
+
+            {% if userPerformace %}
+                {% include 'components/tables/userPerformace.html' %}
+            {% endif %}
+        
+            {% if siproquimMap %}
+                {% include 'components/tables/siproquimMap.html' %}
+            {% endif %}
         </section>
 
         {% include 'components/sidebar.html' %}

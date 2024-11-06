@@ -9,7 +9,6 @@ statesChoices = [
 controlChoices = [
     ('LI', 'Livre'),
     ('PF', 'Polícia Federal'),
-    ('EX', 'Exército')
 ]
 
 # Create your models here
@@ -46,3 +45,7 @@ class ReagentBatch(models.Model):
     @property
     def formatted_validity(self):
         return self.validity.strftime('%d/%m/%Y')
+
+    def __str__(self):
+        val = self.validity.strftime('%d/%m/%Y')
+        return "Lote de {} - {}".format(self.fk_reagent.name, val)
