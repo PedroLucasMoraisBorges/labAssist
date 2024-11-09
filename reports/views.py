@@ -134,7 +134,7 @@ class CreateMovement(APIView):
                     remove_reagent_from_stock(movement)
             else:
                 requestMovement = Request.objects.create(
-                    dt_request=movement.dt_movement, fk_movement=movement, approved=True, dt_response=movement.dt_movement
+                    dt_request=movement.dt_movement, fk_movement=movement
                 )
                 requestMovement.save()
 
