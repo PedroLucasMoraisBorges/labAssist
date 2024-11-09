@@ -20,7 +20,7 @@ class Redirect(View):
             if user.is_staff or user.is_superuser:
                 return redirect('home_admin')
             else:
-                return redirect('home')
+                return redirect('home_normal_user')
         else:
             return redirect('landing_page')
 

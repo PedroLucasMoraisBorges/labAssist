@@ -26,25 +26,25 @@
                 <div class="content active">
                     <div class="listReagents actives" id="active">
                         {% if active_liquids|length > 0 %}
-                        {% for grupo in active_liquids %}
-                        {% for letter, reagents in grupo.items %}
-                        {% include 'components/group_reagents.html' %}
-                        {% endfor %}
-                        {% endfor %}
+                            {% for grupo in active_liquids %}
+                                {% for letter, reagents in grupo.items %}
+                                    {% include 'components/group_reagents.html' %}
+                                {% endfor %}
+                            {% endfor %}
                         {% else %}
-                        {% include 'components/no_results.html' %}
+                            {% include 'components/no_results.html' with text="Sem itens disponíveis" %}
                         {% endif %}
                     </div>
 
                     <div class="listReagents none" id="passive">
                         {% if passive_liquids|length > 0 %}
-                        {% for grupo in passive_liquids %}
-                        {% for letter, reagents in grupo.items %}
-                        {% include 'components/group_reagents.html' %}
-                        {% endfor %}
-                        {% endfor %}
+                            {% for grupo in passive_liquids %}
+                                {% for letter, reagents in grupo.items %}
+                                    {% include 'components/group_reagents.html' %}
+                                {% endfor %}
+                            {% endfor %}
                         {% else %}
-                        {% include 'components/no_results.html' %}
+                            {% include 'components/no_results.html' with text="Sem itens disponíveis" %}
                         {% endif %}
                     </div>
                 </div>
