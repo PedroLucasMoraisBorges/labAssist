@@ -18,26 +18,35 @@
             <div class="container">
                 <div class="tab-box">
                     <div class="tabs primary-tabs">
-                        <button class="tab-btn active" content-id="geral"> Ativos</button>
-                        <button class="tab-btn" content-id="move"> Passivos</button>
+                        <button class="tab2-btn active" content-id="active"> Ativos</button>
+                        <button class="tab2-btn" content-id="passive"> Passivos</button>
                     </div>
                 </div>
                 <div class="content-box">
-                    <div class="content active" id="geral">
-                        <div class="actives">
-                            {% for grupo in active_solids %}
-                                {% for letter, reagents in grupo.items %}
-                                    {% include 'components/group_reagents.html' %}
+                    <div class="content active">
+                        <div class="listReagents actives" id="active">
+
+                            {% if active_solids|length > 0 %}
+                                {% for grupo in active_solids %}
+                                    {% for letter, reagents in grupo.items %}
+                                        {% include 'components/group_reagents.html' %}
+                                    {% endfor %}
                                 {% endfor %}
-                            {% endfor %}
+                            {% else %}
+                                {% include 'components/no_results.html' %}
+                            {% endif %}
                         </div>
 
-                        <div class="passives">
-                            {% for grupo in passive_solids %}
-                                {% for letter, reagents in grupo.items %}
-                                    {% include 'components/group_reagents.html' %}
+                        <div class="listReagents passives none" id="passive">
+                            {% if passive_solids|length > 0 %}
+                                {% for grupo in active_solids %}
+                                    {% for letter, reagents in grupo.items %}
+                                        {% include 'components/group_reagents.html' %}
+                                    {% endfor %}
                                 {% endfor %}
-                            {% endfor %}
+                            {% else %}
+                                {% include 'components/no_results.html' %}
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -50,4 +59,5 @@
 {% endblock %}
 
 {% block scripts %}
+<script src="{% static 'js/alter_reagent_types.js' %}"></script>
 {% endblock %}

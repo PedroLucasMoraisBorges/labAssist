@@ -6,48 +6,57 @@
 {% endblock %}
 
 {% block content %}
-    {% include 'components/navbar.html' %}
+{% include 'components/navbar.html' %}
 
-    {% include 'components/movements/form_modal.html' %}
-    <main>
-        <section>
-            {% include 'components/page_indication/welcome.html' with text='Líquidos' %}
-            
-            {% include 'components/search.html' %}
-            
-            <div class="container">
-                <div class="tab-box">
-                    <div class="tabs primary-tabs">
-                        <button class="tab-btn active" content-id="geral"> Ativos</button>
-                        <button class="tab-btn" content-id="move"> Passivos</button>
-                    </div>
+{% include 'components/movements/form_modal.html' %}
+<main>
+    <section>
+        {% include 'components/page_indication/welcome.html' with text='Líquidos' %}
+
+        {% include 'components/search.html' %}
+
+        <div class="container">
+            <div class="tab-box">
+                <div class="tabs primary-tabs">
+                    <button class="tab2-btn active" content-id="active"> Ativos</button>
+                    <button class="tab2-btn" content-id="passive"> Passivos</button>
                 </div>
-                <div class="content-box">
-                    <div class="content active" id="geral">
-                        <div class="actives">
-                            {% for grupo in active_liquids %}
-                                {% for letter, reagents in grupo.items %}
-                                    {% include 'components/group_reagents.html' %}
-                                {% endfor %}
-                            {% endfor %}
-                        </div>
+            </div>
+            <div class="content-box">
+                <div class="content active">
+                    <div class="listReagents actives" id="active">
+                        {% if active_liquids|length > 0 %}
+                        {% for grupo in active_liquids %}
+                        {% for letter, reagents in grupo.items %}
+                        {% include 'components/group_reagents.html' %}
+                        {% endfor %}
+                        {% endfor %}
+                        {% else %}
+                        {% include 'components/no_results.html' %}
+                        {% endif %}
+                    </div>
 
-                        <div class="passives">
-                            {% for grupo in passive_liquids %}
-                                {% for letter, reagents in grupo.items %}
-                                    {% include 'components/group_reagents.html' %}
-                                {% endfor %}
-                            {% endfor %}
-                        </div>
+                    <div class="listReagents none" id="passive">
+                        {% if passive_liquids|length > 0 %}
+                        {% for grupo in passive_liquids %}
+                        {% for letter, reagents in grupo.items %}
+                        {% include 'components/group_reagents.html' %}
+                        {% endfor %}
+                        {% endfor %}
+                        {% else %}
+                        {% include 'components/no_results.html' %}
+                        {% endif %}
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        {% include 'components/sidebar.html' %}
-    </main>
+    {% include 'components/sidebar.html' %}
+</main>
 
 {% endblock %}
 
 {% block scripts %}
+<script src="{% static 'js/alter_reagent_types.js' %}"></script>
 {% endblock %}

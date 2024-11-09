@@ -106,9 +106,13 @@
                         <p>AÇÕES</p>
                     </div>
 
-                    {% for user in users %}
-                        {% include 'components\pendings\users\card_user_request.html' %}
-                    {% endfor %}
+                    {% if users|length == 0 %}
+                        {% include 'components/no_results.html' with text="Sem requisições de usuários" %}
+                    {% else %}
+                        {% for user in users %}
+                            {% include 'components\pendings\users\card_user_request.html' %}
+                        {% endfor %}
+                    {% endif %}
                 </div>
             </article>
 
@@ -122,13 +126,19 @@
                 </div>
             
 
-                <div class="pendings_section_body movements_body">
-                    {% for request in requests_movement %}
+                {% if requests_movement|length == 0 %}
+                    {% include 'components/no_results.html' with text="Sem requisições de movimentações" %}
+                {% else %}
+                    <div class="pendings_section_body movements_body">
+                        
 
-                        {% include 'components/movements/card.html' with movement=request.info.fk_movement is_request=True %}
+                        {% for request in requests_movement %}
 
-                    {% endfor %}
-                </div>
+                            {% include 'components/movements/card.html' with movement=request.info.fk_movement is_request=True %}
+
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </article>
 
             <article class="pendings_section balance" >
@@ -140,13 +150,17 @@
                     <p>Nesta seção estão listados os itens mais próximo de se vencerem.</p>
                 </div>
 
-                <div class="pendings_section_body balance_body">
-                    {% for batch in balance_maturity %}
-                        <div>
-                            {% include 'components/reagent/card_balance.html' with type=maturity %}
-                        </div>
-                    {% endfor %}
-                </div>
+                {% if balance_maturity|length == 0 %}
+                    {% include 'components/no_results.html' with text="Ainda nenhum reagente cadastrado" %}
+                {% else %}
+                    <div class="pendings_section_body balance_body">
+                        {% for batch in balance_maturity %}
+                            <div>
+                                {% include 'components/reagent/card_balance.html' with type=maturity %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </article>
 
             <article class="pendings_section licenses" >
@@ -158,17 +172,21 @@
                     <p>Nesta seção estão listadas os dias para o vencimento das licenças.</p>
                 </div>
 
-                <div class="pendings_section_body licenses_body">
-                    <div class="license_card">
-                        <img src="{% static 'imgs/icons/time.svg' %}" alt="">
-                        <p class="name_license">SIPROQUIM</p>
-                        <p class="days_until">Vence em {{license.days_until_expiration}} dias</p>
+                {% if license %}
+                    <div class="pendings_section_body licenses_body">
+                        <div class="license_card">
+                            <img src="{% static 'imgs/icons/time.svg' %}" alt="">
+                            <p class="name_license">SIPROQUIM</p>
+                            <p class="days_until">Vence em {{license.days_until_expiration}} dias</p>
 
-                        {% if license.days_until_expiration < 60 %}
-                            <p>Está na hora de renovar a licença</p>
-                        {% endif %}
+                            {% if license.days_until_expiration < 60 %}
+                                <p>Está na hora de renovar a licença</p>
+                            {% endif %}
+                        </div>
                     </div>
-                </div>
+                {% else %}
+                    {% include 'components/no_results.html' with text="Você ainda não cadastrou nenhuma licenças ou a sua está atrasada, confira na aba de licenças" %}
+                {% endif %}
             </article>
         </section>
 
