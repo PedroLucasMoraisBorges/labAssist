@@ -85,20 +85,28 @@
             </div>
             <div class="content-box">
                 <div class="content active" id="geral">
-                    <div class="liquids">
-                        {% for grupo in liquids %}
-                        {% for letter, reagents in grupo.items %}
-                        {% include 'components/group_reagents.html' %}
-                        {% endfor %}
-                        {% endfor %}
+                    <div class="liquids listReagents" id="liquids">
+                        {% if liquids|length > 0 %}
+                            {% for grupo in liquids %}
+                            {% for letter, reagents in grupo.items %}
+                            {% include 'components/group_reagents.html' %}
+                            {% endfor %}
+                            {% endfor %}
+                        {% else %}
+                            {% include 'components/no_results.html' with text="Nenhum reagente líquido cadastrado no momento" %}
+                        {% endif %}
                     </div>
 
-                    <div class="solids none">
-                        {% for grupo in solids %}
-                        {% for letter, reagents in grupo.items %}
-                        {% include 'components/group_reagents.html' %}
-                        {% endfor %}
-                        {% endfor %}
+                    <div class="solids listReagents none" id="solids">
+                        {% if solids|length > 0 %}
+                            {% for grupo in solids %}
+                            {% for letter, reagents in grupo.items %}
+                            {% include 'components/group_reagents.html' %}
+                            {% endfor %}
+                            {% endfor %}
+                        {% else %}
+                            {% include 'components/no_results.html' with text="Nenhum reagente sólido cadastrado no momento" %}
+                        {% endif %}
                     </div>
                 </div>
 
@@ -221,4 +229,5 @@ Já é funcional, mas ainda não pega nenhuma informação real-->
 
     verificarLetrasAtivas();
 </script>
+<script src="{% static 'js/alter_reagent_types.js' %}"></script>
 {% endblock %}

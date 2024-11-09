@@ -1,0 +1,32 @@
+{% load static %}
+
+<style>
+    .noResults {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 4rem;
+        position: relative;
+    }
+
+    .noResults div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: fit-content;
+        background-color: #58A365;
+        padding: .6rem;
+        border-radius: 10px;
+    }
+
+    .noResults img {
+        margin-right: .7rem;
+    }
+</style>
+
+<div class="noResults">
+    <div>
+        <img src="{% static 'imgs/icons/estoque.svg' %}" alt="">
+        <p>{{text}}</p>
+    </div>
+</div>

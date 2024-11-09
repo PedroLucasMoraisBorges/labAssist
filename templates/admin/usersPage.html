@@ -56,6 +56,7 @@
                 </div>
 
                 <!-- container de gerenciar -->
+                {% if inactiveUsers|length > 0 %}
                 <div class="user-list">
                     {% for user in inactiveUsers %}
                         <div class="user-row">
@@ -71,6 +72,9 @@
                     {% endfor %}
                     <!-- Adicione mais usuários aqui -->
                 </div>
+                {% else %}
+                    {% include 'components/no_results.html' with text="Nenhum usuário inativo no momento" %}
+                {% endif %}
             </article>
         </section>
 

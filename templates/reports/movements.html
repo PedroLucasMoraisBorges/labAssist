@@ -8,6 +8,7 @@
         font-weight: 500;
         margin-bottom: 1rem;
     }
+
     .pendings_section {
         margin: 25px 4rem 2rem 4rem;
         border-radius: 15px;
@@ -78,7 +79,8 @@
         margin-bottom: .8rem;
     }
 
-    .name_license, .days_until {
+    .name_license,
+    .days_until {
         font-size: 1.3rem;
         text-align: center;
         font-weight: 700;
@@ -88,38 +90,46 @@
 {% endblock %}
 
 {% block content %}
-    {% include 'components/navbar.html' %}
+{% include 'components/navbar.html' %}
 
-    {% include 'components/movements/form_modal.html' %}
-    <main>
-        <section>
-            {% include 'components/page_indication/welcome.html' with text='Movimentações' %}
+{% include 'components/movements/form_modal.html' %}
+<main>
+    <section>
+        {% include 'components/page_indication/welcome.html' with text='Movimentações' %}
 
-            <div class="pendings_section">
-                <h1>Produtos adicionados</h1>
+        <div class="pendings_section">
+            <h1>Produtos adicionados</h1>
+            {% if added_movements|length > 0 %}
                 <div class="pendings_section_body movements_body">
                     {% for movement in added_movements %}
-                            <div>
-                                {% include 'components/movements/card.html' with movement=movement is_request=False %}
-                            </div>
-                    {% endfor %}
-                </div>
-            </div>
-            
-            <div class="pendings_section">
-                <h1>Produtos removidos</h1>
-                <div class="pendings_section_body movements_body">
-                    {% for movement in removed_movements %}
                         <div>
-                            {% include 'components/movements/card.html' with movement=movement is_request=False is_removed=True %}
+                            {% include 'components/movements/card.html' with movement=movement is_request=False %}
                         </div>
                     {% endfor %}
                 </div>
-            </div>
-        </section>
+            {% else %}
+                {% include 'components/no_results.html' with text="Nenhuma movimentação de adição criada ainda" %}
+            {% endif %}
+        </div>
 
-        {% include 'components/sidebar.html' %}
-    </main>
+        <div class="pendings_section">
+            <h1>Produtos removidos</h1>
+            {% if added_movements|length > 0 %}
+            <div class="pendings_section_body movements_body">
+                {% for movement in removed_movements %}
+                <div>
+                    {% include 'components/movements/card.html' with movement=movement is_request=False is_removed=True %}
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+                {% include 'components/no_results.html' with text="Nenhuma movimentação de remoção ou transferência criada ainda" %}
+            {% endif %}
+        </div>
+    </section>
+
+    {% include 'components/sidebar.html' %}
+</main>
 {% endblock %}
 
 {% block scripts %}
