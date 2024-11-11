@@ -9,4 +9,5 @@ urlpatterns = [
     path('paginaUsuario/<str:id>', ViewUserProfile.as_view(), name='user_page'),
     path('', Redirect.as_view(), name=''),
     path('perfil/', ViewUserProfile.as_view(), name='user_profile'),
+    path('perfil/editar/<str:username>/', views.edit_profile, name='edit_profile'),
 ]

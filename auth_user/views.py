@@ -118,3 +118,21 @@ class ViewUserProfile(View):
         }
         return render(request, 'user_profile.html', contexto)
     
+@login_required
+def edit_profile(request, username):
+    user = get_object_or_404(User, username=username)
+    if request.user != user and not request.user.is_superuser:
+        messages.error(request, 'Você não tem permissão para editar este perfil.')
+        return redirect('home')  # Redireciona para uma página padrão caso não tenha permissão
+
+    if request.method == 'POST':
+        form = ProfileEditForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Perfil atualizado com sucesso!')
+            return redirect('profile', username=user.username)  # Redireciona após a atualização
+    else:
+        form = ProfileEditForm(instance=user)
+
+    return render(request, 'profile_edit.html', {'form': form, 'user_profile': user})
+    
