@@ -102,13 +102,12 @@ class Movements(View):
 
 class CreateMovement(APIView):
     @method_decorator(login_required)
-    @method_decorator(permission_required("Reports.can_add_movement", login_url="/"))
     def post(self, request):
         movementForm = MovementForm(request.POST)
 
         errors = getErrors([movementForm])
 
-        if movementForm.is_valid():
+        if movementForm.is_valid() and request.user.has_perm('reports.can_add_movement'):
             movement = movementForm.save(commit=False)
             movement.fk_user = request.user
             movement.dt_movement = timezone.now()
@@ -135,12 +134,17 @@ class CreateMovement(APIView):
                     remove_reagent_from_stock(movement)
             else:
                 requestMovement = Request.objects.create(
-                    dt_request=movement.dt_movement, fk_movement=movement, approved=True, dt_response=movement.dt_movement
+                    dt_request=movement.dt_movement, fk_movement=movement
                 )
                 requestMovement.save()
 
             return send_request_movement(requestMovement)
 
+        if not request.user.has_perm('reports.can_add_movement'):
+            return Response(
+                {"message": "Usuário não autorizado"}, status=status.HTTP_400_BAD_REQUEST
+            )
+        
         return Response(
             {"message": "Formulário incorreto"}, status=status.HTTP_400_BAD_REQUEST
         )

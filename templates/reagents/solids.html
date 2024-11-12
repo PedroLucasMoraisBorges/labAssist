@@ -33,7 +33,7 @@
                                     {% endfor %}
                                 {% endfor %}
                             {% else %}
-                                {% include 'components/no_results.html' %}
+                                {% include 'components/no_results.html' with text="Sem itens disponíveis" %}
                             {% endif %}
                         </div>
 
@@ -45,7 +45,7 @@
                                     {% endfor %}
                                 {% endfor %}
                             {% else %}
-                                {% include 'components/no_results.html' %}
+                                {% include 'components/no_results.html' with text="Sem itens disponíveis" %}
                             {% endif %}
                         </div>
                     </div>
