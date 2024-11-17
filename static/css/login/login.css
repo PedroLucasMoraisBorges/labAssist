@@ -80,7 +80,7 @@ body {
 .formContainer button:hover {
     background-size: 0% 100%; /* Definir o fundo como branco no hover */
     background-color: #6db758; /* Garantir que o fundo seja branco no hover */
-    color: rgb(25, 136, 44); /* Letras verdes no hover */
+    color: rgb(25, 136, 44); 
     transition: all 0.5s cubic-bezier(0.000, 0.000, 0.230, 1);
 }
 
