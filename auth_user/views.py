@@ -7,6 +7,7 @@ from GeralUtilits import *
 
 from .forms import *
 from .models import *
+from .tasks import *
 
 from django.contrib.auth.decorators import login_required, permission_required
 from django.utils.decorators import method_decorator
@@ -48,7 +49,9 @@ class Login(View):
 
         if form.is_valid():
             user = form.get_user()
-            login(request, user)
+
+            if user.approved or user.is_superuser:
+                login(request, user)
             return redirect('/')
         
         context = {
@@ -87,6 +90,7 @@ class RegisterUser(View):
             user = registerForm.save(commit=False)
             user.save()
 
+            send_account_activation(user)
             return redirect('alert_user_inactive')
         
         context = {
@@ -95,6 +99,19 @@ class RegisterUser(View):
         }
 
         return render(request, 'authentication/registerUser.html', context)
+    
+class AlertUserInactive(View):
+    def get(self, request):
+        return render(request, 'authentication/alert_user_inactive.html')
+
+class UserActivate(View):
+    def get(self, request, id):
+        decode_id = base64.b64decode(id).decode('utf-8')
+        user = User.objects.get(id=decode_id)
+        user.approved = True
+        user.save()
+
+        return render(request, 'authentication/active_user.html')
     
 class Users(View):
     @method_decorator(login_required)
@@ -130,7 +147,6 @@ class ManageUser(View):
             permissionForm.save()
             return redirect('users')
     
-    
 class ViewUserProfile(View):
     @method_decorator(login_required)
     def get (self, request):
@@ -140,21 +156,30 @@ class ViewUserProfile(View):
         }
         return render(request, 'user_profile.html', contexto)
     
-@login_required
-def edit_profile(request, username):
-    user = get_object_or_404(User, username=username)
-    if request.user != user and not request.user.is_superuser:
-        messages.error(request, 'Você não tem permissão para editar este perfil.')
-        return redirect('home')  # Redireciona para uma página padrão caso não tenha permissão
+class EditProfile(View):
+    @method_decorator(login_required)
+    def get(self, request):
+        user = User.objects.get(id=request.user.id)
 
-    if request.method == 'POST':
+        context = {
+            'form': ProfileEditForm(instance=user), 
+            'user_profile': user
+        }
+        
+        return render(request, 'profile_edit.html', context)  
+
+    @method_decorator(login_required)
+    def post(self, request):
+        user = User.objects.get(id=request.user.id)
         form = ProfileEditForm(request.POST, instance=user)
+
         if form.is_valid():
             form.save()
-            messages.success(request, 'Perfil atualizado com sucesso!')
-            return redirect('profile', username=user.username)  # Redireciona após a atualização
-    else:
-        form = ProfileEditForm(instance=user)
+            return redirect('profile', id=user.id)
 
-    return render(request, 'profile_edit.html', {'form': form, 'user_profile': user})
-    
+        context = {
+            'form': ProfileEditForm(instance=user), 
+            'user_profile': user
+        }
+
+        return render(request, 'profile_edit.html', context)   

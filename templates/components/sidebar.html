@@ -96,7 +96,7 @@
 
    <div class="geralLinks links">
       {% if user.is_superuser %}
-         <a href="{% url 'home_normal_user' %}">
+         <a href="{% url 'home_admin' %}">
             <img src="{% static 'imgs/icons/admin_estoque.svg' %}" alt="">
             <p>Início</p>
          </a>
@@ -126,7 +126,7 @@
             <p>Licenças</p>
          </a>
       {% else %}
-         <a href="{% url 'home_admin' %}">
+         <a href="{% url 'home_normal_user' %}">
             <img src="{% static 'imgs/icons/admin_estoque.svg' %}" alt="">
             <p>Início</p>
          </a>

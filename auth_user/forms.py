@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm,UserChangeForm
 from .models import *
 from django.core.exceptions import ValidationError
 from .models import *
@@ -225,7 +225,8 @@ class PermissionForm(forms.ModelForm):
 class ProfileEditForm(UserChangeForm):
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'email']  # Campos que o usuário pode editar
+        fields = ['first_name', 'last_name', 'email']
+
         widgets = {
             'first_name': forms.TextInput(attrs={'class': 'form-control'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control'}),

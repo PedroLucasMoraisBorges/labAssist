@@ -76,7 +76,7 @@
                 <div class="tabs primary-tabs">
                     <button class="tab-btn active" content-id="geral"> Visão Geral</button>
                     <button class="tab-btn" content-id="move"> Movimentações Recentes</button>
-                    <button class="tab-btn" content-id="inventory"> Balanços de Estoque</button>
+                    <!-- <button class="tab-btn" content-id="inventory"> Balanços de Estoque</button> -->
                 </div>
                 <div class="tabs secondary-tabs">
                     <button class="tab2-btn tab-liquids active" content-id="liquids"> Líquidos</button>
@@ -117,7 +117,8 @@
                         {% endfor %}
                     </div>
                 </div>
-                <div class="content" id="inventory">
+
+                <!-- <div class="content" id="inventory">
                     {% for reagent in inventoryBalance %}
                     <div>{{reagent}} - {{reagent.amount}}</div>
                     <!-- para fins de teste da separação das tabs -->
@@ -127,7 +128,7 @@
                         mollitia asperiores culpa exercitationem at consectetur, facilis labore aspernatur aut
                         voluptatem magnam neque officiis, eius consequuntur maxime?
                     </p>
-                </div>
+                </div> -->
             </div>
         </div>
     </section>
