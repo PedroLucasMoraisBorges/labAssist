@@ -22,7 +22,7 @@ class Reagent(models.Model):
     control = models.CharField(max_length=144, choices=controlChoices)
     state = models.CharField(max_length=64, choices=statesChoices)
     opening_date = models.DateField(null=True)
-    is_active = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name

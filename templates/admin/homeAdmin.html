@@ -21,7 +21,7 @@
         {% include 'components/page_indication/welcome.html' with text='Bem vindo,' username=user.name %}
 
         <!-- Essa parte vai ser a seleção da letra do composto requisitado, ainda não pega nenhuma informação -->
-        <div class="alfabeto">
+        <!-- <div class="alfabeto">
             <div class=" tab_alfa tag_inicio">
                 <button class="inicio">
                     <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
@@ -68,7 +68,7 @@
                     </svg>
                 </button>
             </div>
-        </div>
+        </div> -->
 
         <!-- Separações entre visão geral, movimentação recente e Balanço de estoque -->
         <div class="container">
@@ -148,9 +148,6 @@
             });
     });
 </script>
-
-<!-- lógica para a troca de tabs PRINCIPAIS, ainda falta implementar as secundárias, que vão estar atreladas somente à tab "Visão Geral" 
-Já é funcional, mas ainda não pega nenhuma informação real-->
 
 <script>
     const tabs = document.querySelectorAll('.tab-btn');

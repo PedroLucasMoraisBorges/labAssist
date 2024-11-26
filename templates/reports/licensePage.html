@@ -126,17 +126,21 @@
                 </div>
 
                 <div class="pendings_section_body licenses_body">
-                    <div class="license_card">
-                        <img src="{% static 'imgs/icons/time.svg' %}" alt="">
-                        <p class="name_license">SIPROQUIM</p>
-                        <p class="days_until">Vence em {{license.days_until_expiration}} dias</p>
+                    {% if license %}
+                        <div class="pendings_section_body licenses_body">
+                            <div class="license_card">
+                                <img src="{% static 'imgs/icons/time.svg' %}" alt="">
+                                <p class="name_license">SIPROQUIM</p>
+                                <p class="days_until">Vence em {{license.days_until_expiration}} dias</p>
 
-                        {% if license.days_until_expiration < 60 %}
-                            <p class="alert">Está na hora de renovar a licença</p>
-                        {% endif %}
-
-                        <a href="#">Ver mais</a>
-                    </div>
+                                {% if license.days_until_expiration < 60 %}
+                                    <p>Está na hora de renovar a licença</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% else %}
+                        {% include 'components/no_results.html' with text="Você ainda não cadastrou nenhuma licença ou a sua está atrasada, confira na aba de licenças" %}
+                    {% endif %}
                 </div>
             </article>
 

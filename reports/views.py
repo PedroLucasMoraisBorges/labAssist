@@ -86,7 +86,8 @@ class Movements(View):
 
         for movement in movements:
             req = Request.objects.get(fk_movement=movement)
-            if req.approved == True and req.dt_response != None:
+
+            if (req.approved == True and req.dt_response != None) or (movement.fk_user.is_superuser):
                 if movement.movement_type in ["R", "T"]:
                     removed_movements.append(movement)
                 else:
@@ -369,7 +370,10 @@ class Reports(View):
         # if type_map == 'Q':
         #     movements = Movement.objects.filter(fk_reagent__control='PF', dt_movement__gte=startDate, dt_movement__lte=finalDate)
         if type_map in ['R', 'T']:
+            print(Movement.objects.filter(fk_reagent__control='PF', movement_type__in=['R', 'T']))
+
             movements = Movement.objects.filter(fk_reagent__control='PF', dt_movement__gte=startDate, dt_movement__lte=finalDate, movement_type__in=['R', 'T'])
+
 
             for movement in movements:
                 total_quantity = 0
@@ -410,7 +414,6 @@ class Reports(View):
                     reagents_map.append(reagent)
                     reagents_verify.append(reagent['name'])
             
-        print(reagents_map)
         return reagents_map
     
     def get(self, request):
