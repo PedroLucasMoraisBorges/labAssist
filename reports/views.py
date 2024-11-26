@@ -28,7 +28,7 @@ class Pendings(View):
     @method_decorator(login_required)
     @method_decorator(superuser_required)
     def get(self, request):
-        users = User.objects.filter(is_active=False)
+        users = User.objects.filter(is_active=False, approved=True)
         requests = Request.objects.filter(approved=False, dt_response=None)
         license = License.objects.filter(is_expired=False).first()
         inactiveUsers = []
