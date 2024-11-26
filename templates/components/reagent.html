@@ -72,15 +72,15 @@
     <div class="body">
         <div class="card_info">
             <h3 class="reagent_name">
-                {{reagent.name}}
+                {{reagent.info.name}}
             </h3>
             <div class="details">
-                <p>{{reagent.formula}} ; {{reagent.amount}}</p>
-                <p>{{reagent.classification}}</p>
+                <p>{{reagent.info.formula}} <!--{{reagent.amount}}--></p>
+                <p>{{reagent.info.classification}}</p>
             </div>
 
             <div class="btns">
-                <button class="btn_show" card_id="reagent{{reagent.id}}">
+                <button class="btn_show" card_id="reagent{{reagent.info.id}}">
                     VER MAIS
                 </button>
             </div>

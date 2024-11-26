@@ -4,7 +4,7 @@
     .list_movements {
         border: 1px solid black;
         display: grid;
-        grid-template-columns: 20% 20% 20% 20% 20%;
+        grid-template-columns: 22% 22% 22% 22%;
         padding: 1.2rem;
         justify-content: space-between;
     }
@@ -15,6 +15,10 @@
         border: 1px solid #0A5517;
         border-radius: 10px;
         margin: .6rem;
+    }
+
+    .is_removed {
+        background-color: #FFCFCF !important;
     }
 
     .responsible {
@@ -87,6 +91,11 @@
         box-shadow: 1px 3px 3px rgba(0, 0, 0, 0.268);
         transition: .3s;
         font-size: 1.1rem;
+        background-color: #0A5517;
+    }
+
+    .is_removed_button {
+        background-color: #FF3E3E !important;
     }
 
     .btn_show:hover {
@@ -120,9 +129,17 @@
     .request_m_btns button:hover {
         transform: scale(1.1);
     }
+
+    .approve {
+        background-color: #58A365;
+    }
+
+    .disapprove {
+        background-color: #FF3E3E;
+    }
 </style>
 
-<div  class="movement_card {% if is_request %} card_request {% endif %}">
+<div  class="movement_card {% if is_request %} card_request {% endif %} {% if is_removed %} is_removed {% endif %}">
     <div class="responsible">
         <div class="img_perfil">
             {{movement.fk_user.user_image}}
@@ -159,7 +176,7 @@
             <button class="disapprove actionButtons" url="{{request.urls.desapprove}}" data-id="{{ request.info.id }}">Negar</button>
         </div>
     {% else %}
-        <button class="btn_show btn_show_move" card_id="movement{{movement.id}}">Ver Movimentação</button>
+        <button class="btn_show btn_show_move {% if is_removed %} is_removed_button {% endif %}" card_id="movement{{movement.id}}">Ver Movimentação</button>
     {% endif %}
 </div>
 

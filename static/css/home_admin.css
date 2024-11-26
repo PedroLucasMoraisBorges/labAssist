@@ -113,8 +113,7 @@ ainda não consigo trazer as tabelas, não sei se fica melhor como componente ou
 
 .container{
     background-color: white;
-    padding:30px;
-    margin: 20px
+    margin: 20px 4rem 20px 4rem;
 }
 
 .tab-box{

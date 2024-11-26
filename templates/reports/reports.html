@@ -1,0 +1,115 @@
+{% extends 'components/base.html' %}
+{% load static %}
+
+{% block head %}
+<script>
+    $(document).ready(function () {
+        $('.js-example-basic-multiple').select2();
+    });
+</script>
+
+<link rel="stylesheet" href="{% static 'css/reports.css'%}">
+{% endblock %}
+
+{% block content %}
+    {% include 'components/navbar.html' %}
+
+    {% include 'components/movements/form_modal.html' %}
+    <main>
+        <section>
+            {% include 'components/page_indication/welcome.html' with text='Relatórios' %}
+            <div class="container">
+            <article class="report_options">
+                    <div class="reports_header">
+                        <div class="title">
+                            <img src="{% static 'imgs/icons/report.svg' %}" width="40">
+                            <h1>OPÇÕES DE RELATÓRIO</h1>
+                        </div>
+                        <div class="options">
+                            <button class="tab_button active" content-id="movementHistory_Content">Histórico de movimentações</button>
+                            <button class="tab_button" content-id="userPerformance_Content">Atuação do usuário</button>
+                            <button class="tab_button" content-id="siproquimMap_Content">Mapa SIPROQUIM</button>                            
+                        </div>
+                    </div>
+                </article>
+
+                <article class="forms">
+                    <div class="movementHistory_Content content active">
+                        <form class="movementHistory" method="post">
+                            {% csrf_token %}
+                            {% for field in movementForm %}
+                                {{ field.label_tag }}
+                                {{ field }}
+                            {% endfor %}
+                            <button name="submitted_form" value="movementHistory" class="generate">GERAR RELATÓRIO</button>
+                        </form>
+                    </div>
+                    
+
+                    <div class="userPerformance_Content content">
+                        <form method="post" class="userPerformace">
+                            {% csrf_token %}
+                            {% for field in userPerformaceForm %}
+                                {{field.label_tag}}
+                                {{field}}
+                            {% endfor %}
+
+                            <button name="submitted_form" value="userPerformace" class="generate">GERAR RELATÓRIO</button>
+                        </form>
+                    </div>
+
+                    <div class="siproquimMap_Content content">
+                        <form method="post" class="siproquimMap">
+                            {% csrf_token %}
+                            {% for field in siproquimMapForm %}
+                                {{field.label_tag}}
+                                {{field}}
+                            {% endfor %}
+
+                            <button name="submitted_form" value="siproquimMap" class="generate">GERAR RELATÓRIO</button>
+                        </form>
+                    </div>
+                </article>
+
+                {% if movement_history %}    
+                    {% include 'components/tables/movementHistory.html' %}         
+                {% endif %}
+
+                {% if userPerformace %}
+                    {% include 'components/tables/userPerformace.html' %}
+                {% endif %}
+            
+                {% if siproquimMap %}
+                    {% include 'components/tables/siproquimMap.html' %}
+                {% endif %}
+        </div>
+        </section>
+
+        {% include 'components/sidebar.html' %}
+    </main>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const tabs = document.querySelectorAll('.tab_button');
+        const allContent = document.querySelectorAll('.content');
+
+        tabs.forEach((tab) => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(tab => tab.classList.remove('active'));
+                allContent.forEach(content => content.classList.remove('active'));
+
+                tab.classList.add('active');
+
+                const contentId = tab.getAttribute('content-id');
+
+                const contentToShow = document.querySelector(`.${contentId}`);
+                if (contentToShow) {
+                    contentToShow.classList.add('active');
+                }
+            })
+        });
+    });
+</script>
+{% endblock %}

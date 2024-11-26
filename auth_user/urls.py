@@ -10,4 +10,5 @@ urlpatterns = [
     path('', Redirect.as_view(), name=''),
     path('perfil/', ViewUserProfile.as_view(), name='user_profile'),
     path('perfil/editar/<str:username>/', views.edit_profile, name='edit_profile'),
+    path('gerenciarUsuario/<str:id>', ManageUser.as_view(), name='manage_user')
 ]

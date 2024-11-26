@@ -20,7 +20,7 @@ class Redirect(View):
             if user.is_staff or user.is_superuser:
                 return redirect('home_admin')
             else:
-                return redirect('home')
+                return redirect('home_normal_user')
         else:
             return redirect('landing_page')
 
@@ -100,13 +100,35 @@ class Users(View):
     @method_decorator(login_required)
     @method_decorator(superuser_required)
     def get(self, request):
-        users = User.objects.filter()
+        activeUsers = User.objects.filter(is_active=True)
+        inactiveUsers = User.objects.filter(is_active=False)
 
         context = {
-            'users' : users
+            'activeUsers' : activeUsers,
+            'inactiveUsers' : inactiveUsers
         }
         
         return render(request,'admin/usersPage.html', context)
+    
+class ManageUser(View):
+    def get(self, request, id):
+        user = User.objects.get(id=id)
+        permissionForm = PermissionForm(instance=user)
+
+        context = {
+            'customUser' : user,
+            'permissionForm' : permissionForm
+        }
+
+        return render(request, 'admin/manageUser.html', context)
+    
+    def post(self, request, id):
+        user = User.objects.get(id=id)
+        permissionForm = PermissionForm(request.POST, instance=user)
+
+        if permissionForm.is_valid():
+            permissionForm.save()
+            return redirect('users')
     
     
 class ViewUserProfile(View):

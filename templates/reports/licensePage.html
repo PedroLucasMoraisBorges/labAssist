@@ -4,7 +4,7 @@
 {% block head %}
 <style>
     .pendings_section {
-        margin: 25px;
+        margin: 25px 4rem 2rem 4rem;
         border-radius: 15px;
         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.20);
         padding: 1rem;
@@ -114,13 +114,13 @@
     {% include 'components/movements/form_modal.html' %}
     <main>
         <section>
-            {% include 'components/page_indication/welcome.html' with text='Suas Licenças' license=license %}
+            {% include 'components/page_indication/welcome.html' with text='Suas Licenças' license_page=True %}
 
             <article class="pendings_section">
                 <div class="section_header">
                     <div class="title">
                         <img src="{% static 'imgs/icons/alert_w.svg' %}" alt="">
-                        <h2>Lisença Atual</h2>
+                        <h2>Licença Atual</h2>
                     </div>
                     <p>Nesta seção está listada a liseça atual e o seu tempo de validade</p>
                 </div>
@@ -144,7 +144,7 @@
                 <div class="section_header">
                     <div class="title">
                         <img src="{% static 'imgs/icons/alert_w.svg' %}" alt="">
-                        <h2>Lisenças vencidas</h2>
+                        <h2>Licenças vencidas</h2>
                     </div>
                     <p>Nesta seção estão listadas as liseça passadas.</p>
                 </div>

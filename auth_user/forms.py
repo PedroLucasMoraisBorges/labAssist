@@ -191,6 +191,15 @@ class PermissionForm(forms.ModelForm):
     content_type_movement = ContentType.objects.get_for_model(Movement)
     content_type_reagent = ContentType.objects.get_for_model(Reagent)
 
+    # Obtenha o ContentType do seu modelo
+    content_type_reagent = ContentType.objects.get_for_model(Reagent)
+
+    # Atualize cada permissão com o nome correto em português
+    Permission.objects.filter(codename="can_add_reagent", content_type=content_type_reagent).update(name="Cadastrar Reagente")
+    Permission.objects.filter(codename="can_change_reagent", content_type=content_type_reagent).update(name="Alterar Reagente")
+    Permission.objects.filter(codename="can_delete_reagent", content_type=content_type_reagent).update(name="Deletar Reagente")
+    Permission.objects.filter(codename="can_view_reagent", content_type=content_type_reagent).update(name="Ver Reagente")
+
     # Filtrar as permissões específicas das duas models
     permissions = Permission.objects.filter(
         Q(content_type=content_type_movement, codename="can_add_movement") |
@@ -205,7 +214,8 @@ class PermissionForm(forms.ModelForm):
     user_permissions = forms.ModelMultipleChoiceField(
         label = 'Permissões',
         queryset=permissions,
-        widget= forms.SelectMultiple(),
+        widget= forms.SelectMultiple(attrs={'class' : 'js-example-basic-multiple'}),
+        required=False
     )
 
     class Meta:

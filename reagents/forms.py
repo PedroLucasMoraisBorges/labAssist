@@ -78,6 +78,7 @@ class ReagentForm(forms.ModelForm):
         label='VALIDADE',
         widget=forms.DateInput(
             attrs={
+                'type' : 'date',
                 'class' : 'shadow-lg text-sm rounded-full focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:focus:border-primary-500'
             }
         )
@@ -97,7 +98,7 @@ class ReagentForm(forms.ModelForm):
         required=False,
         label='INCOMPATÍVEL COM',
         queryset=Reagent.objects.all(),
-        widget= forms.SelectMultiple(),
+        widget= forms.SelectMultiple(attrs={'class':'form-control input-search js-example-basic-multiple'})
     )
 
     is_active = forms.BooleanField(
@@ -107,7 +108,7 @@ class ReagentForm(forms.ModelForm):
     
     class Meta():
         model = Reagent
-        fields = ['name', 'formula', 'classification', 'state', 'amount', 'validity', 'control', 'incompatibility', 'size', 'limit', 'is_active']
+        fields = ['name', 'formula', 'classification', 'state', 'control', 'incompatibility', 'limit', 'is_active']
 
     def save(self, commit=True):
         instance = super().save(commit=False)

@@ -95,84 +95,95 @@
    </div>
 
    <div class="geralLinks links">
-      <a href="{% url 'home_admin' %}">
-         <img src="{% static 'imgs/icons/admin_estoque.svg' %}" alt="">
-         <p>Início</p>
-      </a>
+      {% if user.is_superuser %}
+         <a href="{% url 'home_normal_user' %}">
+            <img src="{% static 'imgs/icons/admin_estoque.svg' %}" alt="">
+            <p>Início</p>
+         </a>
 
-      <a href="{% url 'pendings' %}">
-         <img src="{% static 'imgs/icons/pendencias.svg' %}" alt="">
-         <p>Pendências</p>
-      </a>
+         <a href="{% url 'pendings' %}">
+            <img src="{% static 'imgs/icons/pendencias.svg' %}" alt="">
+            <p>Pendências</p>
+         </a>
 
-      <a href="{% url 'register_reagent' %}">
-         <img src="{% static 'imgs/icons/add.svg' %}" alt="">
-         <p>Cadastrar Reagente</p>
-      </a>
+         <a href="{% url 'users' %}">
+            <img src="{% static 'imgs/icons/users.svg' %}" alt="">
+            <p>Administrar Usuários</p>
+         </a>
+   
+         <a href="{% url 'reports' %}">
+            <img src="{% static 'imgs/icons/relatorios.svg' %}" alt="">
+            <p>Relatórios</p>
+         </a>
+   
+         <a href="{% url 'movements' %}">
+            <img src="{% static 'imgs/icons/movimentações.svg' %}" alt="">
+            <p>Movimentações</p>
+         </a>
+   
+         <a href="{% url 'licenses' %}">
+            <img src="{% static 'imgs/icons/pendencias.svg' %}" alt="">
+            <p>Licenças</p>
+         </a>
+      {% else %}
+         <a href="{% url 'home_admin' %}">
+            <img src="{% static 'imgs/icons/admin_estoque.svg' %}" alt="">
+            <p>Início</p>
+         </a>
+      {% endif %}
 
-      <a href="{% url 'users' %}">
-         <img src="{% static 'imgs/icons/users.svg' %}" alt="">
-         <p>Administrar Usuários</p>
-      </a>
-
-      <a href="">
-         <img src="{% static 'imgs/icons/relatorios.svg' %}" alt="">
-         <p>Relatórios</p>
-      </a>
-
-      <a href="{% url 'movements' %}">
-         <img src="{% static 'imgs/icons/movimentações.svg' %}" alt="">
-         <p>Movimentações</p>
-      </a>
-
-      <a href="{% url 'licenses' %}">
-         <img src="{% static 'imgs/icons/pendencias.svg' %}" alt="">
-         <p>Licenças</p>
-      </a>
+      {% if 'reagents.can_add_reagent' in perms %}
+         <a href="{% url 'register_reagent' %}">
+            <img src="{% static 'imgs/icons/add.svg' %}" alt="">
+            <p>Cadastrar Reagente</p>
+         </a>
+      {% endif %}
    </div>
 
-   <div class="liquids links">
-      <p>Líquidos</p>
+   {% if 'reagents.can_view_reagent' in perms %}
+      <div class="liquids links">
+         <p>Líquidos</p>
 
-      <a href="">
-         <img src="{% static 'imgs/icons/estoque.svg' %}" alt="">
-         <p>Ativos</p>
-      </a>
+         <!-- <a href="">
+            <img src="{% static 'imgs/icons/estoque.svg' %}" alt="">
+            <p>Ativos</p>
+         </a>
 
-      <a href="">
-         <img src="{% static 'imgs/icons/estoque.svg' %}" alt="">
-         <p>Passivos</p>
-      </a>
+         <a href="">
+            <img src="{% static 'imgs/icons/estoque.svg' %}" alt="">
+            <p>Passivos</p>
+         </a> -->
 
-      <a href="">
-         <img src="{% static 'imgs/icons/estoque.svg' %}" alt="">
-         <p>Soluções</p>
-      </a>
+         <a href="">
+            <img src="{% static 'imgs/icons/estoque.svg' %}" alt="">
+            <p>Soluções</p>
+         </a>
 
-      <a href="{% url 'stock_liquids' %}">
-         <img src="{% static 'imgs/icons/estoque.svg' %}" alt="">
-         <p>Visão Geral</p>
-      </a>
-   </div>
+         <a href="{% url 'stock_liquids' %}">
+            <img src="{% static 'imgs/icons/estoque.svg' %}" alt="">
+            <p>Visão Geral</p>
+         </a>
+      </div>
 
-   <div class="solids links">
-      <p>Sólidos</p>
+      <div class="solids links">
+         <p>Sólidos</p>
 
-      <a href="">
-         <img src="{% static 'imgs/icons/estoque.svg' %}" alt="">
-         <p>Ativos</p>
-      </a>
+         <!-- <a href="">
+            <img src="{% static 'imgs/icons/estoque.svg' %}" alt="">
+            <p>Ativos</p>
+         </a>
 
-      <a href="">
-         <img src="{% static 'imgs/icons/estoque.svg' %}" alt="">
-         <p>Passivos</p>
-      </a>
+         <a href="">
+            <img src="{% static 'imgs/icons/estoque.svg' %}" alt="">
+            <p>Passivos</p>
+         </a> -->
 
-      <a href="{% url 'stock_solids' %}">
-         <img src="{% static 'imgs/icons/estoque.svg' %}" alt="">
-         <p>Visão Geral</p>
-      </a>
-   </div>
+         <a href="{% url 'stock_solids' %}">
+            <img src="{% static 'imgs/icons/estoque.svg' %}" alt="">
+            <p>Visão Geral</p>
+         </a>
+      </div>
+   {% endif %}
 
 
 </aside>
