@@ -23,6 +23,7 @@ class User(AbstractUser):
     email = models.EmailField(unique = True, blank = False)
     name = models.CharField(max_length = 256)
     sector = models.CharField(max_length=64, choices=sectorCompleteChoices, default='A')
+    approved = models.BooleanField(default=False)
 
     groups = models.ManyToManyField(
         Group,
