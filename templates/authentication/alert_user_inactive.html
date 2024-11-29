@@ -5,14 +5,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/login/confirmation.css' %}">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .container {
+            border-radius: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
+            width: 500px;
+            max-width: 90%;
+            padding: 40px;
+            background: linear-gradient(90deg, rgba(138, 255, 158, 1) 0%, rgba(83, 153, 95, 1) 100%);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .message-box {
+            margin: 20px 0;
+        }
+
+        .message-text {
+            font-size: 18px;
+            line-height: 1.5;
+            margin-bottom: 30px;
+            text-shadow: 0px 2px 2px rgb(130, 130, 130);
+        }
+
+        .btn-back {
+            background-color: white;
+            color: #0A5517;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: bold;
+            box-shadow: 3px 3px 2px rgba(0, 0, 0, 0.3);
+            text-decoration: none;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .btn-back:hover {
+            background-color: #0A5517;
+            color: white;
+        }
+
+    </style>
     <title>Usuário Ativado</title>
 </head>
 
 <body>
-    <div class="container" id="container">
-        <p>O seu cadastro no sistema foi concluído, agora verifique o seu email no sistema. Foi disparado enviado no email cadastrado.</p>
-
-        <a href="http://127.0.0.1:8000/">Voltar para início</a>
+    <div class="container">
+        <div class="message-box">
+            <p class="message-text">
+                O seu cadastro no sistema foi concluído, agora verifique o seu email no sistema. Foi disparado enviado no email cadastrado.
+            </p>
+            <a href="http://127.0.0.1:8000/" class="btn-back">Voltar para início</a>
+        </div>
     </div>
 </body>
 </html>
