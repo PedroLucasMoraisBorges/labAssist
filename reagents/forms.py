@@ -4,7 +4,7 @@ from .models import *
 class ReagentForm(forms.ModelForm):
     name = forms.CharField(
         required=True,
-        label='NOME DO ITEM',
+        label='NOME DO ITEM*',
         widget = forms.TextInput(
             attrs={
                 'class' : 'shadow-lg text-sm rounded-full focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:focus:border-primary-500'
@@ -14,7 +14,7 @@ class ReagentForm(forms.ModelForm):
 
     formula = forms.CharField(
         required=True,
-        label='FÓRMULA QUÍMICA',
+        label='FÓRMULA QUÍMICA*',
         widget = forms.TextInput(
             attrs={
                 'class' : 'shadow-lg text-sm rounded-full focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:focus:border-primary-500'
@@ -24,7 +24,7 @@ class ReagentForm(forms.ModelForm):
 
     classification = forms.CharField(
         required=True,
-        label='CLASSIFICAÇÃO QUÍMICA',
+        label='CLASSIFICAÇÃO QUÍMICA*',
         widget = forms.TextInput(
             attrs={
                 'class' : 'shadow-lg text-sm rounded-full focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:focus:border-primary-500'
@@ -34,7 +34,7 @@ class ReagentForm(forms.ModelForm):
 
     state = forms.ChoiceField(
         required=True,
-        label='CLASSIFIQUE O ITEM',
+        label='CLASSIFIQUE O ITEM*',
         choices=[('Líquido/Sólido' , '')] + statesChoices,
         widget=forms.Select(
             attrs={
@@ -44,7 +44,7 @@ class ReagentForm(forms.ModelForm):
     )
 
     amount = forms.IntegerField(
-        required= True,
+        required= False,
         label='QUANTIDADE',
         widget = forms.TextInput(
             attrs={
@@ -54,7 +54,7 @@ class ReagentForm(forms.ModelForm):
     )
 
     size = forms.IntegerField(
-        required=True,
+        required=False,
         label='TAMANHO DO FRASCO',
         widget = forms.TextInput(
             attrs={
@@ -65,7 +65,7 @@ class ReagentForm(forms.ModelForm):
 
     limit = forms.IntegerField(
         required=True,
-        label='LIMITE PARA AVISO',
+        label='LIMITE PARA AVISO*',
         widget = forms.TextInput(
             attrs={
                 'class' : 'shadow-lg text-sm rounded-full focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:focus:border-primary-500'
@@ -74,7 +74,7 @@ class ReagentForm(forms.ModelForm):
     )
 
     validity = forms.DateField(
-        required=True,
+        required=False,
         label='VALIDADE',
         widget=forms.DateInput(
             attrs={
@@ -85,7 +85,8 @@ class ReagentForm(forms.ModelForm):
     )
 
     control = forms.ChoiceField(
-        label='CONTROLADO',
+        label='CONTROLADO*',
+        required=True,
         choices=controlChoices,
         widget=forms.Select(
             attrs={
@@ -102,7 +103,7 @@ class ReagentForm(forms.ModelForm):
     )
 
     is_active = forms.BooleanField(
-        required=True,
+        required=False,
         label='É ativo?'
     )
     

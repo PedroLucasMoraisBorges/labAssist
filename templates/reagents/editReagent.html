@@ -2,21 +2,159 @@
 {% load static %}
 
 {% block head %}
+    <style>
+        select{
+            width: 100%;
+        }
+    </style>
+
+    <script>
+        $(document).ready(function () {
+            $('.js-example-basic-multiple').select2();
+        });
+    </script>
+
+    <style>
+        #crud-modal {
+            display: flex;
+            width: 100%;
+            justify-content: center;
+        }
+
+        #crud-modal form {
+            display: flex;
+            flex-direction: column;
+            width: 90%;
+            border: 1px solid rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .form_header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem ;
+        }
+
+        .form_header img {
+            margin-right: .5rem;
+            width: 40px;
+        }
+
+        .form_header h2 {
+            font-weight: 400;
+            font-size: 1.5rem;
+        }
+
+        #crud-modal form label {
+            font-weight: 500;
+        }
+
+        #crud-modal form input, select {
+            border-radius: 10px !important;
+            box-shadow: 0px 4px 3px rgba(0, 0, 0, 0.25);
+            padding: .4rem .4rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #D9D9D9;
+        }
+
+        .group_inputs {
+            display: flex;
+        }
+
+        .group_inputs .field_div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-right: 2rem;
+            width: 22.5%;
+        }
+
+        .incompatibility {
+            width: 100%;
+        }
+
+        #crud-modal .register_button {
+            background-color: rgba(29, 138, 48, 1);
+            color: white;
+            padding: .7rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            font-weight: 600;
+        }
+    </style>
 {% endblock %}
 
 {% block content %}
-    {% include 'components/errorModal.html' %}
+    {% include 'components/navbar.html' %}
 
-    <form method="post">
-        {% csrf_token %}
-        {% for field in form %}
-            {{field.label_tag}}
-            {{field}}
-        {% endfor %}
+    <main>
+        {% include 'components/errorModal.html' %}
+        <section>
+            {% include 'components/page_indication/presentation.html' with page="Editar item cadastrado" text="Nesta seção você poderá editar informações básicas do reagente" %}
 
-        <button type="submit">Salvar</button>
-    </form>
+            <div id="crud-modal" tabindex="-1">
+                <form class="" method="post">
+                    {% csrf_token %}
+                    <div class="form_header">
+                        <img src="{% static 'imgs/icons/add.svg' %}" alt="">
+                        <h2>Editar Item</h2>
+                    </div>
+
+                    <div class="field_name field_div">
+                        {{form.name.label_tag}}
+                        {{form.name}}
+                    </div>
+
+                    <div class="group_inputs">
+                        <div class="field_div">
+                            {{form.formula.label_tag}}
+                            {{form.formula}}
+                        </div>
+                        <div class="field_div">
+                            {{form.classification.label_tag}}
+                            {{form.classification}}
+                        </div>
+                        <div class="field_div">
+                            {{form.state.label_tag}}
+                            {{form.state}}
+                        </div>
+                    </div>
+
+                    <div class="group_inputs">
+
+                        <div class="field_div">
+                            {{form.control.label_tag}}
+                            {{form.control}}
+                        </div>
+                        <div class="field_div">
+                            {{form.limit.label_tag}}
+                            {{form.limit}}
+                        </div>
+                    </div>
+
+                    <div class="">
+                        {{form.is_active.label_tag}}
+                        {{form.is_active}}
+                    </div>
+
+                    <div class="field_div incompatibility">
+                        {{form.incompatibility.label_tag}}
+                        {{form.incompatibility}}
+                    </div>
+
+                    <button type="submit" class="register_button">SALVAR</button>
+                </form>
+            </div>
+        </section>
+
+        {% include 'components/sidebar.html' %}
+    </main>
+
+
 {% endblock %}
 
 {% block scripts %}
+
 {% endblock %}
