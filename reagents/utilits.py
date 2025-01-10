@@ -71,17 +71,21 @@ def get_num_of_reagents(reagentBatches):
 
 def remove_reagent_from_stock(movement : Movement):
     quantityOfItems = movement.amount
-    reagentBatches = ReagentBatch.objects.filter(amount__gt=0, fk_reagent=movement.fk_reagent).order_by('validity')
+    reagentBatches = ReagentBatch.objects.filter(amount__gt=0, fk_reagent=movement.fk_reagent).order_by('-validity')
 
     if len(reagentBatches) > 0 and get_num_of_reagents(reagentBatches) >= quantityOfItems:
         for batch in reagentBatches:
             if batch.amount >= quantityOfItems:
                 batch.amount -= quantityOfItems
                 batch.save()
+                movement.fk_reagentBatch.add(batch)
+                movement.save()
                 break
             else:
                 quantityOfItems -=  batch.amount
                 batch.amount = 0
-                batch.save()
+                movement.fk_reagentBatch.add(batch)
+                batch.save()   
+                movement.save()
     else:
         return False

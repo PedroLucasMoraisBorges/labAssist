@@ -50,6 +50,19 @@ class HomeAdmin(View):
         
         return render(request, 'admin/homeAdmin.html', context)
 
+class HomeNormalUser(View):
+    @method_decorator(login_required)
+    def get(self, request):
+        liquids = Reagent.objects.filter(state='L')
+        solids = Reagent.objects.filter(state='S')
+
+        context = {
+            'solids' : organize_reagents(solids),
+            'liquids' : organize_reagents(liquids),
+        }
+        
+        return render(request, 'reagents/homeUser.html', context)
+        
 class RegisterReagent(View):
     @method_decorator(login_required)
     @method_decorator(permission_required('reagents.can_add_reagent', login_url='/'))

@@ -9,7 +9,6 @@ statesChoices = [
 controlChoices = [
     ('LI', 'Livre'),
     ('PF', 'Polícia Federal'),
-    ('EX', 'Exército')
 ]
 
 # Create your models here
@@ -23,17 +22,17 @@ class Reagent(models.Model):
     control = models.CharField(max_length=144, choices=controlChoices)
     state = models.CharField(max_length=64, choices=statesChoices)
     opening_date = models.DateField(null=True)
-    is_active = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
     
     class Meta:
         permissions = [
-            ("can_add_reagent", "Can add reagent"),
-            ("can_change_reagent", "Can change reagent"),
-            ("can_delete_reagent", "Can delete reagent"),
-            ("can_view_reagent", "Can view reagent"),
+            ("can_add_reagent", "Cadastrar Reagente"),
+            ("can_change_reagent", "Alterar Reagente"),
+            ("can_delete_reagent", "Deletar Reagente"),
+            ("can_view_reagent", "Ver Reagente"),
         ]
 
 class ReagentBatch(models.Model):
@@ -46,3 +45,7 @@ class ReagentBatch(models.Model):
     @property
     def formatted_validity(self):
         return self.validity.strftime('%d/%m/%Y')
+
+    def __str__(self):
+        val = self.validity.strftime('%d/%m/%Y')
+        return "Lote de {} - {}".format(self.fk_reagent.name, val)

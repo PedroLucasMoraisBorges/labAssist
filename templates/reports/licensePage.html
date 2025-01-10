@@ -4,7 +4,7 @@
 {% block head %}
 <style>
     .pendings_section {
-        margin: 25px;
+        margin: 25px 4rem 2rem 4rem;
         border-radius: 15px;
         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.20);
         padding: 1rem;
@@ -120,23 +120,27 @@
                 <div class="section_header">
                     <div class="title">
                         <img src="{% static 'imgs/icons/alert_w.svg' %}" alt="">
-                        <h2>Lisença Atual</h2>
+                        <h2>Licença Atual</h2>
                     </div>
                     <p>Nesta seção está listada a liseça atual e o seu tempo de validade</p>
                 </div>
 
                 <div class="pendings_section_body licenses_body">
-                    <div class="license_card">
-                        <img src="{% static 'imgs/icons/time.svg' %}" alt="">
-                        <p class="name_license">SIPROQUIM</p>
-                        <p class="days_until">Vence em {{license.days_until_expiration}} dias</p>
+                    {% if license %}
+                        <div class="pendings_section_body licenses_body">
+                            <div class="license_card">
+                                <img src="{% static 'imgs/icons/time.svg' %}" alt="">
+                                <p class="name_license">SIPROQUIM</p>
+                                <p class="days_until">Vence em {{license.days_until_expiration}} dias</p>
 
-                        {% if license.days_until_expiration < 60 %}
-                            <p class="alert">Está na hora de renovar a licença</p>
-                        {% endif %}
-
-                        <a href="#">Ver mais</a>
-                    </div>
+                                {% if license.days_until_expiration < 60 %}
+                                    <p>Está na hora de renovar a licença</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% else %}
+                        {% include 'components/no_results.html' with text="Você ainda não cadastrou nenhuma licença ou a sua está atrasada, confira na aba de licenças" %}
+                    {% endif %}
                 </div>
             </article>
 
@@ -144,7 +148,7 @@
                 <div class="section_header">
                     <div class="title">
                         <img src="{% static 'imgs/icons/alert_w.svg' %}" alt="">
-                        <h2>Lisenças vencidas</h2>
+                        <h2>Licenças vencidas</h2>
                     </div>
                     <p>Nesta seção estão listadas as liseça passadas.</p>
                 </div>

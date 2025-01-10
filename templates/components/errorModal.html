@@ -1,28 +1,94 @@
+{% load static %}
+
 {% if errors %}
     <style>
-        .modal {
-            background: rgba(254,140,140,255);
+        
+        main {
+            position: relative;
+        }
+        /* error */
+        @keyframes surgir {
+            from{
+                left: -50%;
+            }
+
+            to{
+                left: 1%;
+            }
         }
 
-        .modal-h3 {
-            color: rgba(30,30,30,255);
+        @keyframes voltar {
+            from{
+                left:1%
+            }
+            to{
+                left: -50%
+            }
+        }
+
+        .alert{
+            z-index: 1;
+            top: 2%;
+            left: 1%;
+            padding: 7px;
+            border-radius: 10px;
+            position: absolute;
+            width: 25%;
+            animation: surgir 1s;
+            display: flex;
+            flex-direction: column;
+
+            background-color: #fa7f72;
+            border-color: #fa7f72;
+        }
+
+        .alertHeader {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .alertHeader img {
+            transition: .3s;
+        }
+
+        .alertHeader img:hover {
+            transform: scale(1.2);
+            cursor: pointer;
+        }
+        .alert h3 {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .sumir{
+            animation: voltar 1s;
+            transition: 1s;
+            opacity: 0;
         }
     </style>
+
     <!-- Main modal -->
-    <div class="relative p-4 w-full max-w-xl max-h-full">
-        <!-- Modal content -->
-        <div class="modal relative bg-white rounded-lg shadow dark:bg-gray-700">
-            <!-- Modal header -->
-            <div class="flex flex-col items-center justify-between p-4 pb-0 rounded-t dark:border-gray-600">
-                <h3 class="modal-h3 pt-8 text-3xl font-semibold text-gray-900 dark:text-white">
-                    ERROR REQUEST!
-                </h3>
-                {% for error in errors %}
-                    <p class="text-base p-1 leading-relaxed text-black">
-                        {{error}}
-                    </p>
-                {% endfor %}
-            </div>
+    <div class="alert">
+        <!-- Modal header -->
+        <div class="alertHeader">
+            <h3 class="">
+                ERROR!
+            </h3>
+            
+            <img src="{% static 'imgs/icons/X.svg' %}" alt="" onclick="fecharError()">
         </div>
+
+        {% for error in errors %}
+            <p class="">
+                {{error}}
+            </p>
+        {% endfor %}
     </div>
+
+    <script>
+        function fecharError() {
+            document.querySelector(".alert").classList.add("sumir")
+        }
+    </script>
 {% endif %}

@@ -7,6 +7,7 @@ from GeralUtilits import *
 
 from .forms import *
 from .models import *
+from .tasks import *
 
 from django.contrib.auth.decorators import login_required, permission_required
 from django.utils.decorators import method_decorator
@@ -20,7 +21,7 @@ class Redirect(View):
             if user.is_staff or user.is_superuser:
                 return redirect('home_admin')
             else:
-                return redirect('home')
+                return redirect('home_normal_user')
         else:
             return redirect('landing_page')
 
@@ -48,7 +49,9 @@ class Login(View):
 
         if form.is_valid():
             user = form.get_user()
-            login(request, user)
+
+            if user.approved or user.is_superuser:
+                login(request, user)
             return redirect('/')
         
         context = {
@@ -87,6 +90,7 @@ class RegisterUser(View):
             user = registerForm.save(commit=False)
             user.save()
 
+            send_account_activation(user)
             return redirect('alert_user_inactive')
         
         context = {
@@ -96,18 +100,52 @@ class RegisterUser(View):
 
         return render(request, 'authentication/registerUser.html', context)
     
+class AlertUserInactive(View):
+    def get(self, request):
+        return render(request, 'authentication/alert_user_inactive.html')
+
+class UserActivate(View):
+    def get(self, request, id):
+        decode_id = base64.b64decode(id).decode('utf-8')
+        user = User.objects.get(id=decode_id)
+        user.approved = True
+        user.save()
+
+        return render(request, 'authentication/active_user.html')
+    
 class Users(View):
     @method_decorator(login_required)
     @method_decorator(superuser_required)
     def get(self, request):
-        users = User.objects.filter()
+        activeUsers = User.objects.filter(is_active=True)
+        inactiveUsers = User.objects.filter(is_active=False)
 
         context = {
-            'users' : users
+            'activeUsers' : activeUsers,
+            'inactiveUsers' : inactiveUsers
         }
         
         return render(request,'admin/usersPage.html', context)
     
+class ManageUser(View):
+    def get(self, request, id):
+        user = User.objects.get(id=id)
+        permissionForm = PermissionForm(instance=user)
+
+        context = {
+            'customUser' : user,
+            'permissionForm' : permissionForm
+        }
+
+        return render(request, 'admin/manageUser.html', context)
+    
+    def post(self, request, id):
+        user = User.objects.get(id=id)
+        permissionForm = PermissionForm(request.POST, instance=user)
+
+        if permissionForm.is_valid():
+            permissionForm.save()
+            return redirect('users')
     
 class ViewUserProfile(View):
     @method_decorator(login_required)
@@ -118,3 +156,30 @@ class ViewUserProfile(View):
         }
         return render(request, 'user_profile.html', contexto)
     
+class EditProfile(View):
+    @method_decorator(login_required)
+    def get(self, request):
+        user = User.objects.get(id=request.user.id)
+
+        context = {
+            'form': ProfileEditForm(instance=user), 
+            'user_profile': user
+        }
+        
+        return render(request, 'profile_edit.html', context)  
+
+    @method_decorator(login_required)
+    def post(self, request):
+        user = User.objects.get(id=request.user.id)
+        form = ProfileEditForm(request.POST, instance=user)
+
+        if form.is_valid():
+            form.save()
+            return redirect('profile', id=user.id)
+
+        context = {
+            'form': ProfileEditForm(instance=user), 
+            'user_profile': user
+        }
+
+        return render(request, 'profile_edit.html', context)   

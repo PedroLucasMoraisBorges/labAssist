@@ -21,7 +21,7 @@
         {% include 'components/page_indication/welcome.html' with text='Bem vindo,' username=user.name %}
 
         <!-- Essa parte vai ser a seleção da letra do composto requisitado, ainda não pega nenhuma informação -->
-        <div class="alfabeto">
+        <!-- <div class="alfabeto">
             <div class=" tab_alfa tag_inicio">
                 <button class="inicio">
                     <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
@@ -68,7 +68,7 @@
                     </svg>
                 </button>
             </div>
-        </div>
+        </div> -->
 
         <!-- Separações entre visão geral, movimentação recente e Balanço de estoque -->
         <div class="container">
@@ -76,7 +76,7 @@
                 <div class="tabs primary-tabs">
                     <button class="tab-btn active" content-id="geral"> Visão Geral</button>
                     <button class="tab-btn" content-id="move"> Movimentações Recentes</button>
-                    <button class="tab-btn" content-id="inventory"> Balanços de Estoque</button>
+                    <!-- <button class="tab-btn" content-id="inventory"> Balanços de Estoque</button> -->
                 </div>
                 <div class="tabs secondary-tabs">
                     <button class="tab2-btn tab-liquids active" content-id="liquids"> Líquidos</button>
@@ -85,20 +85,28 @@
             </div>
             <div class="content-box">
                 <div class="content active" id="geral">
-                    <div class="liquids">
-                        {% for grupo in liquids %}
-                        {% for letter, reagents in grupo.items %}
-                        {% include 'components/group_reagents.html' %}
-                        {% endfor %}
-                        {% endfor %}
+                    <div class="liquids listReagents" id="liquids">
+                        {% if liquids|length > 0 %}
+                            {% for grupo in liquids %}
+                            {% for letter, reagents in grupo.items %}
+                            {% include 'components/group_reagents.html' %}
+                            {% endfor %}
+                            {% endfor %}
+                        {% else %}
+                            {% include 'components/no_results.html' with text="Nenhum reagente líquido cadastrado no momento" %}
+                        {% endif %}
                     </div>
 
-                    <div class="solids none">
-                        {% for grupo in solids %}
-                        {% for letter, reagents in grupo.items %}
-                        {% include 'components/group_reagents.html' %}
-                        {% endfor %}
-                        {% endfor %}
+                    <div class="solids listReagents none" id="solids">
+                        {% if solids|length > 0 %}
+                            {% for grupo in solids %}
+                            {% for letter, reagents in grupo.items %}
+                            {% include 'components/group_reagents.html' %}
+                            {% endfor %}
+                            {% endfor %}
+                        {% else %}
+                            {% include 'components/no_results.html' with text="Nenhum reagente sólido cadastrado no momento" %}
+                        {% endif %}
                     </div>
                 </div>
 
@@ -108,17 +116,6 @@
                         {% include 'components/movements/card.html' %}
                         {% endfor %}
                     </div>
-                </div>
-                <div class="content" id="inventory">
-                    {% for reagent in inventoryBalance %}
-                    <div>{{reagent}} - {{reagent.amount}}</div>
-                    <!-- para fins de teste da separação das tabs -->
-                    {% endfor %}
-                    <p>CONTENT INVENTÁRIO
-                        789 Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus, dicta a voluptatum non
-                        mollitia asperiores culpa exercitationem at consectetur, facilis labore aspernatur aut
-                        voluptatem magnam neque officiis, eius consequuntur maxime?
-                    </p>
                 </div>
             </div>
         </div>
@@ -151,9 +148,6 @@
             });
     });
 </script>
-
-<!-- lógica para a troca de tabs PRINCIPAIS, ainda falta implementar as secundárias, que vão estar atreladas somente à tab "Visão Geral" 
-Já é funcional, mas ainda não pega nenhuma informação real-->
 
 <script>
     const tabs = document.querySelectorAll('.tab-btn');
@@ -221,4 +215,5 @@ Já é funcional, mas ainda não pega nenhuma informação real-->
 
     verificarLetrasAtivas();
 </script>
+<script src="{% static 'js/alter_reagent_types.js' %}"></script>
 {% endblock %}

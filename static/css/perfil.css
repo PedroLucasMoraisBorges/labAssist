@@ -5,36 +5,25 @@
     font-family: Arial, sans-serif;
   }
   
-  body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f5f5f5;
-    margin: 8%;
-  }
   h2{
     margin-top: 30px;
   }
   .profile-card {
-    width: 70%;
-    height: 125%;
     background-color: white;
     border-radius: 1rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 30px;
-    
+    box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25);
+    margin: 20px 4rem 3rem 4rem;
+    padding: 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.25);
   }
   .profile-left{
     display: flex;
-    margin: 1rem;
+    margin-bottom: 1rem;
   }
   .profile-left-text{
-    margin-left: 1.5rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    
   }
   .profile-image {
     width: 9.3rem;
@@ -78,7 +67,7 @@
   
   .input-row {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     margin-bottom: 1rem;
   }

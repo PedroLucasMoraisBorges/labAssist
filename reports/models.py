@@ -25,6 +25,7 @@ class Movement(models.Model):
     size = models.IntegerField(null=True)
 
     fk_reagent = models.ForeignKey(Reagent, related_name='reagent_movement', null=False, on_delete=models.CASCADE)
+    fk_reagentBatch = models.ManyToManyField(ReagentBatch, related_name='batch_remove')
     fk_user = models.ForeignKey(User, related_name='responsible_movement', null=False,  on_delete=models.CASCADE)
 
     @property
