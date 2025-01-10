@@ -55,10 +55,7 @@
     animation: moving .5s ease;
 }
 
-@keyframes moving{
-    from{transform: translateX(50px);opacity:0;}
-    to{transform: translateX(0px);opacity:1;}
-}
+
 .content-box .content.active{
     display: block;
 }

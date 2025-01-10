@@ -158,11 +158,7 @@
                         <div class="license_card">
                             <img src="{% static 'imgs/icons/time.svg' %}" alt="">
                             <p class="name_license">SIPROQUIM</p>
-                            <p class="days_until">Vence em {{license.days_until_expiration}} dias</p>
-
-                            {% if license.days_until_expiration < 60 and license.is_expired == True%}
-                                <p class="alert">Está na hora de renovar a licença</p>
-                            {% endif %}
+                            <p class="days_until">Venceu em {{license.dt_maturity}}</p>
 
                             <a href="#">Ver mais</a>
                         </div>

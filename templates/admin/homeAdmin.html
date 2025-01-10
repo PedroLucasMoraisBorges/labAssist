@@ -88,9 +88,9 @@
                     <div class="liquids listReagents" id="liquids">
                         {% if liquids|length > 0 %}
                             {% for grupo in liquids %}
-                            {% for letter, reagents in grupo.items %}
-                            {% include 'components/group_reagents.html' %}
-                            {% endfor %}
+                                {% for letter, reagents in grupo.items %}
+                                    {% include 'components/group_reagents.html' %}
+                                {% endfor %}
                             {% endfor %}
                         {% else %}
                             {% include 'components/no_results.html' with text="Nenhum reagente líquido cadastrado no momento" %}
@@ -100,9 +100,9 @@
                     <div class="solids listReagents none" id="solids">
                         {% if solids|length > 0 %}
                             {% for grupo in solids %}
-                            {% for letter, reagents in grupo.items %}
-                            {% include 'components/group_reagents.html' %}
-                            {% endfor %}
+                                {% for letter, reagents in grupo.items %}
+                                    {% include 'components/group_reagents.html' %}
+                                {% endfor %}
                             {% endfor %}
                         {% else %}
                             {% include 'components/no_results.html' with text="Nenhum reagente sólido cadastrado no momento" %}
@@ -113,7 +113,7 @@
                 <div class="content" id="move">
                     <div class="list_movements">
                         {% for movement in recentMovement %}
-                        {% include 'components/movements/card.html' %}
+                            {% include 'components/movements/card.html' %}
                         {% endfor %}
                     </div>
                 </div>

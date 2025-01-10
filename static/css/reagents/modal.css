@@ -1,0 +1,142 @@
+@keyframes slideDown {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+}
+
+.back {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%; 
+    background-color: rgba(0, 0, 0, .4);
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal {
+    width: 700px;
+    height: auto;
+    background-color: #CDFFD6;
+    padding: 1.6rem;
+    border-radius: 15px;
+    animation: slideDown 0.5s ease;
+}
+
+.slideUp {
+    animation: slideUp 0.5s ease;
+}
+
+.modal_header {
+    display: flex;
+    margin-bottom: 1.2rem;
+}
+
+.modal_header img {
+    width: 20px;
+}
+
+.modal_header h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-left: .5rem;
+}
+
+.modal_body {
+    display: grid;
+    grid-template-columns: 30% 30% 30%;
+    justify-content: space-between;
+}
+
+.body_item {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.body_item .title, .incompatibilities .title, .batches .title {
+    font-weight: 500;
+}
+
+.body_item .reagent_info {
+    background-color: white;
+    font-weight: 400;
+    border-radius: 25px;
+    padding: .5rem .6rem;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.incompatibilities .list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.incompatibilities .list p {
+    margin: .3rem;
+    background-color: white;
+    padding: .2rem .5rem;
+    border-radius: 25px;
+    box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.255);
+}
+
+.modal_btns {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+}
+
+.close_modal, .edit {
+    width: 47.5%;
+    border-radius: 25px;
+    font-weight: 600;
+    padding: .7rem 0rem;
+    transition: .3s;
+}
+
+.close_modal{
+    background-color: #19882C;
+    color: white;
+}
+
+.close_modal:hover {
+    transform: scale(1.05);
+}
+
+.edit {
+    color: white;
+    background-color: white ;
+    color: black;
+    display: flex;
+    justify-content: center;
+    border: 1px black solid;
+}
+
+.edit:hover {
+    transform: scale(1.05);
+}
+
+.edit img {
+    margin-right: .3rem;
+}
+
+.none {
+    display: none;
+}

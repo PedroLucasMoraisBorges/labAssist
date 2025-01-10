@@ -67,12 +67,23 @@ class Request(models.Model):
 class License(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     dt_register = models.DateField()
+    dt_maturity = models.DateField(null=True)
     pdf = models.FileField(upload_to='pdfs/', unique=True)
     is_expired = models.BooleanField(default=False)
 
+    @property
     def days_until_expiration(self):
-        # Data alvo é um ano após a data de registro
+        # Data de expiração é 365 dias após o registro
         expiration_date = self.dt_register + timedelta(days=365)
-        # Calcula a diferença entre a data de hoje e a data de expiração
-        days_left = (expiration_date - timezone.now().date()).days
-        return max(days_left, 0)  # Retorna 0 se já tiver expirado
+        today = timezone.now().date()
+        days_left = (expiration_date - today).days
+
+        
+        # Garante que não retorne valores negativos
+        return max(days_left, 0)
+    
+    def save(self, *args, **kwargs):
+        if not self.dt_maturity:
+            self.dt_maturity = self.dt_register + timedelta(days=365)
+        
+        super().save(*args, **kwargs)

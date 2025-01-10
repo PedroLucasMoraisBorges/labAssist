@@ -31,6 +31,13 @@ class Pendings(View):
         users = User.objects.filter(is_active=False, approved=True)
         requests = Request.objects.filter(approved=False, dt_response=None)
         license = License.objects.filter(is_expired=False).first()
+
+        if license and license.days_until_expiration <= 0:
+            license.is_expired = True
+            license.save()
+
+            license = None
+            
         inactiveUsers = []
         listRequests = []
 
@@ -217,7 +224,15 @@ class DesapproveRequestMovement(APIView):
 class LicensePage(View):
     def get(self, request):
         license = License.objects.filter(is_expired=False).first()
+
+        if license and license.days_until_expiration <= 0:
+            license.is_expired = True
+            license.save()
+
+            license = None
+
         expiredLicenses = License.objects.filter(is_expired=True).order_by("dt_register")
+            
 
         context = {
             'license' : license,
