@@ -83,7 +83,7 @@ class MovementHistoryForm(forms.Form):
     item_status = forms.ChoiceField(
         label = 'Tipo de reagente',
         choices= statesChoices,
-        widget= forms.SelectMultiple(attrs={'class' : 'js-example-basic-multiple'}),
+        widget= forms.SelectMultiple(attrs={'class' : 'js-example-basic-multiple', 'id' : 'select2'}),
         required=False
     )
 

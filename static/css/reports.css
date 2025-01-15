@@ -4,16 +4,15 @@
   box-sizing: border-box;
   font-family: "Montserrat", sans-serif;
 }
+
 .container {
   display: flex;
   flex-direction: column;
   border-radius: 10px;
-  border-color: rgb(185, 185, 185);
-  border-style: solid;
-  border-width: 2px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.20);
   padding: 20px;
-  margin: 20px;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.35);
+  margin: 20px 4rem 20px 4rem;
 }
 
 .title {
@@ -38,12 +37,14 @@
 
 .options button {
   padding: 8px 16px;
-  border-radius: 4px;
+  border-radius: 20px;
   cursor: pointer;
-  background-color: #d9d9d9;
+  background-color: white;
+  color: #19882c;
   border: none;
   transition: all 0.25s ease-in-out;
   font-weight: 600;
+  box-shadow: 2px 4px 3px rgba(0, 0, 0, 0.4);
 }
 
 .options button.active {
@@ -79,16 +80,17 @@
 .movementHistory,
 .userPerformace,
 .siproquimMap {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  border-color: rgb(185, 185, 185);
-  border-style: solid;
-  border-width: 2px;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  justify-content: space-between;
   padding: 3rem;
   border-radius: 10px;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.35);
+  width: 100%;
+}
+
+
+.inputDiv {
+  margin: .8rem;
 }
 
 .forms label {
@@ -99,27 +101,24 @@
 }
 
 .forms input,
-select {
-  border-color: black;
-  border-style: solid;
-  border-width: 2px;
-  width: 50rem;
-  height: 50px;
-  margin: 10px 0;
+select, #select2 {
   border: 1px solid #ccc;
   font-size: 16px;
   outline: none;
   box-shadow: 0px 2px 2px rgb(130, 130, 130);
-  padding-inline: 20px;
-  border-radius: 30px;
+  border-radius: 10px;
+  padding: .5rem;
+  width: 400px;
 }
 
-.forms input[type="date"] {
-  text-align: center;
-  padding: 10px;
-  font-size: 14px;
+.buttons {
+  display: flex;
+  width: 100%;
+  grid-column: 1 / -1; /* Faz o item ocupar todas as colunas */
 }
-.forms button {
+
+
+.forms .generate {
   margin-top: 3rem;
   padding-inline: 5rem;
   padding-block: 0.5rem;
@@ -127,13 +126,19 @@ select {
   background-color: #19882c;
   color: white;
   transition: all 0.25s ease-in-out;
+  width: 100%;
 }
 
-.forms button:hover {
+.forms .generate:hover {
   box-shadow: 2px 6px 10px rgba(0, 0, 0, 0.35);
   padding-inline: 5.5rem;
   color: white;
   background-color: rgba(138, 255, 158, 1);
   font-weight: 700;
   color: black;
+}
+
+
+table {
+  margin-top: 2rem;
 }

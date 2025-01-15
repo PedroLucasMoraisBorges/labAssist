@@ -8,3 +8,18 @@
     box-sizing: border-box;
     font-family: 'Montserrat', sans-serif;
 }
+
+html, body {
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    background-color: #505050;
+}
+
+.mainSection {
+    background-color: white;
+    margin: 0px 4rem 0rem 4rem;
+    padding-bottom: 3rem;
+}

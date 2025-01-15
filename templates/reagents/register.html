@@ -25,10 +25,9 @@
             display: flex;
             flex-direction: column;
             width: 90%;
-            border: 1px solid rgba(0, 0, 0, 0.5);
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
             border-radius: 15px;
             padding: 2rem;
-            box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.3);
         }
 
         .form_header {
@@ -91,7 +90,7 @@
 
     <main>
         {% include 'components/errorModal.html' %}
-        <section>
+        <section class="mainSection">
             {% include 'components/page_indication/presentation.html' with page="Cadastrar itens no seu estoque" text="Nesta seção você poderá adicionar facilmente itens no seu sistema." %}
 
             <div id="crud-modal" tabindex="-1">

@@ -7,7 +7,7 @@
     {% include 'components/navbar.html' %}
 
     <main>
-        <section>
+        <section class="mainSection">
             <div>
                 {% for perm in userInfo.user_permissions.all %}
                     <p>{{perm.name}}</p>
