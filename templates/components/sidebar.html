@@ -77,6 +77,12 @@
    .links a p{
       margin-left: .8rem;
    }
+
+   @media screen and (min-width: 600px) and (max-width: 1024px) {
+      #sidebar {
+         display: none;
+      }
+   }
 </style>
 
 <aside id="sidebar">
@@ -144,21 +150,6 @@
       <div class="liquids links">
          <p>Líquidos</p>
 
-         <!-- <a href="">
-            <img src="{% static 'imgs/icons/estoque.svg' %}" alt="">
-            <p>Ativos</p>
-         </a>
-
-         <a href="">
-            <img src="{% static 'imgs/icons/estoque.svg' %}" alt="">
-            <p>Passivos</p>
-         </a> -->
-
-         <!-- <a href="">
-            <img src="{% static 'imgs/icons/estoque.svg' %}" alt="">
-            <p>Soluções</p>
-         </a> -->
-
          <a href="{% url 'stock_liquids' %}">
             <img src="{% static 'imgs/icons/estoque.svg' %}" alt="">
             <p>Visão Geral</p>
@@ -167,16 +158,6 @@
 
       <div class="solids links">
          <p>Sólidos</p>
-
-         <!-- <a href="">
-            <img src="{% static 'imgs/icons/estoque.svg' %}" alt="">
-            <p>Ativos</p>
-         </a>
-
-         <a href="">
-            <img src="{% static 'imgs/icons/estoque.svg' %}" alt="">
-            <p>Passivos</p>
-         </a> -->
 
          <a href="{% url 'stock_solids' %}">
             <img src="{% static 'imgs/icons/estoque.svg' %}" alt="">

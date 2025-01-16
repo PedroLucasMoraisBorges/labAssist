@@ -57,7 +57,7 @@
 
     .movements_body {
         display: grid;
-        grid-template-columns: 22% 22% 22% 22%;
+        grid-template-columns: 24% 24% 24% 24%;
         justify-content: space-between;
     }
 
@@ -85,6 +85,13 @@
         text-align: center;
         font-weight: 700;
         color: #0A5517;
+    }
+
+    @media screen and (min-width: 600px) and (max-width: 1024px) {
+        .movements_body {
+            display: flex;
+            flex-direction: column;
+        }
     }
 </style>
 {% endblock %}

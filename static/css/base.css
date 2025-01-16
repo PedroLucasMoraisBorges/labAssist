@@ -15,11 +15,24 @@ html, body {
     padding: 0;
     display: flex;
     flex-direction: column;
-    background-color: #505050;
+    background-color: #656565;
 }
 
 .mainSection {
     background-color: white;
     margin: 0px 4rem 0rem 4rem;
     padding-bottom: 3rem;
+}
+
+main {
+    flex-grow: 1; /* Faz com que o main cresça para ocupar o espaço restante */
+    display: grid;
+    grid-template-columns: 82.5% 17.5%;
+    height: auto; /* Ajusta a altura dinamicamente */
+}
+
+@media screen and (min-width: 600px) and (max-width: 1024px) {
+    main {
+        grid-template-columns: 100%;
+    }
 }

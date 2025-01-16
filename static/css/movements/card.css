@@ -1,7 +1,7 @@
 .list_movements {
     border: 1px solid black;
     display: grid;
-    grid-template-columns: 22% 22% 22% 22%;
+    grid-template-columns: 24% 24% 24% 24%;
     padding: 1.2rem;
     justify-content: space-between;
 }
@@ -87,7 +87,7 @@
     border: 2px solid white;
     box-shadow: 1px 3px 3px rgba(0, 0, 0, 0.268);
     transition: .3s;
-    font-size: 1.1rem;
+    font-size: 14px;
     background-color: #0A5517;
 }
 
@@ -101,7 +101,6 @@
 
 .show_more {
     background-color: #0A5517;
-    font-size: 1rem;
     padding: .1rem;
     margin-top: .3rem;
 }
@@ -133,4 +132,11 @@
 
 .disapprove {
     background-color: #FF3E3E;
+}
+
+@media screen and (min-width: 600px) and (max-width: 1024px) {
+    .list_movements {
+        display: flex;
+        flex-direction: column;
+    }
 }

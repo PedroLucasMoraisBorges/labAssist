@@ -59,3 +59,13 @@
 .btn_show:hover {
     transform: scale(1.1);
 }
+
+@media screen and (min-width: 600px) and (max-width: 1024px) {
+    .group_reagents {
+        flex-direction: column;
+    }
+
+    .reagent {
+        width: 100%;
+    }
+}

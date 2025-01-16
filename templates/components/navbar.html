@@ -4,6 +4,8 @@
     .header{
         background: linear-gradient(90deg, #19882C 0%, #569F62 100%);
         display: flex;
+        padding: .1rem 1rem;
+        justify-content: space-between;
     }
 
     .header h2{
@@ -15,9 +17,155 @@
         transition: text-decoration 50ms;
         text-decoration: underline;
     }
+
+    .logo {
+        display: flex;
+    }
+
+    .header .menu {
+        width: 30px;
+        cursor: pointer;
+    }
+
+    .menuDiv {
+        display: flex;
+        align-items: center;
+        position: relative;
+        cursor: pointer;
+        padding: 0 .5rem;
+        transition: .3s;
+    }
+
+    .menuDiv:hover {
+        background-color: #146922;
+    }
+
+    .dropdownSideBar {
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin-top: 3.5rem;
+        width: 200px;
+        background-color: white;
+        box-shadow: 4px 5px 4px rgba(0, 0, 0, 0.5);
+        border-radius: 10px 0px 10px 10px;
+        padding: .3rem;
+        z-index: 10;
+    }
+
+    .dropdownSideBar button {
+        width: 100%;
+        background-color: #569F62;
+        border-radius: 10px;
+        color: white;
+        font-weight: 600;
+        padding: .2rem;
+        margin-bottom: .5rem;
+        transition: .3s;
+    }
+
+    .dropdownSideBar button:hover {
+        background-color: #146922;
+    }
+
+    @media screen and (min-width: 600px) and (max-width: 1024px) {
+        .header .menu {
+            display: flex !important;
+        }
+    }
 </style>
 
 <div class="header">
-    <h2>LEAS</h2>
-    <img src="{% static 'imgs/header_IF_logo.png' %}" width="200">
+    <div class="logo">
+        <h2>LEAS</h2>
+        <img src="{% static 'imgs/header_IF_logo.png' %}" width="200">
+    </div>
+
+    <div class="menuDiv">
+        <img class="menu none" onclick="openDropDown()" src="{% static 'imgs/icons/whiteMenu.svg' %}" alt="">
+
+        <div class="dropdownSideBar none">
+            <div class="geralLinks links">
+                {% if user.is_superuser %}
+                   <a href="{% url 'home_admin' %}">
+                      <img src="{% static 'imgs/icons/admin_estoque.svg' %}" alt="">
+                      <p>Início</p>
+                   </a>
+          
+                   <a href="{% url 'pendings' %}">
+                      <img src="{% static 'imgs/icons/pendencias.svg' %}" alt="">
+                      <p>Pendências</p>
+                   </a>
+          
+                   <a href="{% url 'users' %}">
+                      <img src="{% static 'imgs/icons/users.svg' %}" alt="">
+                      <p>Administrar Usuários</p>
+                   </a>
+             
+                   <a href="{% url 'reports' %}">
+                      <img src="{% static 'imgs/icons/relatorios.svg' %}" alt="">
+                      <p>Relatórios</p>
+                   </a>
+             
+                   <a href="{% url 'movements' %}">
+                      <img src="{% static 'imgs/icons/movimentações.svg' %}" alt="">
+                      <p>Movimentações</p>
+                   </a>
+             
+                   <a href="{% url 'licenses' %}">
+                      <img src="{% static 'imgs/icons/pendencias.svg' %}" alt="">
+                      <p>Licenças</p>
+                   </a>
+                {% else %}
+                   <a href="{% url 'home_normal_user' %}">
+                      <img src="{% static 'imgs/icons/admin_estoque.svg' %}" alt="">
+                      <p>Início</p>
+                   </a>
+                {% endif %}
+          
+                {% if 'reagents.can_add_reagent' in perms %}
+                   <a href="{% url 'register_reagent' %}">
+                      <img src="{% static 'imgs/icons/add.svg' %}" alt="">
+                      <p>Cadastrar Reagente</p>
+                   </a>
+                {% endif %}
+             </div>
+          
+             {% if 'reagents.can_view_reagent' in perms %}
+                <div class="liquids links">
+                   <p>Líquidos</p>
+          
+                   <a href="{% url 'stock_liquids' %}">
+                      <img src="{% static 'imgs/icons/estoque.svg' %}" alt="">
+                      <p>Visão Geral</p>
+                   </a>
+                </div>
+          
+                <div class="solids links">
+                   <p>Sólidos</p>
+          
+                   <a href="{% url 'stock_solids' %}">
+                      <img src="{% static 'imgs/icons/estoque.svg' %}" alt="">
+                      <p>Visão Geral</p>
+                   </a>
+                </div>
+             {% endif %}
+
+             <button onclick="closeDropDown()">Fechar</button>
+        </div>
+    </div>
 </div>
+
+<script>
+    function openDropDown() {
+        var dropdown = document.querySelector('.dropdownSideBar')
+
+        dropdown.classList.remove('none')
+    }
+
+    function closeDropDown() {
+        var dropdown = document.querySelector('.dropdownSideBar')
+
+        dropdown.classList.add('none')
+    }
+</script>
