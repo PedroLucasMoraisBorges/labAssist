@@ -136,6 +136,8 @@
                                 {% if license.days_until_expiration < 60 %}
                                     <p>Está na hora de renovar a licença</p>
                                 {% endif %}
+
+                                <a href="{% url 'view_pdf' id=license.id %}">Ver mais</a>
                             </div>
                         </div>
                     {% else %}
@@ -160,7 +162,7 @@
                             <p class="name_license">SIPROQUIM</p>
                             <p class="days_until">Venceu em {{license.dt_maturity}}</p>
 
-                            <a href="#">Ver mais</a>
+                            <a href="{% url 'view_pdf' id=license.id %}">Ver mais</a>
                         </div>
                     {% endfor %}
                 </div>

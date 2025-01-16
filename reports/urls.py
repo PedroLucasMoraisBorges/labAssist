@@ -15,4 +15,5 @@ urlpatterns = [
     path('licenças/', LicensePage.as_view(), name='licenses'),
     path('cadastroLisença/', RegisterLicense.as_view(), name='register_license'),
     path('relatorios/', Reports.as_view(), name='reports'),
+    path('verDocumento/<str:id>', ViewPdf.as_view(), name='view_pdf'),
 ]

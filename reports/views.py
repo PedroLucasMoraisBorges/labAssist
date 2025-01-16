@@ -461,3 +461,18 @@ class Reports(View):
             context.update({'siproquimMap' : siproquimMap})
 
         return render(request, 'reports/reports.html', context)
+    
+class ViewPdf(View):
+    def get(self, request, id):
+        try:
+            license = License.objects.get(id=id)
+            text = f"Licença SIPROQUIM - {license.dt_register.year}"
+
+            context = {
+                'pdf' : license.pdf,
+                'text' : text
+            }
+
+            return render(request, 'admin/viewDocument.html', context)
+        except:
+            return render(request, 'admin/viewDocument.html')
