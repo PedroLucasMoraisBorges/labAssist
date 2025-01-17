@@ -8,6 +8,7 @@
 
 {% block content %}
     {% include 'components/navbar.html' %}
+    {% include 'components/movements/form_modal.html' %}
 
     <main>
         <section class="mainSection">
@@ -16,7 +17,7 @@
             
             <!-- Container maior com informações gerais -->
             <article class="info-section">
-                <h2>Usuários ativos</h2>
+                <h2 class="title">Usuários ativos</h2>
                 <!-- Título da tabela de usuários -->
                 <div class="user-header">
                     <div class="user-title">
@@ -32,7 +33,11 @@
                         <div class="user-row">
                             <div class="user-info">
                                 <div class="user-icon">{{user.user_image}}</div>
-                                <div class="user-name">{{user.name}}</div>
+                                <div class="user-name">
+                                    <abbr title="{{user.name}}">
+                                        {{user.name}}
+                                    </abbr>
+                                </div>
                             </div>
                             <div class="user-role">{{user.get_sector_display}}</div>
                             <div class="user-action">
@@ -45,7 +50,7 @@
             </article>
 
             <article class="info-section">
-                <h2>Usuários inativos</h2>
+                <h2 class="title">Usuários inativos</h2>
                 <!-- Título da tabela de usuários -->
                 <div class="user-header">
                     <div class="user-title">
@@ -62,7 +67,11 @@
                         <div class="user-row">
                             <div class="user-info">
                                 <div class="user-icon">{{user.user_image}}</div>
-                                <div class="user-name">{{user.name}}</div>
+                                <div class="user-name">
+                                    <abbr title="{{user.name}}">
+                                        {{user.name}}
+                                    </abbr>
+                                </div>
                             </div>
                             <div class="user-role">{{user.get_sector_display}}</div>
                             <div class="user-action">

@@ -4,7 +4,7 @@
 {% block head %}
 <style>
     .pendings_section {
-        margin: 1rem 4rem 3rem 4rem;
+        margin: 1rem 0rem 3rem 0rem;
         border-radius: 15px;
         box-shadow: 1px 4px 4px rgba(0, 0, 0, 0.30);
         padding: 1rem;
@@ -24,8 +24,7 @@
 
     .section_header img {
         width: 30px;
-        margin-top: .5rem;
-        margin-right: .7rem;
+        margin-right: .4rem;
     }
 
     .section_header h2 {
@@ -82,6 +81,10 @@
 
     @media screen and (min-width: 600px) and (max-width: 1024px)
     {
+        .section_header h2 {
+            font-size: 1.5rem;
+            margin-bottom: .2rem;
+        }
         .license_card {
             width: 100%;
         }
@@ -107,7 +110,7 @@
                 <div class="section_header">
                     <div class="title">
                         <img src="{% static 'imgs/icons/alert_w.svg' %}" alt="">
-                        <h2>Aguardando aprovação - Usuários</h2>
+                        <h2>Aprovar usuários</h2>
                     </div>
                     <p>Nesta seção estão listados as requisições para ativação de conta dos usuários.</p>
                 </div>
@@ -133,7 +136,7 @@
                 <div class="section_header">
                     <div class="title">
                         <img src="{% static 'imgs/icons/alert_w.svg' %}" alt="">
-                        <h2>Aguardando aprovação - Itens</h2>
+                        <h2>Aprovar movimentações</h2>
                     </div>
                     <p>Nesta seção estão listados as movimentações pendentes no sistema.</p>
                 </div>
@@ -158,7 +161,7 @@
                 <div class="section_header balance_header">
                     <div class="title">
                         <img src="{% static 'imgs/icons/alert_b.svg' %}" alt="">
-                        <h2>ITENS MAIS PRÓXIMOS AO VENCIMENTO</h2>
+                        <h2>Vencimento Próximo</h2>
                     </div>
                     <p>Nesta seção estão listados os itens mais próximo de se vencerem.</p>
                 </div>
@@ -180,7 +183,7 @@
                 <div class="section_header licenses_header">
                     <div class="title">
                         <img src="{% static 'imgs/icons/alert_w.svg' %}" alt="">
-                        <h2>LICENÇAS</h2>
+                        <h2>Licenças</h2>
                     </div>
                     <p>Nesta seção estão listadas os dias para o vencimento das licenças.</p>
                 </div>

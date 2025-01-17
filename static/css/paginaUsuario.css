@@ -1,9 +1,14 @@
 /* CONTAINER PARA GERENCIAR USUÁRIOS */
 .info-section {
-    margin: 1rem 4rem;
+    margin: 1rem 0rem;
     border-radius: 15px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.20);
+    box-shadow: 1px 4px 4px rgba(0, 0, 0, 0.30);
     padding: 1rem;
+}
+
+.title {
+    margin-bottom: .9rem;
+    font-weight: 500;
 }
 
 /* Estilo do cabeçalho de usuários */
@@ -70,6 +75,16 @@
 }
 
 .user-name {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+abbr {
+    text-decoration: none;
+}
+
+.user-name {
     font-size: 16px;
     color: #333;
 }
@@ -96,4 +111,12 @@
 
 .action-btn:hover {
     background-color: #003300;
+}
+
+
+
+@media screen and (min-width: 600px) and (max-width: 1024px) {
+    .user-name {
+        width: 100px;
+    }
 }
