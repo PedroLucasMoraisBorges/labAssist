@@ -384,9 +384,8 @@ class Reports(View):
         reagents_verify = []
         # if type_map == 'Q':
         #     movements = Movement.objects.filter(fk_reagent__control='PF', dt_movement__gte=startDate, dt_movement__lte=finalDate)
+        
         if type_map in ['R', 'T']:
-            print(Movement.objects.filter(fk_reagent__control='PF', movement_type__in=['R', 'T']))
-
             movements = Movement.objects.filter(fk_reagent__control='PF', dt_movement__gte=startDate, dt_movement__lte=finalDate, movement_type__in=['R', 'T'])
 
 
@@ -412,15 +411,27 @@ class Reports(View):
                 
             
         else:
-            movements = Movement.objects.filter(fk_reagent__control='PF', dt_movement__gte=startDate, dt_movement__lte=finalDate, movement_type='A')
+            movements = Movement.objects.filter(fk_reagent__control='PF', dt_movement__gte=startDate, dt_movement__lte=finalDate)
 
             for movement in movements:
-                reagent = {
-                    'name' : movement.fk_reagent.name,
-                    'total_quantity' : (movement.amount * movement.size) /1000,
-                    'category' : movement.fk_reagent.state,
-                    'type_map' : 'Adição'
-                }     
+                if movement.movement_type == 'A':
+                    reagent = {
+                        'name' : movement.fk_reagent.name,
+                        'total_quantity' : (movement.amount * movement.size) /1000,
+                        'category' : movement.fk_reagent.state,
+                        'type_map' : 'Adição'
+                    }     
+                else:
+                    
+                    totalSize = 0
+                    for batch in movement.fk_reagentBatch.all():
+                        totalSize += batch.size
+                    reagent = {
+                        'name' : movement.fk_reagent.name,
+                        'total_quantity' : (movement.amount * totalSize) /1000,
+                        'category' : movement.fk_reagent.state,
+                        'type_map' : 'Remoção'
+                    }   
 
                 if reagent['name'] in reagents_verify:
                     index = reagents_verify.index(reagent['name'])
@@ -428,7 +439,7 @@ class Reports(View):
                 else:
                     reagents_map.append(reagent)
                     reagents_verify.append(reagent['name'])
-            
+
         return reagents_map
     
     def get(self, request):

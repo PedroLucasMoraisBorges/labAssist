@@ -1,6 +1,12 @@
 {% load static %}
 
 <style>
+    .table-container {
+        overflow-x: auto; /* Permite rolagem horizontal */
+        -webkit-overflow-scrolling: touch; /* Suaviza a rolagem em dispositivos móveis */
+        margin-top: 2rem;
+    }
+
     table {
         width: 100%;
         border-collapse: collapse;
@@ -40,31 +46,33 @@
     }
 </style>
 
-<table>
-    <thead>
-        <tr>
-            <th>Reagente</th>
-            <th>Responsável</th>
-            <th>Tipo de Movimentação</th>
-            <th>Quantidade</th>
-            <th>Validade</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for movement in movement_history %}
+<div class="table-container">
+    <table>
+        <thead>
             <tr>
-                <td>{{ movement.fk_reagent }}</td>
-                <td>{{ movement.fk_user }}</td>
-                <td>{{ movement.get_movement_type_display }}</td>
-                <td>{{ movement.amount }}</td>
-                <td>
-                    {% if movement.validity %}
-                        {{ movement.formatted_dt_validity }}
-                    {% else %}
-                        <span class="no-data">------</span>
-                    {% endif %}
-                </td>
+                <th>Reagente</th>
+                <th>Responsável</th>
+                <th>Tipo de Movimentação</th>
+                <th>Quantidade</th>
+                <th>Validade</th>
             </tr>
-        {% endfor %}
-    </tbody>
-</table>   
+        </thead>
+        <tbody>
+            {% for movement in movement_history %}
+                <tr>
+                    <td>{{ movement.fk_reagent }}</td>
+                    <td>{{ movement.fk_user }}</td>
+                    <td>{{ movement.get_movement_type_display }}</td>
+                    <td>{{ movement.amount }}</td>
+                    <td>
+                        {% if movement.validity %}
+                            {{ movement.formatted_dt_validity }}
+                        {% else %}
+                            <span class="no-data">------</span>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

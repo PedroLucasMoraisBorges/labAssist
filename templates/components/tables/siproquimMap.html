@@ -3,6 +3,12 @@
 {% load static %}
 
 <style>
+    .table-container {
+        overflow-x: auto; /* Permite rolagem horizontal */
+        -webkit-overflow-scrolling: touch; /* Suaviza a rolagem em dispositivos móveis */
+        margin-top: 2rem;
+    }
+
     table {
         width: 100%;
         border-collapse: collapse;
@@ -42,35 +48,37 @@
     }
 </style>
 
-<table>
-    <thead>
-        <tr>
-            <th>Reagente</th>
-            <th>Tipo de Movimentação</th>
-            <th>Total (KG)</th>
-            <th>Total (L)</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for reagent in siproquimMap %}
+<div class="table-container">
+    <table>
+        <thead>
             <tr>
-                <td>{{ reagent.name }}</td>
-                <td>{{ reagent.type_map }}</td>
-                <td>
-                    {% if reagent.category == 'S' %}
-                        {{ reagent.total_quantity }}
-                    {% else %}
-                        0000
-                    {% endif %}
-                </td>
-                <td>
-                    {% if reagent.category == 'L' %}
-                        {{ reagent.total_quantity }}
-                    {% else %}
-                        0000
-                    {% endif %}
-                </td>
+                <th>Reagente</th>
+                <th>Tipo de Movimentação</th>
+                <th>Total (KG)</th>
+                <th>Total (L)</th>
             </tr>
-        {% endfor %}
-    </tbody>
-</table>   
+        </thead>
+        <tbody>
+            {% for reagent in siproquimMap %}
+                <tr>
+                    <td>{{ reagent.name }}</td>
+                    <td>{{ reagent.type_map }}</td>
+                    <td>
+                        {% if reagent.category == 'S' %}
+                            {{ reagent.total_quantity }}
+                        {% else %}
+                            0000
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if reagent.category == 'L' %}
+                            {{ reagent.total_quantity }}
+                        {% else %}
+                            0000
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

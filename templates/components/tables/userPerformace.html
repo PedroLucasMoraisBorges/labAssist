@@ -1,5 +1,11 @@
 {% load static %}
 <style>
+    .table-container {
+        overflow-x: auto; /* Permite rolagem horizontal */
+        -webkit-overflow-scrolling: touch; /* Suaviza a rolagem em dispositivos móveis */
+        margin-top: 2rem;
+    }
+    
     table {
         width: 100%;
         border-collapse: collapse;
@@ -42,61 +48,65 @@
 <div>
     {% if userPerformace.approved|length != 0 %}
         <h2>Movimentações aprovadas</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Reagente</th>
-                    <th>Tipo de Movimentação</th>
-                    <th>Quantidade</th>
-                    <th>Validade</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for movement in userPerformace.approved %}
+        <div class="table-container">
+            <table>
+                <thead>
                     <tr>
-                        <td>{{ movement.fk_reagent }}</td>
-                        <td>{{ movement.get_movement_type_display }}</td>
-                        <td>{{ movement.amount }}</td>
-                        <td>
-                            {% if movement.validity %}
-                                {{ movement.formatted_dt_validity }}
-                            {% else %}
-                                <span class="no-data">------</span>
-                            {% endif %}
-                        </td>
+                        <th>Reagente</th>
+                        <th>Tipo de Movimentação</th>
+                        <th>Quantidade</th>
+                        <th>Validade</th>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {% for movement in userPerformace.approved %}
+                        <tr>
+                            <td>{{ movement.fk_reagent }}</td>
+                            <td>{{ movement.get_movement_type_display }}</td>
+                            <td>{{ movement.amount }}</td>
+                            <td>
+                                {% if movement.validity %}
+                                    {{ movement.formatted_dt_validity }}
+                                {% else %}
+                                    <span class="no-data">------</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     {% endif %}
     
     {% if userPerformace.denied|length != 0 %}
         <h2>Movimentação negadas</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Reagente</th>
-                    <th>Tipo de Movimentação</th>
-                    <th>Quantidade</th>
-                    <th>Validade</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for movement in userPerformace.denied %}
+        <div class="table-container">
+            <table>
+                <thead>
                     <tr>
-                        <td>{{ movement.fk_reagent }}</td>
-                        <td>{{ movement.get_movement_type_display }}</td>
-                        <td>{{ movement.amount }}</td>
-                        <td>
-                            {% if movement.validity %}
-                                {{ movement.formatted_dt_validity }}
-                            {% else %}
-                                <span class="no-data">------</span>
-                            {% endif %}
-                        </td>
+                        <th>Reagente</th>
+                        <th>Tipo de Movimentação</th>
+                        <th>Quantidade</th>
+                        <th>Validade</th>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {% for movement in userPerformace.denied %}
+                        <tr>
+                            <td>{{ movement.fk_reagent }}</td>
+                            <td>{{ movement.get_movement_type_display }}</td>
+                            <td>{{ movement.amount }}</td>
+                            <td>
+                                {% if movement.validity %}
+                                    {{ movement.formatted_dt_validity }}
+                                {% else %}
+                                    <span class="no-data">------</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     {% endif %}
 </div>

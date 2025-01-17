@@ -12,7 +12,7 @@
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.20);
   padding: 20px;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.35);
-  margin: 20px 4rem 20px 4rem;
+  margin: 20px 0rem 20px 0rem;
 }
 
 .title {
@@ -59,11 +59,6 @@
   box-shadow: 2px 6px 10px rgba(0, 0, 0, 0.35);
 }
 
-.forms {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
 .movementHistory_Content {
   padding-inline: 20px;
@@ -141,4 +136,35 @@ select, #select2 {
 
 table {
   margin-top: 2rem;
+}
+
+@media screen and (min-width: 500px) and (max-width: 1024px) {
+  .options {
+    flex-wrap: wrap;
+  }
+  
+  .options button {
+    width: 45%;
+  }
+
+  .movementHistory, .userPerformace, .siproquimMap {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+  }¨
+
+  .forms {
+    width: 100%;
+  }
+
+  .forms input, select, #select2 {
+    border: 1px solid #ccc;
+    font-size: 16px;
+    outline: none;
+    box-shadow: 0px 2px 2px rgb(130, 130, 130);
+    border-radius: 10px;
+    padding: .5rem;
+    width: 100%;
+  }
+
 }
