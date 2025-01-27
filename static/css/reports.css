@@ -168,3 +168,35 @@ table {
   }
 
 }
+
+@media screen and (min-width: 200px) and (max-width: 600px) {
+  .options {
+    flex-wrap: wrap;
+    flex-direction: column;
+  }
+  
+  .options button {
+    width: 100%;
+  }
+
+  .movementHistory, .userPerformace, .siproquimMap {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+  }¨
+
+  .forms {
+    width: 100%;
+  }
+
+  .forms input, select, #select2 {
+    border: 1px solid #ccc;
+    font-size: 16px;
+    outline: none;
+    box-shadow: 0px 2px 2px rgb(130, 130, 130);
+    border-radius: 10px;
+    padding: .5rem;
+    width: 100%;
+  }
+
+}
