@@ -19,7 +19,7 @@ class MovementForm(forms.ModelForm):
     motivation = forms.CharField(
         label='Motivação',
         required=True,
-        widget=forms.Textarea()
+        widget=forms.Textarea(attrs={'placeholder' : 'Motivação'})
     )
 
     amount = forms.IntegerField(

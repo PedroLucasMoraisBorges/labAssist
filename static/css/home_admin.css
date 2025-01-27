@@ -205,3 +205,19 @@ ainda não consigo trazer as tabelas, não sei se fica melhor como componente ou
         flex-direction: column;
     }
 }
+
+@media screen and (min-width: 200px) and (max-width: 600px) {
+    .tabs button {
+        border-radius: 15px !important;
+        margin-bottom: .5rem;
+    }
+
+    .primary-tabs {
+        flex-direction: column;
+    }
+    
+    .secondary-tabs {
+        flex-direction: column;
+    }
+    
+}

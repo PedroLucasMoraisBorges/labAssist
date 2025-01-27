@@ -140,3 +140,11 @@
         flex-direction: column;
     }
 }
+
+@media screen and (min-width: 200px) and (max-width: 600px) {
+    .list_movements {
+        display: flex;
+        flex-direction: column;
+    }
+    
+}
