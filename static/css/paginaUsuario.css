@@ -120,3 +120,9 @@ abbr {
         width: 100px;
     }
 }
+
+@media screen and (min-width: 200px) and (max-width: 600px) {
+    .user-name {
+        width: 70px;
+    }
+}

@@ -167,3 +167,9 @@
 .none {
     display: none !important;
 }
+
+@media screen and (min-width: 200px) and (max-width: 600px) {
+    .movements_form {
+        width: 94%;
+    }
+}

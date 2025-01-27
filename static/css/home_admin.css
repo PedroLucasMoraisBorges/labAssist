@@ -188,3 +188,20 @@ ainda não consigo trazer as tabelas, não sei se fica melhor como componente ou
 }
 
 /* Tenho que fazer a customização e a lógica das tabs secundárias */
+
+
+
+@media screen and (min-width: 375px) and (max-width: 600px) {
+    .tabs button {
+        border-radius: 15px !important;
+        margin-bottom: .5rem;
+    }
+
+    .primary-tabs {
+        flex-direction: column;
+    }
+    
+    .secondary-tabs {
+        flex-direction: column;
+    }
+}

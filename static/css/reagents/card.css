@@ -69,3 +69,13 @@
         width: 100%;
     }
 }
+
+@media screen and (min-width: 375px) and (max-width: 600px) {
+    .group_reagents {
+        flex-direction: column;
+    }
+
+    .reagent {
+        width: 100%;
+    }
+}
